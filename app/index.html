@@ -1,21 +1,44 @@
 <html>
     <head>
-        <link rel="import" href="imports.html">
+        <link rel="import" href="include/lib_local.html">
+        <link rel="import" href="include/components.html">
     </head>
     <body>
-        <div id="container">
-            <div id="map">
-
-            </div>
+        <div id="map"></div>
+        <div id="top-bar"></div>
+        <div id="notifications"></div>
+        <div id="layer"></div>
+        <div id="graphs"></div>
+        <div id="footer">
+            <button id="toggle_all">Toggle</button>
+            <button id="toggle_notifications">notifications</button>
+            <button id="toggle_layer">layer-selection</button>
+            <button id="toggle_graphs">graphs</button>
         </div>
 
         <script>
-            var map = L.map('map').setView([51.505, -0.09], 13);
-           L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
-                subdomains: '1234',
-                minZoom: 4,
-                maxZoom: 18
-            }).addTo(map);
+            var app = new App();
+
+
+
+                $("#toggle_all").click(function(){
+                    $("#layer").toggle(1000);
+                    $("#notifications").toggle(1000);
+                    $("#graphs").toggle(1000);
+                });
+
+                $("#toggle_notifications").click(function(){
+                    $("#notifications").toggle(1000);
+                });
+
+                $("#toggle_layer").click(function(){
+                    $("#layer").toggle(1000);
+                });
+
+                $("#toggle_graphs").click(function(){
+                    $("#graphs").toggle(1000);
+                });
+
         </script>
     </body>
 </html>
