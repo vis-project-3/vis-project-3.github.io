@@ -1,6 +1,12 @@
 
+var chicagoEndpoint = "http://data.cityofchicago.org/resource/";
+
 var apiEndpoints = {
-	potholes: "http://data.cityofchicago.org/resource/7as2-ds3y.json?"
+	potholes: chicagoEndpoint + "7as2-ds3y.json?",
+	vehicles: chicagoEndpoint + "3c9v-pnva.json?",
+	lightsAll: chicagoEndpoint + "zuxi-7xem.json?",
+	lightsOne: chicagoEndpoint + "3aav-uy2v.json?",
+	crime: chicagoEndPoint + "ijzp-q8t2.json?"
 }
 
 function query(type) {
@@ -15,6 +21,9 @@ function query(type) {
 		fromLng, toLng,
 		fromLat, toLat,
 		my = {};
+
+	var lastChar = endPoint.substr(endPoint.length - 1);
+	if (lastChar !== "?") endPoint += "?";
 
 	function buildQuery() {
 		if (where.length) addParam(where);
@@ -99,6 +108,8 @@ function query(type) {
 		return my;
 	}
 
+	my.type = function() { return type; };
+
 	my.get = function() {
 		buildQuery();
 		console.info("Query: ", query);
@@ -112,15 +123,23 @@ var lastWeek = d3.time.day.offset(new Date(), -7);
 var yesterday = d3.time.day.offset(new Date(), -2);
 var date = lastWeek;
 
-var query = query("potholes")
+var potholesQuery = query("potholes")
 	.fromLat("41.8")
 	.fromLng("-87.8")
 	.toLat("41.9")
 	.toLng("-87.6")
 	.fromDate(date)
 	.limit(100)
-	.addWhere("status = 'open'")
-	.get();
+	.addWhere("status = 'open'");
 
-d3.json(query, function(data) { console.log(data); });
+var vehiclesQuery = query("vehicles")
+	.fromLat("41.8")
+	.fromLng("-87.8")
+	.toLat("41.9")
+	.toLng("-87.6")
+	.fromDate(date)
+	.limit(100);
+
+d3.json(potholesQuery.get(), function(data) { console.log(potholesQuery.type(), data); });
+d3.json(vehiclesQuery.get(), function(data) { console.log(vehiclesQuery.type(), data); });
 	
