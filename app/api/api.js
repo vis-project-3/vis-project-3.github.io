@@ -6,12 +6,12 @@ var apiEndpoints = {
 	vehicles: chicagoEndpoint + "3c9v-pnva.json?",
 	lightsAll: chicagoEndpoint + "zuxi-7xem.json?",
 	lightsOne: chicagoEndpoint + "3aav-uy2v.json?",
-	crime: chicagoEndPoint + "ijzp-q8t2.json?"
+	crime: chicagoEndpoint + "ijzp-q8t2.json?",
+	divvy: "http://www.divvybikes.com/stations/json/"
 }
 
 function query(type) {
 	var endPoint = apiEndpoints[type],
-		query = endPoint,
 		where = "",
 		limit = "",
 		minLongitude = -88,
@@ -22,13 +22,14 @@ function query(type) {
 		fromLat, toLat,
 		my = {};
 
-	var lastChar = endPoint.substr(endPoint.length - 1);
-	if (lastChar !== "?") endPoint += "?";
+	// var lastChar = endPoint.substr(endPoint.length - 1);
+	// if (lastChar !== "?") endPoint += "?";
+
+	var query = endPoint;
 
 	function buildQuery() {
 		if (where.length) addParam(where);
 		if (limit.length) addParam(limit);
-		where = "";
 	}
 	function addParam(param) {
 		var lastChar = query.substr(query.length - 1);
@@ -142,4 +143,6 @@ var vehiclesQuery = query("vehicles")
 
 d3.json(potholesQuery.get(), function(data) { console.log(potholesQuery.type(), data); });
 d3.json(vehiclesQuery.get(), function(data) { console.log(vehiclesQuery.type(), data); });
+// No access-control-allow-origin ?!
+// d3.json(query("divvy").get(), function(data) { console.log("divvy", data); });
 	
