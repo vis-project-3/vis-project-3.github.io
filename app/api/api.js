@@ -92,6 +92,13 @@ function query(type) {
 		return my;
 	}
 
+	my.fromDate = function(date) {
+		var day = d3.time.day(date);
+		var iso = day.toISOString();
+		addWhere("creation_date >= '" + iso + "'");
+		return my;
+	}
+
 	my.get = function() {
 		buildQuery();
 		console.info("Query: ", query);
@@ -101,11 +108,16 @@ function query(type) {
 	return my;
 }
 
+var lastWeek = d3.time.day.offset(new Date(), -7);
+var yesterday = d3.time.day.offset(new Date(), -2);
+var date = lastWeek;
+
 var query = query("potholes")
 	.fromLat("41.8")
 	.fromLng("-87.8")
 	.toLat("41.9")
 	.toLng("-87.6")
+	.fromDate(date)
 	.limit(100)
 	.addWhere("status = 'open'")
 	.get();
