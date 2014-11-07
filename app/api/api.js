@@ -141,9 +141,9 @@ var vehiclesQuery = query("vehicles")
 	.fromDate(date)
 	.limit(100);
 
-d3.json(potholesQuery.get(), function(data) { console.log(potholesQuery.type(), data); });
-d3.json(vehiclesQuery.get(), function(data) { console.log(vehiclesQuery.type(), data); });
+// d3.json(potholesQuery.get(), function(data) { console.log(potholesQuery.type(), data); });
+// d3.json(vehiclesQuery.get(), function(data) { console.log(vehiclesQuery.type(), data); });
 
 // No access-control-allow-origin ?!
-// d3.json(query("divvy").get(), function(data) { console.log("divvy", data); });
+$.get(query("divvy").get(), function(data) { console.log("divvy", data); });
 	
