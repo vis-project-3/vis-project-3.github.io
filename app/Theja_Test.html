@@ -22,8 +22,6 @@
 
     <button class="topcoat-button--cta" onclick="getInfo()">Show Potholes Data</button>
     <button class="topcoat-button--cta" onclick="updateInfo()">Update Data</button>
-
-    <div id="jsonContent"></div>
 </div>
 <script>
     function getInfo(){
@@ -39,8 +37,6 @@
             status: 'Open'
         };
         potholesData.getData(requiredColumns,filterConditions);
-
-        //document.getElementById('jsonContent').innerHTML = JSONData;
     }
     function updateInfo(){
         var requiredColumns = {
@@ -55,8 +51,6 @@
             status: 'Open'
         };
         potholesData.getUpdatedData(requiredColumns,filterConditions);
-
-        //document.getElementById('jsonContent').innerHTML = JSONData;
     }
 </script>
 </body>
