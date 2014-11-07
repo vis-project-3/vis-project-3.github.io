@@ -3,7 +3,7 @@
  */
 function potholesDataSet(){
     //constructor code goes here
-    this.dataSetEndPoint = 'http://data.cityofchicago.org/resource/7as2-ds3y.json?';
+    this.dataSetEndPoint = 'http://data.cityofchicago.org/resource/7as2-ds3y.json?$$app_token=pJ4wo2exY0EaCEJ758bK7Q5E3';
     this.potholesJSON;
     this.previousPotholesJSON;
     this.addedContent = [];
@@ -21,11 +21,11 @@ function potholesDataSet(){
     this.appendTimeStamp = function(timeFrame,requiredQuery){
         var frequency;
         if(timeFrame === 'lastWeek'){
-            frequency = d3.time.day.offset(new Date(), -2);
+            frequency = d3.time.day.offset(new Date(), -7);
         }
         else if(timeFrame === 'lastMonth'){
 
-            frequency = d3.time.day.offset(new Date(), -3);
+            frequency = d3.time.day.offset(new Date(), -30);
         }
         var day = d3.time.day(frequency);
         var iso = day.toISOString();
@@ -35,7 +35,7 @@ function potholesDataSet(){
 
     this.generateQuery = function(requiredColumns,filterConditions){
         var requiredQuery = this.dataSetEndPoint;
-        requiredQuery += '$select=';
+        requiredQuery += '&$select=';
         //Append the required Columns to show in the query
         for (var property in requiredColumns) {
             if (requiredColumns.hasOwnProperty(property)) {

@@ -3,7 +3,7 @@
  */
 function crimesDataSet(){
     //constructor code goes here
-    this.dataSetEndPoint = 'http://data.cityofchicago.org/resource/ijzp-q8t2.json?';
+    this.dataSetEndPoint = 'http://data.cityofchicago.org/resource/ijzp-q8t2.json?$$app_token=pJ4wo2exY0EaCEJ758bK7Q5E3';
     this.crimesJSON;
     this.previouCrimesJSON;
     this.addedContent = [];
@@ -35,7 +35,7 @@ function crimesDataSet(){
 
     this.generateQuery = function(requiredColumns,filterConditions){
         var requiredQuery = this.dataSetEndPoint;
-        requiredQuery += '$select=';
+        requiredQuery += '&$select=';
         //Append the required Columns to show in the query
         for (var property in requiredColumns) {
             if (requiredColumns.hasOwnProperty(property)) {

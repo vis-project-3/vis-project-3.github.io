@@ -3,7 +3,7 @@
  */
 function streetLightsOneOutDataSet(){
     //constructor code goes here
-    this.dataSetEndPoint = 'http://data.cityofchicago.org/resource/3aav-uy2v.json?';
+    this.dataSetEndPoint = 'http://data.cityofchicago.org/resource/3aav-uy2v.json?$$app_token=pJ4wo2exY0EaCEJ758bK7Q5E3';
     this.streetLightsOneJSON;
     this.previouStreetLightsOneJSON;
     this.addedContent = [];
@@ -35,7 +35,7 @@ function streetLightsOneOutDataSet(){
 
     this.generateQuery = function(requiredColumns,filterConditions){
         var requiredQuery = this.dataSetEndPoint;
-        requiredQuery += '$select=';
+        requiredQuery += '&$select=';
         //Append the required Columns to show in the query
         for (var property in requiredColumns) {
             if (requiredColumns.hasOwnProperty(property)) {
