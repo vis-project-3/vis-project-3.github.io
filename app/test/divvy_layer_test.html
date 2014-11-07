@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <link rel="import" href="../include/lib_local.html">
+        <link rel="import" href="../include/components.html">
+        <script src="../model/divvyLayer.js"></script>
+    </head>
+    <body>
+        <div id="map"></div>
+
+        <script>
+
+            var divvyModel = new divvyLayer();
+            var divvyModel2 = new divvyLayer();
+
+            function getData(){
+                $.ajax({
+                    url: "http://sortieapp.com/sortie/divvy",
+                    dataType: "json",
+                    success: function(data){
+                        callBack(data)
+                    }
+                });
+            }
+
+            function callBack(data){
+                divvyModel.addCollection(data);
+                //divvyModel.updateLayer();
+                divvyModel.varLog();
+            }
+
+            function prova(){
+                var map = new Map("map");
+                getData();
+
+
+            }
+
+            prova();
+
+
+        </script>
+    </body>
+</html>

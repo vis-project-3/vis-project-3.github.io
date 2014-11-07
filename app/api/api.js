@@ -7,7 +7,7 @@ var apiEndpoints = {
 	lightsAll: chicagoEndpoint + "zuxi-7xem.json?",
 	lightsOne: chicagoEndpoint + "3aav-uy2v.json?",
 	crime: chicagoEndpoint + "ijzp-q8t2.json?",
-	divvy: "http://www.divvybikes.com/stations/json/"
+	divvy: "http://sortieapp.com/sortie/divvy"
 }
 
 function query(type) {
@@ -145,5 +145,5 @@ var vehiclesQuery = query("vehicles")
 // d3.json(vehiclesQuery.get(), function(data) { console.log(vehiclesQuery.type(), data); });
 
 // No access-control-allow-origin ?!
-$.get(query("divvy").get(), function(data) { console.log("divvy", data); });
+// d3.json.query("divvy").get(), function(data) { console.log("divvy", data); });
 	
