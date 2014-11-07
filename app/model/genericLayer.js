@@ -1,4 +1,4 @@
-function divvyLayer() {
+function genericLayer(iconKind) {
     var self = this;
     var layer = [];
     var collection = {};
@@ -6,16 +6,10 @@ function divvyLayer() {
 
     /* Public Methods */
 
-    this.varLog = function(){
-        console.log(layer)
-        console.log(collection)
-        console.log(markers)
-    }
-
     this.addCollection = function (data) {
-        for (var i = 0; i < data.stationBeanList.length; i++) {
-            collection[data.stationBeanList[i].id] = data.stationBeanList[i];
-            addToMarkers(data.stationBeanList[i]);
+        for (var i = 0; i < data.length; i++) {
+            collection[data[i].id] = data[i];
+            addToMarkers(data[i]);
         }
     }
 
@@ -39,7 +33,7 @@ function divvyLayer() {
 
     var addToMarkers = function (data) {
         markers[data.id] = L.marker([parseFloat(data.latitude), parseFloat(data.longitude)], {
-            icon : getIcon("dang")
+            icon : getIcon(iconKind)
         }).addTo(layer);
     }
 
