@@ -12,8 +12,10 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="../api/potholesDataSet.js"></script>
+<script src="../api/weatherDataSet.js"></script>
 <script>
     var potholesData = new potholesDataSet();
+    var weatherData = new weatherDataSet();
 </script>
 <body>
 <div class="content">
@@ -22,6 +24,7 @@
 
     <button class="topcoat-button--cta" onclick="getInfo()">Show Potholes Data</button>
     <button class="topcoat-button--cta" onclick="updateInfo()">Update Data</button>
+    <button class="topcoat-button--cta" onclick="getWeather()">Get Weather</button>
 </div>
 <script>
     function getInfo(){
@@ -51,6 +54,12 @@
             status: 'Open'
         };
         potholesData.getUpdatedData(requiredColumns,filterConditions);
+    }
+    function getWeather(){
+        var latitude = 41.870452;
+        var longitude =  -87.647978;
+        var num_of_days = 0;
+        weatherData.getWeatherData(latitude,longitude,num_of_days);
     }
 </script>
 </body>
