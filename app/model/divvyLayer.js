@@ -31,7 +31,6 @@ function divvyLayer() {
         this.collection[data.id] = data;
     }
 
-
     /* Private Methods */
     var addToMarkers = function (data) {
         markers[data.id] = L.marker([parseFloat(data.latitude), parseFloat(data.longitude)], {
