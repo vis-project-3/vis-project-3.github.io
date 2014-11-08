@@ -102,10 +102,10 @@
 				$(cssSelector + " svg").append("<rect x=\"" + (+padding + +extraPadding) + "\" y=\"" + ( ( i + 1 ) * padding + i * bheight ) + "\" width=\"" + (w - 2 * padding - 2 * +extraPadding ) + "\" height=\"" + bheight + "\" />");
 
 				// Appends the button icon
-				$(cssSelector + " svg").append("<image xlink\:href=\"" + buttonObjectArray[i].iconPath + "\" x=\"" + Math.floor( ( (padding + extraPadding) + iconInset - 0.5 * iconSize ) ) + "\" y=\"" + Math.floor( ( ( ( i + 1 ) * padding + i * bheight ) + ( 0.5 * bheight ) - ( 0.5 * iconSize ) ) ) + "\" height=\" " + iconSize + "\" width=\"" + iconSize + "\" />");
+				// $(cssSelector + " svg").append("<image xlink\:href=\"" + buttonObjectArray[i].iconPath + "\" x=\"" + Math.floor( ( (padding + extraPadding) + iconInset - 0.5 * iconSize ) ) + "\" y=\"" + Math.floor( ( ( ( i + 1 ) * padding + i * bheight ) + ( 0.5 * bheight ) - ( 0.5 * iconSize ) ) ) + "\" height=\" " + iconSize + "\" width=\"" + iconSize + "\" />");
 
 				// DEBUGGING: Orange rectangles to show where the icons are supposed to show up
-				// $(cssSelector + " svg").append("<rect x=\"" + Math.floor( ( (padding + extraPadding) + iconInset - 0.5 * iconSize ) ) + "\" y=\"" + Math.floor( ( ( ( i + 1 ) * padding + i * bheight ) + ( 0.5 * bheight ) - ( 0.5 * iconSize ) ) ) + "\" height=\" " + iconSize + "\" width=\"" + iconSize + "\" class=\"icon\" />");
+				$(cssSelector + " svg").append("<rect x=\"" + Math.floor( ( (padding + extraPadding) + iconInset - 0.5 * iconSize ) ) + "\" y=\"" + Math.floor( ( ( ( i + 1 ) * padding + i * bheight ) + ( 0.5 * bheight ) - ( 0.5 * iconSize ) ) ) + "\" height=\" " + iconSize + "\" width=\"" + iconSize + "\" class=\"icon\" />");
 			}
 
 			// This is necessary to draw SVG elements after being appended with jQuery (see https://stackoverflow.com/questions/3642035/jquerys-append-not-working-with-svg-element)
