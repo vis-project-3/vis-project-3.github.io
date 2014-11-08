@@ -37,7 +37,9 @@
         };
         var filterConditions = {
             timeStamp: 'lastWeek',
-            status: 'Open'
+            status: 'Open',
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
         };
         potholesData.getData(requiredColumns,filterConditions);
     }
@@ -51,7 +53,9 @@
         };
         var filterConditions = {
             timeStamp: 'lastMonth',
-            status: 'Open'
+            status: 'Open',
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
         };
         potholesData.getUpdatedData(requiredColumns,filterConditions);
     }
