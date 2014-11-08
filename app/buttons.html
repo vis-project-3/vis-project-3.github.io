@@ -8,8 +8,21 @@
 
 	<style type="text/css">
 
+	body {
+		background-image: url("resources/images/map-background.png");
+	}
+
+	#layer {
+		background-color: rgba(255,255,255,0.66);
+		margin-top: 100px;
+	}
+
 	#layer svg rect {
 		fill: #FFFFFF;
+	}
+
+	#layer svg rect.icon {
+		fill: orange;
 	}
 
 	#layer svg rect:hover {
@@ -30,14 +43,9 @@
 	<div id="layer"></div>
 
 	<div id="test">
-		<svg width="300" height="200">
-
-		  <rect width="100%" height="100%" />
-
-		  <circle cx="50%" cy="50%" r="80" fill="green" />
-
-		  <text x="150" y="125" font-size="60" text-anchor="middle" fill="white">SVG</text>
-
+		<svg width="300" height="100">
+			<rect width="100%" height="100%" />
+			<image xlink:href="resources/icons/icon-bus-station.svg" x="10" y="20" height="30" width="30" />
 		</svg>
 	</div>
 
@@ -45,64 +53,86 @@
 
 		var buttonObjects = [ 
 			{
-				text:"",
-				iconPath:"",
+				text:"Bus Station",
+				iconPath:"resources/icons/icon-bus-station.svg",
 				iconHoverPath:"",
-				id:""
+				id:"icon-bus"
 			},
 			{
-				text:"",
-				iconPath:"",
+				text:"Divvy Station",
+				iconPath:"resources/icons/icon-divvy.svg",
 				iconHoverPath:"",
-				id:""
+				id:"icon-divvy"
 			},
 			{
-				text:"",
-				iconPath:"",
+				text:"Crime Reports",
+				iconPath:"resources/icons/icon-crime.svg",
 				iconHoverPath:"",
-				id:""
+				id:"icon-crime"
 			},
 			{
-				text:"",
-				iconPath:"",
+				text:"Street Light Out",
+				iconPath:"resources/icons/icon-light.svg",
 				iconHoverPath:"",
-				id:""
+				id:"icon-light"
 			},
 			{
-				text:"",
-				iconPath:"",
+				text:"Potholes",
+				iconPath:"resources/icons/icon-pot-hole.svg",
 				iconHoverPath:"",
-				id:""
-			},
-			{
-				text:"",
-				iconPath:"",
-				iconHoverPath:"",
-				id:""
-			},
+				id:"icon-pothole"
+			}
 		];
 
 		// Function to draw the buttons on the side of the interface
 		function drawButtons(width, buttonHeight, padding, buttonObjectArray, cssSelector) {
 			var w = width, h = buttonObjectArray.length * buttonHeight + (buttonObjectArray.length + 1) * padding, bheight = buttonHeight;
-			var buttonHTML = "<rect width=\"30\" height=\"75\" />";
+			var extraPadding = 2;
+			var iconRelativeSize = 0.8, // Scale factor for each icon
+				iconSize = iconRelativeSize * bheight, // Sets icon dimensions relative to the height of each button
+				iconInset = 0.15 * (w - 2 * padding - 2 * +extraPadding ); // Sets how far right into the button the icon is placed
 
 			// Append SVG canvas to DIV
 			$(cssSelector).append($.parseHTML("<svg xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" width=\"" + w + "\" height=\"" + h + "\"></svg>"));
 
 			// Cycles through the Button Object array and draws the buttons for each vertically
 			for (var i=0; i<buttonObjectArray.length; i++) {
-				$(cssSelector + " svg").append("<rect x=\"" + padding + "\" y=\"" + ( ( i + 1 ) * padding + i * bheight ) + "\" width=\"" + (w - 2 * padding) + "\" height=\"" + bheight + "\" />");
+				
+				//Draws the button rectangle
+				$(cssSelector + " svg").append("<rect x=\"" + (+padding + +extraPadding) + "\" y=\"" + ( ( i + 1 ) * padding + i * bheight ) + "\" width=\"" + (w - 2 * padding - 2 * +extraPadding ) + "\" height=\"" + bheight + "\" />");
+
+				// Appends the button icon
+				$(cssSelector + " svg").append("<image xlink\:href=\"" + buttonObjectArray[i].iconPath + "\" x=\"" + Math.floor( ( (padding + extraPadding) + iconInset - 0.5 * iconSize ) ) + "\" y=\"" + Math.floor( ( ( ( i + 1 ) * padding + i * bheight ) + ( 0.5 * bheight ) - ( 0.5 * iconSize ) ) ) + "\" height=\" " + iconSize + "\" width=\"" + iconSize + "\" />");
+
+				// DEBUGGING: Orange rectangles to show where the icons are supposed to show up
+				// $(cssSelector + " svg").append("<rect x=\"" + Math.floor( ( (padding + extraPadding) + iconInset - 0.5 * iconSize ) ) + "\" y=\"" + Math.floor( ( ( ( i + 1 ) * padding + i * bheight ) + ( 0.5 * bheight ) - ( 0.5 * iconSize ) ) ) + "\" height=\" " + iconSize + "\" width=\"" + iconSize + "\" class=\"icon\" />");
 			}
 
 			// This is necessary to draw SVG elements after being appended with jQuery (see https://stackoverflow.com/questions/3642035/jquerys-append-not-working-with-svg-element)
 			$(cssSelector).html($(cssSelector).html());
 
+			$(cssSelector).css("width", w);
+
+			listenForSidebarClicks(cssSelector);
+
 		};
 
-		drawButtons(500, 100, 10, buttonObjects, "#layer");
+		function listenForSidebarClicks(cssSelector) {
+			// Listen for Click Events
+			$(cssSelector + " svg rect").click(function () {
 
-		// Listen for Button Clicks
+			    if ( $( this ).attr("class") == "selected") {
+			    	this.classList.remove("selected");
+			    }
+			    else {
+			    	this.classList.add("selected");
+			    }
+
+			})	
+		}
+
+		drawButtons(300, 75, 5, buttonObjects, "#layer");	 
+
 	</script>
 </body>
 </html>
