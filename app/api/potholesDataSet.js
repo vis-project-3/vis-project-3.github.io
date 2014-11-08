@@ -53,8 +53,16 @@ function potholesDataSet(){
 
                 var propertyValue = filterConditions[property];
                 if (property !== 'timeStamp') {
+                    // Handle case for latitude and longitude - Show data between give latitude and longitude positions
+                    if(propertyValue instanceof Array){
+                        var fromVal = propertyValue[0];
+                        var toVal = propertyValue[1];
+                        requiredQuery += property + '>=' + fromVal +' AND '+ property + '<=' + toVal + ' AND ';
+                    }
                     // Ex:append STATUS=open to the query
-                    requiredQuery += property + '=\'' + propertyValue + '\' AND ';
+                    else{
+                        requiredQuery += property + '=\'' + propertyValue + '\' AND ';
+                    }
                 }
                 //if property is timeStamp we have to change condition depending on Weekly or Monthly
                 else {
@@ -66,7 +74,7 @@ function potholesDataSet(){
         requiredQuery = requiredQuery.substr(0, requiredQuery.length - 4);
         return requiredQuery;
     }
-
+    // Reference: http://tlrobinson.net/projects/javascript-fun/jsondiff
     this.startCompare = function(objectA,objectB){
 
         var HashStore =
