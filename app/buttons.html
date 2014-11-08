@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Side Menu Buttons</title>
+
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+	<style type="text/css">
+
+	#layer svg rect {
+		fill: #FFFFFF;
+	}
+
+	#layer svg rect:hover {
+		fill: #76B3E5;
+	}
+
+	#layer svg rect.selected {
+		fill: #6699CC;
+	}
+
+	#test svg rect {
+		fill: red;
+	}
+
+	</style>
+</head>
+<body>
+	<div id="layer"></div>
+
+	<div id="test">
+		<svg width="300" height="200">
+
+		  <rect width="100%" height="100%" />
+
+		  <circle cx="50%" cy="50%" r="80" fill="green" />
+
+		  <text x="150" y="125" font-size="60" text-anchor="middle" fill="white">SVG</text>
+
+		</svg>
+	</div>
+
+	<script type="text/javascript">
+
+		var buttonObjects = [ 
+			{
+				text:"",
+				iconPath:"",
+				iconHoverPath:"",
+				id:""
+			},
+			{
+				text:"",
+				iconPath:"",
+				iconHoverPath:"",
+				id:""
+			},
+			{
+				text:"",
+				iconPath:"",
+				iconHoverPath:"",
+				id:""
+			},
+			{
+				text:"",
+				iconPath:"",
+				iconHoverPath:"",
+				id:""
+			},
+			{
+				text:"",
+				iconPath:"",
+				iconHoverPath:"",
+				id:""
+			},
+			{
+				text:"",
+				iconPath:"",
+				iconHoverPath:"",
+				id:""
+			},
+		];
+
+		// Function to draw the buttons on the side of the interface
+		function drawButtons(width, buttonHeight, padding, buttonObjectArray, cssSelector) {
+			var w = width, h = buttonObjectArray.length * buttonHeight + (buttonObjectArray.length + 1) * padding, bheight = buttonHeight;
+			var buttonHTML = "<rect width=\"30\" height=\"75\" />";
+
+			// Append SVG canvas to DIV
+			$(cssSelector).append($.parseHTML("<svg xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" width=\"" + w + "\" height=\"" + h + "\"></svg>"));
+
+			// Cycles through the Button Object array and draws the buttons for each vertically
+			for (var i=0; i<buttonObjectArray.length; i++) {
+				$(cssSelector + " svg").append("<rect x=\"" + padding + "\" y=\"" + ( ( i + 1 ) * padding + i * bheight ) + "\" width=\"" + (w - 2 * padding) + "\" height=\"" + bheight + "\" />");
+			}
+
+			// This is necessary to draw SVG elements after being appended with jQuery (see https://stackoverflow.com/questions/3642035/jquerys-append-not-working-with-svg-element)
+			$(cssSelector).html($(cssSelector).html());
+
+		};
+
+		drawButtons(500, 100, 10, buttonObjects, "#layer");
+
+		// Listen for Button Clicks
+	</script>
+</body>
+</html>
