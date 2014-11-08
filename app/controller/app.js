@@ -9,7 +9,7 @@ function App(){
 
     var map = this.map;
 
-    map.addMarker("damn",41.87,-87.58);
+    map.addMarker("test",41.87,-87.58);
 
 
 }

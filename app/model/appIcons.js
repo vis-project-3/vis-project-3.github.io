@@ -3,7 +3,7 @@ var getIcon = function (kind) {
             case "test" :
                 return L.icon({
                     iconUrl: 'resources/icons/test_icon.svg',
-                    iconSize: [100, 100]
+                    iconSize: [50, 50]
                 });
             case "cta_bus" :
                 return L.icon({
@@ -40,7 +40,7 @@ var getIcon = function (kind) {
             default:
                 return L.icon({
                     iconUrl: 'resources/icons/error.svg',
-                    iconSize: [50, 50]
+                    iconSize: [25, 25]
                 });
 
         }
