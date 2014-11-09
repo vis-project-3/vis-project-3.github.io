@@ -4,7 +4,7 @@ function App(){
 
     this.ui.createSVG("#top-bar");
     this.ui.createSVG("#notifications");
-    this.ui.createSVG("#layer");
+    //this.ui.createSVG("#layer");
     this.ui.createSVG("#graphs");
 
     var map = this.map;
