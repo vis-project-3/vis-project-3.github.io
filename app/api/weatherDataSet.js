@@ -4,8 +4,18 @@
 function weatherDataSet(){
     //constructor code goes here
     this.dataSetEndPoint = 'http://api.worldweatheronline.com/free/v2/weather.ashx?';
-    this.currentWeatherJSON;
-    this.formattedWeatherJSON;
+
+    this.getWeatherData = function(latitude,longitude,num_of_days,callBack){
+        var urlForDataSet = this.generateQuery(latitude,longitude,num_of_days);
+        $.ajax({
+            url: urlForDataSet,
+            dataType: "json",
+            success: function(data){
+                var weatherData = self.modifyJSON(data);
+                callBack(weatherData);
+            }
+        });
+    }
 
     this.generateQuery = function(latitude,longitude,num_of_days){
         var requiredQuery = this.dataSetEndPoint;
@@ -29,15 +39,4 @@ function weatherDataSet(){
         }
         return modifiedJSON;
     }
-}
-
-weatherDataSet.prototype.getWeatherData = function(latitude,longitude,num_of_days){
-    var that = this;
-    var query = this.generateQuery(latitude,longitude,num_of_days);
-    d3.json(query, function(data) {
-            that.currentWeatherJSON = data;
-            that.formattedWeatherJSON = that.modifyJSON(data);
-        }
-    );
-
 }

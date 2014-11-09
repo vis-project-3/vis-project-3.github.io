@@ -3,6 +3,7 @@
  */
 function abandonedVehiclesDataSet(){
     //constructor code goes here
+    var self = this;
     this.dataSetEndPoint = 'http://data.cityofchicago.org/resource/3c9v-pnva.json?$$app_token=pJ4wo2exY0EaCEJ758bK7Q5E3';
     this.abandonedVehiclesJSON;
     this.previousAbandonedVehiclesJSON;
@@ -10,6 +11,45 @@ function abandonedVehiclesDataSet(){
     this.modifiedContent = [];
     this.deletedContent = [];
 
+    this.getData = function(requiredColumns,filterConditions,callBack){
+        var urlForDataSet = this.generateQuery(requiredColumns,filterConditions);
+        $.ajax({
+            url: urlForDataSet,
+            dataType: "json",
+            success: function(data){
+                self.abandonedVehiclesJSON = data;
+                self.previousAbandonedVehiclesJSON = data;
+                callBack(data);
+            }
+        });
+    }
+
+    this.getUpdatedData = function(requiredColumns,filterConditions,callBack){
+        var urlForDataSet = this.generateQuery(requiredColumns,filterConditions);
+        $.ajax({
+            url: urlForDataSet,
+            dataType: "json",
+            success: function(data){
+                self.abandonedVehiclesJSON = data;
+                var previousData = self.previousAbandonedVehiclesJSON;
+                self.previousAbandonedVehiclesJSON = data;
+                self.nullifyChanges();
+                self.startCompare(previousData,data);
+                var modifiedData = {
+                    addedData : self.addedContent,
+                    deletedData: self.deletedContent,
+                    modifiedData: self.modifiedContent
+                }
+                callBack(modifiedData)
+            }
+        });
+    }
+
+    this.nullifyChanges = function(){
+        self.addedContent = [];
+        self.deletedContent = [];
+        self.modifiedContent = [];
+    }
     this.typeofReal = function(value){
         return this.isArray(value) ? "array" : typeof value;
     }
@@ -147,33 +187,4 @@ function abandonedVehiclesDataSet(){
             }
         }
     }
-}
-
-//requiredColumns contains all the fields that has to be returned from API
-//filterConditions contain 2 properties: timeStamp(defines if we need monthly data or weekly data) and
-//itemStatus (is a filter on Items. Ex: get only potholes whose status is open)
-
-abandonedVehiclesDataSet.prototype.getData = function(requiredColumns,filterConditions){
-
-    var query = this.generateQuery(requiredColumns,filterConditions);
-    d3.json(query, function(data) {
-            this.abandonedVehiclesJSON = data;
-            this.previousPotholesJSON = data;
-        }
-    );
-
-}
-
-abandonedVehiclesDataSet.prototype.getUpdatedData =  function(requiredColumns,filterConditions) {
-
-    var that = this;
-    var query = this.generateQuery(requiredColumns,filterConditions);
-    d3.json(query, function (data) {
-            this.abandonedVehiclesJSON = data;
-            var previousData = this.previousAbandonedVehiclesJSON;
-            this.previousAbandonedVehiclesJSON = data;
-            //Find diff between current and previous data
-            that.startCompare(previousData,this.abandonedVehiclesJSON);
-        }
-    );
 }
