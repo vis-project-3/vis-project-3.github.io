@@ -39,7 +39,7 @@ function divvyLayer() {
 
     var addToMarkers = function (data) {
         markers[data.id] = L.marker([parseFloat(data.latitude), parseFloat(data.longitude)], {
-            icon : getIcon("dang")
+            icon : getIcon("divvy")
         }).addTo(layer);
     }
 

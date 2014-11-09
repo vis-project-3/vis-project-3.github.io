@@ -2,36 +2,36 @@ var getIcon = function (kind) {
         switch (kind) {
             case "test" :
                 return L.icon({
-                    iconUrl: 'resources/icons/test_icon.svg',
+                    iconUrl: 'resources/icons/icon-test.svg',
                     iconSize: [50, 50]
                 });
             case "cta_bus" :
                 return L.icon({
-                    iconUrl: 'resources/icons/cta_bus.svg'
+                    iconUrl: 'resources/icons/icon-bus.svg'
                 });
             case "cta_station" :
                 return L.icon({
-                    iconUrl: 'resources/icons/cta_station.svg'
+                    iconUrl: 'resources/icons/icon-bus-station.svg'
                 });
             case "divvy" :
                 return L.icon({
-                    iconUrl: 'resources/icons/divvy.svg'
+                    iconUrl: 'resources/icons/icon-divvy.svg'
                 });
             case "light" :
                 return L.icon({
-                    iconUrl: 'resources/icons/light.svg'
+                    iconUrl: 'resources/icons/icon-light.svg'
                 });
             case "pothole" :
                 return L.icon({
-                    iconUrl: 'resources/icons/pothole.svg'
+                    iconUrl: 'resources/icons/icon-pot-hole.svg'
                 });
             case "crime" :
                 return L.icon({
-                    iconUrl: 'resources/icons/crime.svg'
+                    iconUrl: 'resources/icons/icon-crime.svg'
                 });
             case "vehicle" :
                 return L.icon({
-                    iconUrl: 'resources/icons/vehicle.svg'
+                    iconUrl: 'resources/icons/icon-abandoned-car.svg'
                 });
             case "uber" :
                 return L.icon({
@@ -39,7 +39,7 @@ var getIcon = function (kind) {
                 });
             default:
                 return L.icon({
-                    iconUrl: 'resources/icons/error.svg',
+                    iconUrl: 'resources/icons/icon-error.svg',
                     iconSize: [25, 25]
                 });
 
