@@ -2,14 +2,14 @@
 <!-- Generator: Adobe Illustrator 15.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="46.5px" height="51.25px" viewBox="0 0 46.5 51.25" enable-background="new 0 0 46.5 51.25" xml:space="preserve">
+	 width="46.5px" height="46.5px" viewBox="0 2.375 46.5 46.5" enable-background="new 0 2.375 46.5 46.5" xml:space="preserve">
 <g>
 	<g>
 		<g>
-			<polygon stroke="#BF481C" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="21.763,28.312 
-				25.458,28.312 40.238,12.711 40.238,5.116 23.816,22.154 6.572,5.116 6.572,12.711 			"/>
-			<polygon stroke="#BF481C" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="21.953,42.634 
-				25.648,42.634 40.428,27.033 40.428,19.437 24.005,36.477 6.762,19.437 6.762,27.033 			"/>
+			<polygon stroke="#BF481C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+				21.763,31.312 25.458,31.312 40.238,15.711 40.238,8.116 23.816,25.154 6.572,8.116 6.572,15.711 			"/>
+			<polygon stroke="#BF481C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="
+				21.953,45.634 25.648,45.634 40.428,30.033 40.428,22.437 24.005,39.477 6.762,22.437 6.762,30.033 			"/>
 		</g>
 	</g>
 </g>

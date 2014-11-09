@@ -72,8 +72,6 @@ function layerButtons(container){
 
         layer = svg .append("g");
 
-        // iconSize = height/buttonObjects.length;
-
         // Draws the button rectangle
         svg     .selectAll("rect")
                 .data(buttonObjects)
@@ -84,13 +82,6 @@ function layerButtons(container){
                     return yScale(i) + padding;})
                 .attr("width", width - 2 * padding)
                 .attr("height", buttonHeight);
-                // .append("text")
-                // .text( function(d) { return d.text })
-                // // .attr("text-anchor", "end")
-                // .attr("x", padding)
-                // .attr("y", function(d,i) {
-                //     return yScale(i) + padding + 0.5 * buttonHeight;
-                // });
 
         svg     .selectAll("text")
                 .data(buttonObjects)
@@ -102,7 +93,7 @@ function layerButtons(container){
                 .attr("y", function(d,i) {
                     return yScale(i) + padding + 0.6 * buttonHeight;
                 })
-                .attr("pointer-events", "none")
+                .attr("pointer-events", "none");
 
 
         // Places the icons
@@ -120,7 +111,7 @@ function layerButtons(container){
                 // .attr("height",iconSize - padding)
                 .attr("width", iconSize)
                 .attr("height", iconSize)
-                .attr("pointer-events", "none")
+                .attr("pointer-events", "none");
 
 
         // Highlight rectangles when they've been selected
