@@ -92,9 +92,22 @@ function Map(container){
                             subdomains: '1234'
                         });
 
+        // A more color neutral map layer
+        var secondMapLayer = L.tileLayer('http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}', {
+            attribution: 'Map &copy; 1987-2014 <a href="http://developer.here.com">HERE</a>',
+            subdomains: '1234',
+            mapID: 'newest',
+            app_id: 'bInsuD6J2viFbpUIsQyZ',
+            app_code: 'PlxtcGU1qGFBdLzv0KZ84w',
+            base: 'base',
+            minZoom: 0,
+            maxZoom: 20
+        });
+
         baseLayers = {
             Map: mapLayer,
-            Satellite: satLayer
+            Satellite: satLayer,
+            Map2: secondMapLayer
         };
 
         computeRectangle();
