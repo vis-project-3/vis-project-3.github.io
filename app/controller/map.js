@@ -83,17 +83,11 @@ function Map(container){
             //maxZoom: 18
         }).setView([41.87,-87.58],13);
 
-        var mapLayer =  L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
-                            subdomains: '1234'
-                        }).addTo(map);
+        // var mapLayer =  L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
+        //                     subdomains: '1234'
+        //                 }).addTo(map);
 
-
-        var satLayer =  L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpeg', {
-                            subdomains: '1234'
-                        });
-
-        // A more color neutral map layer
-        var secondMapLayer = L.tileLayer('http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}', {
+        var mapLayer = L.tileLayer('http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}', {
             attribution: 'Map &copy; 1987-2014 <a href="http://developer.here.com">HERE</a>',
             subdomains: '1234',
             mapID: 'newest',
@@ -102,12 +96,17 @@ function Map(container){
             base: 'base',
             minZoom: 0,
             maxZoom: 20
-        });
+        }).addTo(map);
+
+
+        var satLayer =  L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpeg', {
+                            subdomains: '1234'
+                        });
+
 
         baseLayers = {
             Map: mapLayer,
-            Satellite: satLayer,
-            Map2: secondMapLayer
+            Satellite: satLayer
         };
 
         computeRectangle();
