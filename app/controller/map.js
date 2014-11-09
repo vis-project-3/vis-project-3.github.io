@@ -49,6 +49,24 @@ function Map(container){
         setRectangle();
     }
 
+    this.zoomIn = function() {
+        map.zoomIn();
+    }
+
+    this.zoomOut = function() {
+        map.zoomOut();
+    }
+
+    this.addLayer = function(layer) {
+        map.addLayer(layer);
+    }
+
+    this.removeLayer = function(layer) {
+        map.removeLayer(layer);
+    }
+
+
+
     /*************** Private Methods ********************/
 
     var computeRectangle = function(){
@@ -80,6 +98,9 @@ function Map(container){
         map = L.map(container, {
             //maxBounds : bounds,
             minZoom: 10,
+            zoomControl:true,
+            attributionControl : false
+
             //maxZoom: 18
         }).setView([41.87,-87.58],13);
 
@@ -88,14 +109,14 @@ function Map(container){
         //                 }).addTo(map);
 
         var mapLayer = L.tileLayer('http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}', {
-            attribution: 'Map &copy; 1987-2014 <a href="http://developer.here.com">HERE</a>',
+            //attribution: 'Map &copy; 1987-2014 <a href="http://developer.here.com">HERE</a>',
             subdomains: '1234',
             mapID: 'newest',
             app_id: 'bInsuD6J2viFbpUIsQyZ',
             app_code: 'PlxtcGU1qGFBdLzv0KZ84w',
-            base: 'base',
-            minZoom: 0,
-            maxZoom: 20
+            base: 'base'
+            //minZoom: 0,
+            //maxZoom: 20
         }).addTo(map);
 
 

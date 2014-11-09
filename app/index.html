@@ -18,25 +18,25 @@
 
         <script>
             var app = new App();
-
+            var transitionTime = 500;
 
 
                 $("#toggle_all").click(function(){
-                    $("#layer").toggle(1000);
-                    $("#notifications").toggle(1000);
-                    $("#graphs").toggle(1000);
+                    $("#layer").toggle(transitionTime);
+                    $("#notifications").toggle(transitionTime);
+                    $("#graphs").toggle(transitionTime);
                 });
 
                 $("#toggle_notifications").click(function(){
-                    $("#notifications").toggle(1000);
+                    $("#notifications").toggle(transitionTime);
                 });
 
                 $("#toggle_layer").click(function(){
-                    $("#layer").toggle(1000);
+                    $("#layer").toggle(transitionTime);
                 });
 
                 $("#toggle_graphs").click(function(){
-                    $("#graphs").toggle(1000);
+                    $("#graphs").toggle(transitionTime);
                 });
 
         </script>

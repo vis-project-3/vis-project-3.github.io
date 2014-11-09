@@ -15,6 +15,7 @@
                 latitude : 41.87,
                 longitude: -87.58
             };
+            var map;
 
             function getData(){
                 $.ajax({
@@ -30,8 +31,9 @@
                 divvy.addCollection(data);
                 divvy.varLog();
                 var mapObject = new Map("map");
-                mapObject.addOverLayer("Divvy", divvy.getLayer());
-                mapObject.updateLayer();
+                //mapObject.addOverLayer("Divvy", divvy.getLayer());
+                mapObject.addLayer(divvy.getLayer());
+                //mapObject.zoomIn();
 
                 //divvy.updateMarker(updatedMarker);
 

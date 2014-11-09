@@ -101,7 +101,9 @@ function layerButtons(container){
                 .attr("x", 4 * padding + iconSize)
                 .attr("y", function(d,i) {
                     return yScale(i) + padding + 0.6 * buttonHeight;
-                });
+                })
+                .attr("pointer-events", "none")
+
 
         // Places the icons
         svg     .selectAll("image")
@@ -117,7 +119,9 @@ function layerButtons(container){
                 // .attr("width", iconSize - padding)
                 // .attr("height",iconSize - padding)
                 .attr("width", iconSize)
-                .attr("height", iconSize);
+                .attr("height", iconSize)
+                .attr("pointer-events", "none")
+
 
         // Highlight rectangles when they've been selected
         $(container + " svg rect").click(function () {
