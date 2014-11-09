@@ -1,15 +1,14 @@
 function layerButtons(container){
     var svg;
     var layer;
-    var background = "rgba(255,255,255,0.66)"
-    var width = 600;
-    var height = 600;
+    var background = "rgba(255,255,255,0.15)"
+    var width = 350;
+    var height = 500;
     var yScale;
-    var padding = 10;
+    var padding = 7;
     var iconPadding;
+    var buttonHeight;
     var iconSize;
-    var rx = 15;
-    var ry = 15;
 
     var buttonObjects = [
         {
@@ -41,6 +40,12 @@ function layerButtons(container){
             iconPath:"resources/icons/icon-pot-hole.svg",
             iconHoverPath:"",
             id:"icon-pothole"
+        },
+        {
+            text:"Abandoned Cars",
+            iconPath:"resources/icons/icon-abandoned-car.svg",
+            iconHoverPath:"",
+            id:"icon-abandoned-car"
         }
     ];
 
@@ -48,7 +53,9 @@ function layerButtons(container){
 
     var init = function(){
 
-
+        // These variables set the height of each button and use it to scale the size of each icon to fit within the button
+        buttonHeight = ( buttonObjects.length > 0 ) ? ( ( height - ( buttonObjects.length + 1 ) * padding ) / ( buttonObjects.length ) ) : ( height - 2 * padding );
+        iconSize = 0.7 * buttonHeight;
 
         yScale =  d3 	.scale
                         .linear()
@@ -65,9 +72,9 @@ function layerButtons(container){
 
         layer = svg .append("g");
 
-        iconSize = height/buttonObjects.length;
+        // iconSize = height/buttonObjects.length;
 
-        //Draws the button rectangle
+        // Draws the button rectangle
         svg     .selectAll("rect")
                 .data(buttonObjects)
                 .enter()
@@ -75,34 +82,54 @@ function layerButtons(container){
                 .attr("x",padding)
                 .attr("y", function(d,i){
                     return yScale(i) + padding;})
-                .attr("width", width - 2*padding)
-                .attr("height",height/buttonObjects.length-padding)
-                .attr("rx",rx)
-                .attr("ry",ry)
-                .style("fill","#FFFFFF")
+                .attr("width", width - 2 * padding)
+                .attr("height", buttonHeight);
+                // .append("text")
+                // .text( function(d) { return d.text })
+                // // .attr("text-anchor", "end")
+                // .attr("x", padding)
+                // .attr("y", function(d,i) {
+                //     return yScale(i) + padding + 0.5 * buttonHeight;
+                // });
 
-        svg .selectAll()
-            .data(buttonObjects)
-            .enter()
-            .append("rect")
-            .attr("x",2 * padding)
-            .attr("y", function(d,i){
-                return yScale(i) + 2*padding;})
-            .attr("width", iconSize)
-            .attr("height",iconSize - 3*padding)
-            .attr("rx",rx)
-            .attr("ry",ry)
-            .style("fill","orange")
+        svg     .selectAll("text")
+                .data(buttonObjects)
+                .enter()
+                .append("text")
+                .text( function(d) { return d.text })
+                // .attr("text-anchor", "end")
+                .attr("x", 4 * padding + iconSize)
+                .attr("y", function(d,i) {
+                    return yScale(i) + padding + 0.6 * buttonHeight;
+                });
 
+        // Places the icons
         svg     .selectAll("image")
                 .data(buttonObjects)
                 .enter()
                 .append("image")
                 .attr("xlink:href", function(d){return d.iconPath;})
                 .attr("x", 2*padding)
+                // .attr("y",function(d,i){
+                //     return yScale(i) + 2*padding;})
                 .attr("y",function(d,i){
-                    return yScale(i) + 2*padding;})
-                .attr("width", iconSize - padding)
-                .attr("height",iconSize - padding)
+                    return yScale(i) + 0.25 * buttonHeight;})
+                // .attr("width", iconSize - padding)
+                // .attr("height",iconSize - padding)
+                .attr("width", iconSize)
+                .attr("height", iconSize);
+
+        // Highlight rectangles when they've been selected
+        $(container + " svg rect").click(function () {
+
+            if ( $( this ).attr("class") == "selected") {
+                this.classList.remove("selected");
+            }
+            else {
+                this.classList.add("selected");
+            }
+
+        })  
+
     }();
 }
