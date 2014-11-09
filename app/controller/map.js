@@ -9,6 +9,10 @@ function Map(container){
     var northEast;
     var bounds;
     var map;
+    var mapLayer;
+    var mapView;
+    var mapView2;
+    var satView;
     var baseLayers = {}
     var overLayers = {};
     var controls;
@@ -65,6 +69,16 @@ function Map(container){
         map.removeLayer(layer);
     }
 
+    this.switchToMap = function(){
+        mapLayer.setUrl(mapView);
+        //map.redraw();
+    }
+
+    this.switchToSat = function(){
+        mapLayer.setUrl(satView);
+        //map.redraw();
+    }
+
 
 
     /*************** Private Methods ********************/
@@ -73,8 +87,8 @@ function Map(container){
         lowerLeft = [Math.min(pointA[0], pointB[0])-buffer, Math.min(pointA[1],pointB[1])-buffer];
         upperRight = [Math.max(pointA[0], pointB[0])+buffer,Math.max(pointA[1], pointB[1])+buffer];
 
-        console.log(lowerLeft);
-        console.log(upperRight);
+        //console.log(lowerLeft);
+        //console.log(upperRight);
     }
 
     var setRectangle= function(){
@@ -108,7 +122,7 @@ function Map(container){
         //                     subdomains: '1234'
         //                 }).addTo(map);
 
-        var mapLayer = L.tileLayer('http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}', {
+        mapLayer = L.tileLayer('http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}', {
             //attribution: 'Map &copy; 1987-2014 <a href="http://developer.here.com">HERE</a>',
             subdomains: '1234',
             mapID: 'newest',
@@ -119,16 +133,9 @@ function Map(container){
             //maxZoom: 20
         }).addTo(map);
 
-
-        var satLayer =  L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpeg', {
-                            subdomains: '1234'
-                        });
-
-
-        baseLayers = {
-            Map: mapLayer,
-            Satellite: satLayer
-        };
+        mapView = 'http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}'
+        mapView2 = 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
+        satView = 'http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpeg';
 
         computeRectangle();
         setRectangle();

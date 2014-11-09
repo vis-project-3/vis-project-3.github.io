@@ -15,7 +15,8 @@ var getIcon = function (kind) {
                 });
             case "divvy" :
                 return L.icon({
-                    iconUrl: 'resources/icons/icon-divvy.svg'
+                    iconUrl: 'resources/icons/icon-divvy.svg',
+                    iconSize: [50, 50]
                 });
             case "light" :
                 return L.icon({
@@ -23,7 +24,8 @@ var getIcon = function (kind) {
                 });
             case "pothole" :
                 return L.icon({
-                    iconUrl: 'resources/icons/icon-pot-hole.svg'
+                    iconUrl: 'resources/icons/icon-pot-hole.svg',
+                    iconSize: [50, 50]
                 });
             case "crime" :
                 return L.icon({
