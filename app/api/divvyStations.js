@@ -38,12 +38,31 @@ function divvyStationsDataSet(){
         });
     }
 
+    this.getSpecificStationData = function(stationId,callBack){
+        var urlForDataSet = this.generateSpecificStnQuery(stationId);
+        $.ajax({
+            url: urlForDataSet,
+            dataType: "json",
+            success: function(data){
+                var divvyBikesGeoJSON = data;
+                callBack(divvyBikesGeoJSON);
+            }
+        });
+    }
+
     this.generateQuery = function(latitude,longitude,num_of_Stations){
         var requiredQuery = this.dataSetEndPoint;
         //specify latitude and longitude
         requiredQuery += 'nearby?lat='+latitude+'&lon='+longitude;
         //limit to required number of stations
         requiredQuery += '&max_stations='+num_of_Stations;
+        return requiredQuery;
+    }
+
+    this.generateSpecificStnQuery = function(stationID){
+        var requiredQuery = this.dataSetEndPoint;
+        //specify latitude and longitude
+        requiredQuery += stationID;
         return requiredQuery;
     }
 }
