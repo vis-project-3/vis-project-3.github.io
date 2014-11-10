@@ -6,6 +6,10 @@ function toggleButtons(container){
     var buttonWidth;
     var xScale;
     var padding = 5;
+    var lastTextWidth = 0;
+    var currentX = 0;
+    var rightMargin = 10;
+    var radius = 3;
 
     var buttonObjects = [
         {
@@ -40,12 +44,12 @@ function toggleButtons(container){
 
         // These variables set the height of each button and use it to scale the size of each icon to fit within the button
 
-        buttonWidth = width/buttonObjects.length;
+        buttonWidth = (0.5 * width)/buttonObjects.length;
 
         xScale = d3.scale
             .linear()
             .domain([0, buttonObjects.length])
-            .range([padding, width - padding]);
+            .range([padding, 0.5 * width - padding]);
 
         svg = d3.select(container)
                 .append("svg")
@@ -53,8 +57,6 @@ function toggleButtons(container){
                 .attr("preserveAspectRatio", "xMidYMid meet")
                 .attr("width", "100%")
                 .attr("height", "100%")
-
-        //layer = svg .append("g");
 
         // Draws the button rectangle
         svg .selectAll("rect")
@@ -67,8 +69,10 @@ function toggleButtons(container){
                 return xScale(i) + padding;})
             .attr("y",padding)
             .attr("width", buttonWidth - 2 * padding)
-            .attr("height", height - padding)
-            .style("fill","white")
+            .attr("height", 0.6 * height)
+            .attr("rx", radius)
+            .attr("ry", radius)
+            .style("fill","#666666")
 
 
         svg .selectAll("text")
@@ -76,11 +80,13 @@ function toggleButtons(container){
             .enter()
             .append("text")
             .attr("text-anchor","middle")
+            .attr("class", "UI-toggle-button")
             .text( function(d) { return d.text })
             .attr("x", function (d, i) {
-                return xScale(i) + padding + buttonWidth/2;})
+                return xScale(i) + 0.5 * buttonWidth;})
             .attr("y", height/2)
             .attr("pointer-events", "none");
+
 
     }();
 
