@@ -3,6 +3,7 @@
  */
 function weatherDataSet(){
     //constructor code goes here
+    var self = this;
     this.dataSetEndPoint = 'http://api.worldweatheronline.com/free/v2/weather.ashx?';
 
     this.getWeatherData = function(latitude,longitude,num_of_days,callBack){

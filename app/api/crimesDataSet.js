@@ -113,7 +113,7 @@ function crimesDataSet(){
             }
         }
         requiredQuery = requiredQuery.substr(0, requiredQuery.length - 4);
-        return requiredQuery;
+        return requiredQuery+'&$order=id DESC';
     }
     // Reference: http://tlrobinson.net/projects/javascript-fun/jsondiff
     this.startCompare = function(objectA,objectB){

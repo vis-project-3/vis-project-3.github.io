@@ -113,7 +113,7 @@ function streetLightsAllOutDataSet(){
             }
         }
         requiredQuery = requiredQuery.substr(0, requiredQuery.length - 4);
-        return requiredQuery;
+        return requiredQuery+'&$order=service_request_number DESC';
     }
     // Reference: http://tlrobinson.net/projects/javascript-fun/jsondiff
     this.startCompare = function(objectA,objectB){

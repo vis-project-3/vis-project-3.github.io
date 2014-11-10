@@ -36,12 +36,12 @@ function potholesDataSet(){
                 self.previousPotholesJSON = data;
                 self.nullifyChanges();
                 self.startCompare(previousData,data);
-                var modifiedData = {
+                var newData = {
                     addedData : self.addedContent,
                     deletedData: self.deletedContent,
                     modifiedData: self.modifiedContent
                 }
-                callBack(modifiedData)
+                callBack(newData)
             }
         });
     }
@@ -113,7 +113,7 @@ function potholesDataSet(){
             }
         }
         requiredQuery = requiredQuery.substr(0, requiredQuery.length - 4);
-        return requiredQuery;
+        return requiredQuery+'&$order=service_request_number DESC';
     }
 
     // Reference: http://tlrobinson.net/projects/javascript-fun/jsondiff
