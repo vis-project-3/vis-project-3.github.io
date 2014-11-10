@@ -1,14 +1,163 @@
 function App(){
-    this.map = new Map("map");
-    this.ui = new UI();
+    var mapObject = new Map("map");
+    var ui = new UI();
 
-    this.ui.createSVG("#top-bar");
-    this.ui.createSVG("#notifications");
+    ui.createSVG("#top-bar");
+    ui.createSVG("#notifications");
     //this.ui.createSVG("#layer");
-    this.ui.createSVG("#graphs");
+    ui.createSVG("#graphs");
 
-    var map = this.map;
     var layer = new layerButtons("#layer");
+    var controls = new mapControls("#mapcontrol")
+    var toggle = new toggleButtons("#toggle");
+    var events = new mapEvents(mapObject.getMap());
+
+    /*** TEMPORARY BINDINGS ***/
+
+    d3  .select("#icon-minus")
+        .on("click",function(){
+            events.zoomOut();
+        });
+
+    d3  .select("#icon-plus")
+        .on("click", function(){
+            events.zoomIn();
+        });
+
+    d3  .select("#satellite")
+        .on("click", function(){
+            events.changeToSat();
+        });
+
+    d3  .select("#street")
+        .on("click", function(){
+            events.changeToMap();
+        });
+
+    d3  .select("#divvy-layer")
+        .on("click", function(){
+            events.toggleLayer(divvy.getLayer());
+        });
+
+    d3  .select("#potholes-layer")
+        .on("click", function(){
+            events.toggleLayer(potholes.getLayer());
+        });
+
+    d3  .select("#vehicles-layer")
+        .on("click", function(){
+            events.toggleLayer(vehicles.getLayer());
+        });
+
+    d3  .select("#lights-layer")
+        .on("click", function(){
+            events.toggleLayer(lights.getLayer());
+        });
+
+    d3  .select("#crime-layer")
+        .on("click", function(){
+            events.toggleLayer(crimes.getLayer());
+        });
+
+
+    L.Icon.Default.imagePath = "../resources/images";
+    var divvy = new divvyLayer();
+
+    var potholes = new potholesLayer();
+    var potholesAPI = new potholesDataSet();
+
+    var vehicles = new vehicleLayer();
+    var vehiclesAPI = new abandonedVehiclesDataSet();
+
+    var crimes = new crimeLayer();
+    var crimesAPI = new crimesDataSet();
+
+    var lights = new lightsLayer();
+    var lightsAPI = new streetLightsAllOutDataSet();
+
+    var requiredColumns = {
+        0: 'creation_date',
+        1: 'status',
+        2: 'service_request_number',
+        3: 'latitude',
+        4: 'longitude'
+    };
+
+    var crimeRequiredColumns = {
+        0: 'id',
+        1: 'date',
+        3: 'latitude',
+        4: 'longitude'
+    };
+
+    var filterConditions = {
+        timeStamp: 'lastMonth',
+        status: 'Open',
+        latitude:[41.8,41.9],//[from,to]
+        longitude:[-87.8,-87.6]//[from,to]
+    };
+
+    var crimeFilterConditions = {
+        timeStamp: 'lastMonth'
+        //latitude:[41.8,41.9],//[from,to]
+        //longitude:[-87.8,-87.6]//[from,to]
+    };
+
+    function getDivvyData(){
+        $.ajax({
+            url: "http://sortieapp.com/sortie/divvy",
+            dataType: "json",
+            success: function(data){
+                callBackDivvy(data)
+            }
+        });
+    }
+
+    function callBackDivvy(data){
+        divvy.addCollection(data);
+        //divvy.varLog();
+       // mapObject.addLayer(divvy.getLayer());
+
+    }
+
+
+    function callBackPotholes(data){
+        potholes.addCollection(data);
+        //potholes.varLog();
+        //mapObject.addLayer(potholes.getLayer());
+
+    }
+
+    function callBackVehicles(data){
+        vehicles.addCollection(data);
+        //potholes.varLog();
+       // mapObject.addLayer(vehicles.getLayer());
+
+    }
+
+    function callBackLights(data){
+        lights.addCollection(data);
+        //potholes.varLog();
+        //mapObject.addLayer(lights.getLayer());
+
+    }
+
+    function callBackCrime(data){
+        crimes.addCollection(data);
+        //potholes.varLog();
+       // mapObject.addLayer(crimes.getLayer());
+
+    }
+
+    function prova(){
+        getDivvyData();
+        potholesAPI.getData(requiredColumns,filterConditions,callBackPotholes);
+        vehiclesAPI.getData(requiredColumns,filterConditions,callBackVehicles);
+        //crimesAPI.getData(crimeRequiredColumns,crimeFilterConditions,callBackCrime);
+        lightsAPI.getData(requiredColumns,filterConditions,callBackLights);
+    }
+
+    prova();
 
     //map.addMarker("test",41.87,-87.58);
 

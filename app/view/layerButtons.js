@@ -15,37 +15,37 @@ function layerButtons(container){
             text:"Bus Station",
             iconPath:"resources/icons/icon-bus-station.svg",
             iconHoverPath:"",
-            id:"icon-bus"
+            id:"bus-layer"
         },
         {
             text:"Divvy Station",
             iconPath:"resources/icons/icon-divvy.svg",
             iconHoverPath:"",
-            id:"icon-divvy"
+            id:"divvy-layer"
         },
         {
             text:"Crime Reports",
             iconPath:"resources/icons/icon-crime.svg",
             iconHoverPath:"",
-            id:"icon-crime"
+            id:"crimes-layer"
         },
         {
             text:"Street Light Out",
             iconPath:"resources/icons/icon-light.svg",
             iconHoverPath:"",
-            id:"icon-light"
+            id:"lights-layer"
         },
         {
             text:"Potholes",
             iconPath:"resources/icons/icon-pot-hole.svg",
             iconHoverPath:"",
-            id:"icon-pothole"
+            id:"potholes-layer"
         },
         {
             text:"Abandoned Cars",
             iconPath:"resources/icons/icon-abandoned-car.svg",
             iconHoverPath:"",
-            id:"icon-abandoned-car"
+            id:"vehicles-layer"
         }
     ];
 
@@ -77,6 +77,7 @@ function layerButtons(container){
                 .data(buttonObjects)
                 .enter()
                 .append("rect")
+                .attr("id",function(d){return d.id})
                 .attr("x",padding)
                 .attr("y", function(d,i){
                     return yScale(i) + padding;})

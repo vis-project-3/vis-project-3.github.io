@@ -4,7 +4,7 @@
 // L.marker.update()
 
 function Map(container){
-
+    var self = this;
     var southWest;
     var northEast;
     var bounds;
@@ -32,7 +32,7 @@ function Map(container){
     }
 
     this.getMap = function(){
-        return map;
+        return self;
     }
 
     this.addOverLayer = function(name,toAdd){
@@ -61,11 +61,18 @@ function Map(container){
         map.zoomOut();
     }
 
+    this.hasLayer = function(layer){
+        console.log("[LOG] : Checking if Layer Exists");
+        return map.hasLayer(layer);
+    }
+
     this.addLayer = function(layer) {
+        console.log("[LOG] : Adding Layer");
         map.addLayer(layer);
     }
 
     this.removeLayer = function(layer) {
+        console.log("[LOG] : Removing Layer")
         map.removeLayer(layer);
     }
 
@@ -112,7 +119,7 @@ function Map(container){
         map = L.map(container, {
             //maxBounds : bounds,
             minZoom: 10,
-            zoomControl:true,
+            zoomControl:false,
             attributionControl : false
 
             //maxZoom: 18
