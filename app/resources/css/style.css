@@ -14,7 +14,7 @@ body{
     left : 1%;
     width : 67.5%;
     height : 10%;
-    background-color: rgba(255,255,255,0.66);
+    /*background-color: rgba(255,255,255,0.66);*/
 }
 
 #layer{
@@ -23,7 +23,7 @@ body{
     left : 1%;
     width : 20%;
     height : 60%;
-    background-color: rgba(255,255,255,0.66);
+    background-color: none;
 }
 
 #layer svg rect {
@@ -107,10 +107,10 @@ body{
     padding: 3px;
 }
 
-#mapTiles {
+/*#mapTiles {
     overflow: auto;
 }
-
+*/
 .map-preview-tile {
     width: 180px;
     height: 130px;
@@ -147,21 +147,12 @@ body{
     padding: 6px;
     background-color: #333333;
     float: left;
-
 }
 
-#UI-feature-toggle span {
-    color: #FFFFFF;
-    margin-right: 10px;
-    font-family: Helvetica, 'Open Sans', Sans-serif;
-    font-weight: lighter;
-    font-size: 11px;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.65);
-    padding: 3px;
+#top-bar svg polygon.start-location, #top-bar svg rect.start-location {
+    fill: #FFFFFF;
 }
 
-#UI-feature-toggle span.selected {
-    -moz-border-radius:1px 1px 1px 1px;  // rounds corners for firefox
-    border-radius:1px 1px 1px 1px;
-    background-color: #66CC66;
+#top-bar svg polygon.end-location, #top-bar svg rect.end-location {
+    fill: #6699CC;
 }

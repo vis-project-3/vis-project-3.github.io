@@ -2,7 +2,7 @@ function App(){
     var mapObject = new Map("map");
     var ui = new UI();
 
-    ui.createSVG("#top-bar");
+    // ui.createSVG("#top-bar");
     ui.createSVG("#notifications");
     //this.ui.createSVG("#layer");
     ui.createSVG("#graphs");
@@ -10,6 +10,7 @@ function App(){
     var layer = new layerButtons("#layer");
     var controls = new mapControls("#mapcontrol")
     var toggle = new toggleButtons("#toggle");
+    var navigation = new navigationBar("#top-bar");
     var events = new mapEvents(mapObject.getMap());
 
     /*** TEMPORARY BINDINGS ***/

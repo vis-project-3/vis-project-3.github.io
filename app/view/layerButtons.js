@@ -1,9 +1,11 @@
 function layerButtons(container){
     var svg;
+    var svgBackdrop;
     var layer;
-    var background = "rgba(255,255,255,0.15)"
+    var background = "#FFFFFF";
+    var opacity = "0.65";
     var width = 350;
-    var height = 500;
+    var height = 600;
     var yScale;
     var padding = 7;
     var iconPadding;
@@ -68,7 +70,13 @@ function layerButtons(container){
                     .attr("preserveAspectRatio", "xMidYMid meet")
                     .attr("width", "100%")
                     .attr("height", "100%")
-                    .style("background-color" , background);
+                    // .style("background-color" , background);
+
+        svg     .append("polygon")
+                .attr("points", "0,0 " + width + ",0 " + width + "," + height + " 0," + height)
+                .attr("fill", background)
+                .attr("opacity", opacity)
+                .attr("pointer-events", "none");
 
         layer = svg .append("g");
 
@@ -89,7 +97,6 @@ function layerButtons(container){
                 .enter()
                 .append("text")
                 .text( function(d) { return d.text })
-                // .attr("text-anchor", "end")
                 .attr("x", 4 * padding + iconSize)
                 .attr("y", function(d,i) {
                     return yScale(i) + padding + 0.6 * buttonHeight;
@@ -104,12 +111,8 @@ function layerButtons(container){
                 .append("image")
                 .attr("xlink:href", function(d){return d.iconPath;})
                 .attr("x", 2*padding)
-                // .attr("y",function(d,i){
-                //     return yScale(i) + 2*padding;})
                 .attr("y",function(d,i){
                     return yScale(i) + 0.25 * buttonHeight;})
-                // .attr("width", iconSize - padding)
-                // .attr("height",iconSize - padding)
                 .attr("width", iconSize)
                 .attr("height", iconSize)
                 .attr("pointer-events", "none");
