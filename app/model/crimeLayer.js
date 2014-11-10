@@ -1,4 +1,4 @@
-function potholesLayer() {
+function crimeLayer() {
     var self = this;
     var layer = [];
     var collection = {};
@@ -14,14 +14,14 @@ function potholesLayer() {
 
     this.addCollection = function (data) {
         for (var i = 0; i < data.length; i++) {
-            collection[data[i].service_request_number] = data[i];
+            collection[data[i].id] = data[i];
             addToMarkers(data[i]);
         }
     }
 
     this.updateMarker = function (data) {
-        markers[data.service_request_number].setLatLng([parseFloat(data.latitude), parseFloat(data.longitude)]);
-        markers[data.service_request_number].update();
+        markers[data.id].setLatLng([parseFloat(data.latitude), parseFloat(data.longitude)]);
+        markers[data.id].update();
     }
 
     this.getLayer = function () {
@@ -29,7 +29,7 @@ function potholesLayer() {
     }
 
     this.updateCollectionElement = function (data) {
-        this.collection[data.service_request_number] = data;
+        this.collection[data.id] = data;
     }
 
     /* Private Methods */
@@ -38,8 +38,8 @@ function potholesLayer() {
     }();
 
     var addToMarkers = function (data) {
-        markers[data.service_request_number] = L.marker([parseFloat(data.latitude), parseFloat(data.longitude)], {
-            icon : getIcon("pothole")
+        markers[data.id] = L.marker([parseFloat(data.latitude), parseFloat(data.longitude)], {
+            icon : getIcon("crime")
         }).addTo(layer);
     }
 

@@ -1,9 +1,4 @@
-function vehicleLayer(){
-
-    var api;
-    var requiredColumns = {};
-    var filterConditions = {};
-
+function vehicleLayer() {
     var self = this;
     var layer = [];
     var collection = {};
@@ -11,26 +6,41 @@ function vehicleLayer(){
 
     /* Public Methods */
 
+    this.varLog = function(){
+        console.log(layer)
+        console.log(collection)
+        console.log(markers)
+    }
+
+    this.addCollection = function (data) {
+        for (var i = 0; i < data.length; i++) {
+            collection[data[i].service_request_number] = data[i];
+            addToMarkers(data[i]);
+        }
+    }
+
+    this.updateMarker = function (data) {
+        markers[data.service_request_number].setLatLng([parseFloat(data.latitude), parseFloat(data.longitude)]);
+        markers[data.service_request_number].update();
+    }
+
+    this.getLayer = function () {
+        return layer;
+    }
+
+    this.updateCollectionElement = function (data) {
+        this.collection[data.service_request_number] = data;
+    }
 
     /* Private Methods */
-
-    // Initializer
     var init = function(){
-        api = new abandonedVehiclesDataSet();
-
-        requiredColumns = {
-            0: 'creation_date',
-            1: 'status',
-            2: 'service_request_number',
-            3: 'latitude',
-            4: 'longitude'
-        }
-        filterConditions = {
-            timeStamp: 'lastWeek',
-            status: 'Open'
-        };
-
+        layer = new L.LayerGroup();
     }();
 
+    var addToMarkers = function (data) {
+        markers[data.service_request_number] = L.marker([parseFloat(data.latitude), parseFloat(data.longitude)], {
+            icon : getIcon("vehicle")
+        }).addTo(layer);
+    }
 
 }

@@ -8,8 +8,9 @@ function App(){
     this.ui.createSVG("#graphs");
 
     var map = this.map;
+    var layer = new layerButtons("#layer");
 
-    map.addMarker("test",41.87,-87.58);
+    //map.addMarker("test",41.87,-87.58);
 
 
 }

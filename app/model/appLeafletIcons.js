@@ -7,11 +7,13 @@ var getIcon = function (kind) {
                 });
             case "cta_bus" :
                 return L.icon({
-                    iconUrl: 'resources/icons/icon-bus.svg'
+                    iconUrl: 'resources/icons/icon-bus.svg',
+                    iconSize: [50, 50]
                 });
             case "cta_station" :
                 return L.icon({
-                    iconUrl: 'resources/icons/icon-bus-station.svg'
+                    iconUrl: 'resources/icons/icon-bus-station.svg',
+                    iconSize: [50, 50]
                 });
             case "divvy" :
                 return L.icon({
@@ -20,7 +22,8 @@ var getIcon = function (kind) {
                 });
             case "light" :
                 return L.icon({
-                    iconUrl: 'resources/icons/icon-light.svg'
+                    iconUrl: 'resources/icons/icon-light.svg',
+                    iconSize: [50, 50]
                 });
             case "pothole" :
                 return L.icon({
@@ -29,15 +32,18 @@ var getIcon = function (kind) {
                 });
             case "crime" :
                 return L.icon({
-                    iconUrl: 'resources/icons/icon-crime.svg'
+                    iconUrl: 'resources/icons/icon-crime.svg',
+                    iconSize: [50, 50]
                 });
             case "vehicle" :
                 return L.icon({
-                    iconUrl: 'resources/icons/icon-abandoned-car.svg'
+                    iconUrl: 'resources/icons/icon-abandoned-car.svg',
+                    iconSize: [50, 50]
                 });
             case "uber" :
                 return L.icon({
-                    iconUrl: 'resources/icons/uber.svg'
+                    iconUrl: 'resources/icons/uber.svg',
+                    iconSize: [50, 50]
                 });
             default:
                 return L.icon({

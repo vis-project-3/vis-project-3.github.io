@@ -116,7 +116,7 @@ function Map(container){
             attributionControl : false
 
             //maxZoom: 18
-        }).setView([41.87,-87.58],13);
+        }).setView([41.88,-87.615],13);
 
         // var mapLayer =  L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
         //                     subdomains: '1234'

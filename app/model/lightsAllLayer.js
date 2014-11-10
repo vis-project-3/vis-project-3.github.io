@@ -1,4 +1,4 @@
-function potholesLayer() {
+function lightsAllLayer() {
     var self = this;
     var layer = [];
     var collection = {};
@@ -39,7 +39,7 @@ function potholesLayer() {
 
     var addToMarkers = function (data) {
         markers[data.service_request_number] = L.marker([parseFloat(data.latitude), parseFloat(data.longitude)], {
-            icon : getIcon("pothole")
+            icon : getIcon("light")
         }).addTo(layer);
     }
 

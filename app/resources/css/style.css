@@ -11,24 +11,19 @@ body{
 #top-bar{
     position : absolute;
     top : 1%;
-    left : 10%;
-    width : 80%;
+    left : 1%;
+    width : 67.5%;
     height : 10%;
-    background-color : blue;
+    background-color: rgba(255,255,255,0.66);
 }
 
 #layer{
     position : absolute;
-    top : 14%;
+    top : 12%;
     left : 1%;
     width : 20%;
     height : 60%;
-    background-color : blue;
-}
-
-#layer {
     background-color: rgba(255,255,255,0.66);
-    /*margin-top: 100px;*/
 }
 
 #layer svg rect {
@@ -52,29 +47,49 @@ body{
     color: #FFFFFF;
 }
 
+#weather{
+    position: absolute;
+    top: 1%;
+    right: 1%;
+    width : 30%;
+    height: 10%;
+    background-color: rgba(255,255,255,0.66);
+}
+
+#mapselection{
+    position : absolute;
+    bottom : 7%;
+    left : 1%;
+    width : 20%;
+    height : 20%;
+    background-color: rgba(255,255,255,0.66);
+}
+
 #graphs{
     position : absolute;
-    top : 14%;
+    top : 12%;
     right : 1%;
     width : 30%;
-    height : 50%;
-    background-color : blue;
+    height : 60%;
+    background-color: rgba(255,255,255,0.66);
+
 }
 
 #notifications{
     position : absolute;
-    bottom : 1%;
+    bottom : 7%;
     right: 1%;
     width : 30%;
-    height : 30%;
-    background-color : blue;
+    height : 20%;
+    background-color: rgba(255,255,255,0.66);
 }
 
-#footer{
+#toggle{
     position : absolute;
     bottom : 1%;
     left : 1%;
-    width : 20%;
-    height : 10%;
-    background-color : blue;
+    width : 98%;
+    height : 5%;
+    background-color: rgba(255,255,255,0.66);
+
 }
