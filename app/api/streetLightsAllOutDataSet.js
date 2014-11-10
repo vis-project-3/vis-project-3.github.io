@@ -62,11 +62,11 @@ function streetLightsAllOutDataSet(){
     this.appendTimeStamp = function(timeFrame,requiredQuery){
         var frequency;
         if(timeFrame === 'lastWeek'){
-            frequency = d3.time.day.offset(new Date(), -2);
+            frequency = d3.time.day.offset(new Date(), -7);
         }
         else if(timeFrame === 'lastMonth'){
 
-            frequency = d3.time.day.offset(new Date(), -3);
+            frequency = d3.time.day.offset(new Date(), -30);
         }
         var day = d3.time.day(frequency);
         var iso = day.toISOString();
