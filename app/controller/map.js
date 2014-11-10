@@ -5,75 +5,149 @@
 
 function Map(container){
 
-    this.southWest  = [41.60,-87.40];
-    this.northEast = [42.00, -88.00];
-    this.bounds = L.latLngBounds(this.southWest, this.northEast);
+    var southWest;
+    var northEast;
+    var bounds;
+    var map;
+    var mapLayer;
+    var mapView;
+    var mapView2;
+    var satView;
+    var baseLayers = {}
+    var overLayers = {};
+    var controls;
+    var pointA;
+    var pointB;
+    var lowerLeft;
+    var upperRight;
+    var rectangle;
+    var buffer = 0.005;
 
-    this.map = L.map(container, {
-        maxBounds : this.bounds,
-        minZoom: 10,
-        maxZoom: 18
-    }).setView([41.87,-87.58],13)
+    /*************** Public Methods *****************/
 
-    L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
-            subdomains: '1234'
-        }).addTo(this.map);
-
-    this.getIcon = function(kind) {
-        switch (kind) {
-            case "test" :
-                return L.icon({
-                    iconUrl: 'resources/icons/test_icon.svg',
-                    iconSize: [100,100]
-                });
-            case "cta_bus" :
-                return L.icon({
-                    iconUrl: 'resources/icons/cta_bus.svg'
-                });
-            case "cta_station" :
-                return L.icon({
-                    iconUrl: 'resources/icons/cta_station.svg'
-                });
-            case "divvy" :
-                return L.icon({
-                    iconUrl: 'resources/icons/divvy.svg'
-                });
-            case "light" :
-                return L.icon({
-                    iconUrl: 'resources/icons/light.svg'
-                });
-            case "pothole" :
-                return L.icon({
-                    iconUrl: 'resources/icons/pothole.svg'
-                });
-            case "crime" :
-                return L.icon({
-                    iconUrl: 'resources/icons/crime.svg'
-                });
-            case "vehicle" :
-                return L.icon({
-                    iconUrl: 'resources/icons/vehicle.svg'
-                });
-            case "uber" :
-                return L.icon({
-                    iconUrl: 'resources/icons/uber.svg'
-                });
-            default:
-                return L.icon({
-                    iconUrl: 'resources/icons/error.svg',
-                    iconSize: [100,100]
-                 });
-
-        }
+    this.addMarker = function(kind, lat, long){
+        var marker = L.marker([lat, long], {
+            icon: getIcon(kind)
+        }).addTo(map);
     }
 
+    this.getMap = function(){
+        return map;
+    }
+
+    this.addOverLayer = function(name,toAdd){
+        overLayers[name] = toAdd;
+    }
+
+    this.removeOverLayer = function(name){
+        delete overLayers[name];
+    }
+
+    this.updateLayer = function(){
+        //controls.removeFrom(map);
+        controls = L.control.layers(baseLayers, overLayers).addTo(map);
+    }
+
+    this.updateRectangle = function(){
+        computeRectangle();
+        setRectangle();
+    }
+
+    this.zoomIn = function() {
+        map.zoomIn();
+    }
+
+    this.zoomOut = function() {
+        map.zoomOut();
+    }
+
+    this.addLayer = function(layer) {
+        map.addLayer(layer);
+    }
+
+    this.removeLayer = function(layer) {
+        map.removeLayer(layer);
+    }
+
+    this.switchToMap = function(){
+        mapLayer.setUrl(mapView);
+        //map.redraw();
+    }
+
+    this.switchToSat = function(){
+        mapLayer.setUrl(satView);
+        //map.redraw();
+    }
+
+
+
+    /*************** Private Methods ********************/
+
+    var computeRectangle = function(){
+        lowerLeft = [Math.min(pointA[0], pointB[0])-buffer, Math.min(pointA[1],pointB[1])-buffer];
+        upperRight = [Math.max(pointA[0], pointB[0])+buffer,Math.max(pointA[1], pointB[1])+buffer];
+
+        //console.log(lowerLeft);
+        //console.log(upperRight);
+    }
+
+    var setRectangle= function(){
+        rectangle = L.rectangle([lowerLeft,upperRight], {color: "#ff3c00", weight: 5}).addTo(map);
+    }
+
+    var updateRectangle = function(){
+        computeRectangle();
+        rectangle.setBounds([lowerLeft,upperRight]);
+    }
+
+
+    var init = function(){
+        var uic_west = [41.874255, -87.676353];
+        var uic_location = [41.8719, -87.6492];
+        var museum_location = [41.861466,-87.614935];
+
+        pointA = uic_west;
+        pointB = museum_location;
+
+        map = L.map(container, {
+            //maxBounds : bounds,
+            minZoom: 10,
+            zoomControl:true,
+            attributionControl : false
+
+            //maxZoom: 18
+        }).setView([41.88,-87.615],13);
+
+        // var mapLayer =  L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
+        //                     subdomains: '1234'
+        //                 }).addTo(map);
+
+        mapLayer = L.tileLayer('http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}', {
+            //attribution: 'Map &copy; 1987-2014 <a href="http://developer.here.com">HERE</a>',
+            subdomains: '1234',
+            mapID: 'newest',
+            app_id: 'bInsuD6J2viFbpUIsQyZ',
+            app_code: 'PlxtcGU1qGFBdLzv0KZ84w',
+            base: 'base'
+            //minZoom: 0,
+            //maxZoom: 20
+        }).addTo(map);
+
+        mapView = 'http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}'
+        mapView2 = 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
+        satView = 'http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpeg';
+
+        computeRectangle();
+        setRectangle();
+
+        /*L.Routing.control({
+            waypoints: [
+                L.latLng(pointA),
+                L.latLng(pointB)
+            ]
+        }).addTo(map);*/
+
+    }();
+
 }
 
-Map.prototype.addMarker = function(kind, lat, long){
-    var map = this.map;
-    var marker = L.marker([lat, long], {
-        icon: this.getIcon(kind)
-    }).addTo(map);
-
-    return marker;
-}

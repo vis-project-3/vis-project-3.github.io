@@ -13,9 +13,11 @@
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="../api/potholesDataSet.js"></script>
 <script src="../api/weatherDataSet.js"></script>
+<script src="../api/divvyStationsDataSet.js"></script>
 <script>
     var potholesData = new potholesDataSet();
     var weatherData = new weatherDataSet();
+    var bikeStations = new divvyStationsDataSet();
 </script>
 <body>
 <div class="content">
@@ -25,9 +27,13 @@
     <button class="topcoat-button--cta" onclick="getInfo()">Show Potholes Data</button>
     <button class="topcoat-button--cta" onclick="updateInfo()">Update Data</button>
     <button class="topcoat-button--cta" onclick="getWeather()">Get Weather</button>
+    <button class="topcoat-button--cta" onclick="getStationsInfo()">Get Divvy Stations</button>
 </div>
 <script>
-    function getInfo(){
+    function callBack(data){
+        console.log(data);
+    }
+    function getInfo(){filtered
         var requiredColumns = {
             0: 'creation_date',
             1: 'status',
@@ -36,10 +42,12 @@
             4: 'longitude'
         };
         var filterConditions = {
-            timeStamp: 'lastWeek',
-            status: 'Open'
+            timeStamp: 'lastMonth',
+            status: 'Open',
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
         };
-        potholesData.getData(requiredColumns,filterConditions);
+        potholesData.getData(requiredColumns,filterConditions,callBack);
     }
     function updateInfo(){
         var requiredColumns = {
@@ -50,16 +58,24 @@
             4: 'longitude'
         };
         var filterConditions = {
-            timeStamp: 'lastMonth',
-            status: 'Open'
+            timeStamp: 'lastWeek',
+            status: 'Open',
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
         };
-        potholesData.getUpdatedData(requiredColumns,filterConditions);
+        potholesData.getUpdatedData(requiredColumns,filterConditions,callBack);
     }
     function getWeather(){
         var latitude = 41.870452;
         var longitude =  -87.647978;
         var num_of_days = 0;
         weatherData.getWeatherData(latitude,longitude,num_of_days);
+    }
+    function getStationsInfo(){
+        var latitude = 41.870452;
+        var longitude =  -87.647978;
+        var num_of_stns = 5;
+        bikeStations.getSurroundingStationsData(latitude,longitude,num_of_stns,callBack);
     }
 </script>
 </body>

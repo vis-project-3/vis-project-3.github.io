@@ -1,4 +1,4 @@
-function divvyLayer() {
+function crimeLayer() {
     var self = this;
     var layer = [];
     var collection = {};
@@ -13,9 +13,9 @@ function divvyLayer() {
     }
 
     this.addCollection = function (data) {
-        for (var i = 0; i < data.stationBeanList.length; i++) {
-            collection[data.stationBeanList[i].id] = data.stationBeanList[i];
-            addToMarkers(data.stationBeanList[i]);
+        for (var i = 0; i < data.length; i++) {
+            collection[data[i].id] = data[i];
+            addToMarkers(data[i]);
         }
     }
 
@@ -39,7 +39,7 @@ function divvyLayer() {
 
     var addToMarkers = function (data) {
         markers[data.id] = L.marker([parseFloat(data.latitude), parseFloat(data.longitude)], {
-            icon : getIcon("divvy")
+            icon : getIcon("crime")
         }).addTo(layer);
     }
 
