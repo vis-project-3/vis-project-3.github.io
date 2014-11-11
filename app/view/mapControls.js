@@ -68,7 +68,7 @@ function mapControls(container){
                 .attr("id",function(d){return d.id + "-rectangle";})
                 .attr("x", function(d,i){
                     return xScaleSelection(i) + padding;})
-                .attr("y",padding + 19)
+                .attr("y",padding + 18)
                 .attr("width", selectionWidth/imageObjects.length - padding)
                 .attr("height", 0.72 * (selectionWidth/imageObjects.length - padding));
 
@@ -87,17 +87,17 @@ function mapControls(container){
                 .attr("width", selectionWidth/imageObjects.length - padding)
                 .attr("height", height);
 
-            svg .selectAll("text")
-                .data(imageObjects)
-                .enter()
-                .append("text")
-                .attr("class","map-tile-label")
-                .text( function(d) { return d.text })
-                .attr("text-anchor", "start")
-                .attr("x", function(d,i){
-                    return xScaleSelection(i) + padding + 10;})
-                .attr("y", 3.5 * padding)
-                .attr("pointer-events", "none");
+            // svg .selectAll("text")
+            //     .data(imageObjects)
+            //     .enter()
+            //     .append("text")
+            //     .attr("class","map-tile-label")
+            //     .text( function(d) { return d.text })
+            //     .attr("text-anchor", "start")
+            //     .attr("x", function(d,i){
+            //         return xScaleSelection(i) + padding + 10;})
+            //     .attr("y", 3.5 * padding)
+            //     .attr("pointer-events", "none");
 
             svg .selectAll()
                 .data(zoomObjects)

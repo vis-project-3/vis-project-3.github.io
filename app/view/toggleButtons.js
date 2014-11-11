@@ -71,8 +71,7 @@ function toggleButtons(container){
             .attr("width", buttonWidth - 2 * padding)
             .attr("height", 0.6 * height)
             .attr("rx", radius)
-            .attr("ry", radius)
-            .style("fill","#666666")
+            .attr("ry", radius);
 
 
         svg .selectAll("text")
