@@ -101,14 +101,14 @@ function App(){
     var filterConditions = {
         timeStamp: 'lastMonth',
         status: 'Open',
-        latitude:[Math.min(pointA[0],pointB[0]),Math.max(pointA[0],pointB[0])],//[from,to]
-        longitude:[Math.min(pointA[1],pointB[1]),Math.max(pointA[1],pointB[1])]//[from,to]
+        latitude:[Math.min(pointA[0],pointB[0]),Math.max(pointA[0],pointB[0])],
+        longitude:[Math.min(pointA[1],pointB[1]),Math.max(pointA[1],pointB[1])]
     };
 
     var crimeFilterConditions = {
-        timeStamp: 'lastMonth'
-        //latitude:[41.8,41.9],//[from,to]
-        //longitude:[-87.8,-87.6]//[from,to]
+        timeStamp: 'lastMonth',
+        latitude:[Math.min(pointA[0],pointB[0]),Math.max(pointA[0],pointB[0])],
+        longitude:[Math.min(pointA[1],pointB[1]),Math.max(pointA[1],pointB[1])]
     };
 
     function getDivvyData(){
