@@ -88,10 +88,19 @@
         weatherData.getWeatherData(latitude,longitude,num_of_days,callBack);
     }
     function getStationsInfo(){
-        var latitude = 41.870452;
-        var longitude =  -87.647978;
-        var num_of_stns = 5;
-        bikeStations.getSurroundingStationsData(latitude,longitude,num_of_stns,callBack);
+        var requiredColumns = {
+            0: 'id',
+            1: 'stationName',
+            2: 'availableDocks',
+            3: 'availableBikes',
+            4: 'latitude',
+            5: 'longitude'
+        };
+        var filterConditions = {
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
+        };
+        bikeStations.getSurroundingStationsData(requiredColumns,filterConditions,callBack);
     }
     function getCrimesInfo(){
         var requiredColumns = {
