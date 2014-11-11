@@ -20,6 +20,12 @@ function layerButtons(container){
             id:"bus-layer"
         },
         {
+            text:"CTA Buses",
+            iconPath:"resources/icons/icon-bus.svg",
+            iconHoverPath:"",
+            id:"live-bus-layer"
+        },
+        {
             text:"Divvy Station",
             iconPath:"resources/icons/icon-divvy.svg",
             iconHoverPath:"",
