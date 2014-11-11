@@ -13,6 +13,14 @@ function Map(container){
     var mapView;
     var mapView2;
     var satView;
+    var satView2;
+
+    var map_app_id = 'bInsuD6J2viFbpUIsQyZ';
+    var map_app_code = 'PlxtcGU1qGFBdLzv0KZ84w';
+
+    var sat_app_id =""
+    var sat_app_code = ""
+
     var baseLayers = {}
     var overLayers = {};
     var controls;
@@ -70,26 +78,28 @@ function Map(container){
     }
 
     this.hasLayer = function(layer){
-        console.log("[LOG] : Checking if Layer Exists");
+        console.log("[LOG] : Checking if selected layer exists")
         return map.hasLayer(layer);
     }
 
     this.addLayer = function(layer) {
-        console.log("[LOG] : Adding Layer");
+        console.log("[LOG] : Adding selected Layer");
         map.addLayer(layer);
     }
 
     this.removeLayer = function(layer) {
-        console.log("[LOG] : Removing Layer")
+        console.log("[LOG] : Removing selected Layer")
         map.removeLayer(layer);
     }
 
     this.switchToMap = function(){
+        console.log("[LOG] : Switching to Street View")
         mapLayer.setUrl(mapView);
         //map.redraw();
     }
 
     this.switchToSat = function(){
+        console.log("[LOG] : Switching to Satellite View")
         mapLayer.setUrl(satView);
         //map.redraw();
     }
@@ -148,8 +158,9 @@ function Map(container){
             //maxZoom: 20
         }).addTo(map);
 
-        mapView = 'http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}'
+        mapView = 'http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}';
         mapView2 = 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
+        satView2 = 'http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/satellite.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}';
         satView = 'http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpeg';
 
         computeRectangle();

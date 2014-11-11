@@ -13,9 +13,9 @@ function divvyLayer() {
     }
 
     this.addCollection = function (data) {
-        for (var i = 0; i < data.stationBeanList.length; i++) {
-            collection[data.stationBeanList[i].id] = data.stationBeanList[i];
-            addToMarkers(data.stationBeanList[i]);
+        for (var i = 0; i < data.length; i++) {
+            collection[data[i].id] = data[i];
+            addToMarkers(data[i]);
         }
     }
 

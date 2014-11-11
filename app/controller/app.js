@@ -81,7 +81,18 @@ function App(){
     var lights = new lightsLayer();
     var lightsAPI = new streetLightsAllOutDataSet();
 
-    var requiredDivvy
+    var divvyRequiredColumns = {
+        0: 'id',
+        1: 'stationName',
+        2: 'availableDocks',
+        3: 'availableBikes',
+        4: 'latitude',
+        5: 'longitude'
+    };
+    var divvyFilterConditions = {
+        latitude:[Math.min(pointA[0],pointB[0]),Math.max(pointA[0],pointB[0])],
+        longitude:[Math.min(pointA[1],pointB[1]),Math.max(pointA[1],pointB[1])]
+    };
 
     var requiredColumns = {
         0: 'creation_date',
@@ -163,7 +174,7 @@ function App(){
     }
 
     function prova(){
-        getDivvyData();
+        divvyAPI.getSurroundingStationsData(divvyRequiredColumns,divvyFilterConditions,callBackDivvy);
         potholesAPI.getData(requiredColumns,filterConditions,callBackPotholes);
         vehiclesAPI.getData(requiredColumns,filterConditions,callBackVehicles);
         lightsAPI.getData(requiredColumns,filterConditions,callBackLights);
