@@ -63,7 +63,9 @@ function divvyStationsDataSet(){
         }
         requiredQuery = requiredQuery.substr(0, requiredQuery.length - 1);
         //Append the filteredConditions to the query
-        requiredQuery += ' from json where url=\'http://www.divvybikes.com/stations/json/\' and itemPath = "json.stationBeanList" and ';
+        var divvyOriginal = 'http://www.divvybikes.com/stations/json';
+        var divvyProxy = 'http://sortieapp.com/sortie/divvy';
+        requiredQuery += ' from json where url= \''+divvyProxy+'\' and itemPath = "json.stationBeanList" and ';
         for (var property in filterConditions) {
             if (filterConditions.hasOwnProperty(property)) {
                 var propertyValue = filterConditions[property];
