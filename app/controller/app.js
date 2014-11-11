@@ -5,12 +5,13 @@ function App(){
     // ui.createSVG("#top-bar");
     ui.createSVG("#notifications");
     //this.ui.createSVG("#layer");
-    ui.createSVG("#graphs");
+    // ui.createSVG("#graphs");
 
     var layer = new layerButtons("#layer");
     var controls = new mapControls("#mapcontrol")
     var toggle = new toggleButtons("#toggle");
     var navigation = new navigationBar("#top-bar");
+    var graphs = new graphsPane("#graphs");
     var events = new mapEvents(mapObject.getMap());
     var pointA = mapObject.getPointA();
     var pointB = mapObject.getPointB();
