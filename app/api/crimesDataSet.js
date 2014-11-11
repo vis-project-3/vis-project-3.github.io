@@ -17,24 +17,34 @@ function crimesDataSet(){
             url: urlForDataSet,
             dataType: "json",
             success: function(data){
-                self.crimesJSON = data;
-                self.previouCrimesJSON = data;
-                callBack(data);
+                var newData = self.filterData(requiredColumns,data);
+                self.crimesJSON = newData;
+                self.previouCrimesJSON = newData;
+                callBack(newData);
             }
         });
     }
-
+    this.filterData = function(requiredColumns,data){
+        var newData = [];
+        for( var i = 0; i < data.length; i++) {
+            if(Object.keys(data[i]).length === Object.keys(requiredColumns).length){
+                newData.push(data[i]);
+            }
+        }
+        return newData;
+    }
     this.getUpdatedData = function(requiredColumns,filterConditions,callBack){
         var urlForDataSet = this.generateQuery(requiredColumns,filterConditions);
         $.ajax({
             url: urlForDataSet,
             dataType: "json",
             success: function(data){
-                self.crimesJSON = data;
+                var newData = self.filterData(requiredColumns,data);
+                self.crimesJSON = newData;
                 var previousData = self.previouCrimesJSON;
-                self.previouCrimesJSON = data;
+                self.previouCrimesJSON = newData;
                 self.nullifyChanges();
-                self.startCompare(previousData,data);
+                self.startCompare(previousData,newData);
                 var modifiedData = {
                     addedData : self.addedContent,
                     deletedData: self.deletedContent,

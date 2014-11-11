@@ -17,12 +17,24 @@ function streetLightsOneOutDataSet(){
             url: urlForDataSet,
             dataType: "json",
             success: function(data){
-                self.streetLightsOneJSON = data;
-                self.previouStreetLightsOneJSON = data;
-                callBack(data);
+                var newData = self.filterData(requiredColumns,data);
+                self.streetLightsOneJSON = newData;
+                self.previouStreetLightsOneJSON = newData;
+                callBack(newData);
             }
         });
     }
+
+    this.filterData = function(requiredColumns,data){
+        var newData = [];
+        for( var i = 0; i < data.length; i++) {
+            if(Object.keys(data[i]).length === Object.keys(requiredColumns).length){
+                newData.push(data[i]);
+            }
+        }
+        return newData;
+    }
+
 
     this.getUpdatedData = function(requiredColumns,filterConditions,callBack){
         var urlForDataSet = this.generateQuery(requiredColumns,filterConditions);
@@ -30,11 +42,12 @@ function streetLightsOneOutDataSet(){
             url: urlForDataSet,
             dataType: "json",
             success: function(data){
-                self.streetLightsOneJSON = data;
+                var newData = self.filterData(requiredColumns,data);
+                self.streetLightsOneJSON = newData;
                 var previousData = self.previouStreetLightsOneJSON;
-                self.previouStreetLightsOneJSON = data;
+                self.previouStreetLightsOneJSON = newData;
                 self.nullifyChanges();
-                self.startCompare(previousData,data);
+                self.startCompare(previousData,newData);
                 var modifiedData = {
                     addedData : self.addedContent,
                     deletedData: self.deletedContent,
