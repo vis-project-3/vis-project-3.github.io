@@ -12,6 +12,9 @@ function App(){
     var toggle = new toggleButtons("#toggle");
     var navigation = new navigationBar("#top-bar");
     var events = new mapEvents(mapObject.getMap());
+    var pointA = mapObject.getPointA();
+    var pointB = mapObject.getPointB();
+
 
     /*** TEMPORARY BINDINGS ***/
 
@@ -55,7 +58,7 @@ function App(){
             events.toggleLayer(lights.getLayer());
         });
 
-    d3  .select("#crime-layer")
+    d3  .select("#crimes-layer")
         .on("click", function(){
             events.toggleLayer(crimes.getLayer());
         });
@@ -63,6 +66,7 @@ function App(){
 
     L.Icon.Default.imagePath = "../resources/images";
     var divvy = new divvyLayer();
+    var divvyAPI = new divvyStationsDataSet();
 
     var potholes = new potholesLayer();
     var potholesAPI = new potholesDataSet();
@@ -70,11 +74,13 @@ function App(){
     var vehicles = new vehicleLayer();
     var vehiclesAPI = new abandonedVehiclesDataSet();
 
-    var crimes = new crimeLayer();
+    var crimes = new crimeLayer(4)
     var crimesAPI = new crimesDataSet();
 
     var lights = new lightsLayer();
     var lightsAPI = new streetLightsAllOutDataSet();
+
+    var requiredDivvy
 
     var requiredColumns = {
         0: 'creation_date',
@@ -94,8 +100,8 @@ function App(){
     var filterConditions = {
         timeStamp: 'lastMonth',
         status: 'Open',
-        latitude:[41.8,41.9],//[from,to]
-        longitude:[-87.8,-87.6]//[from,to]
+        latitude:[Math.min(pointA[0],pointB[0]),Math.max(pointA[0],pointB[0])],//[from,to]
+        longitude:[Math.min(pointA[1],pointB[1]),Math.max(pointA[1],pointB[1])]//[from,to]
     };
 
     var crimeFilterConditions = {
@@ -115,6 +121,7 @@ function App(){
     }
 
     function callBackDivvy(data){
+        console.log("[LOG] : Adding Divvy Data");
         divvy.addCollection(data);
         //divvy.varLog();
        // mapObject.addLayer(divvy.getLayer());
@@ -123,6 +130,7 @@ function App(){
 
 
     function callBackPotholes(data){
+        console.log("[LOG] : Adding Potholes Data");
         potholes.addCollection(data);
         //potholes.varLog();
         //mapObject.addLayer(potholes.getLayer());
@@ -130,6 +138,7 @@ function App(){
     }
 
     function callBackVehicles(data){
+        console.log("[LOG] : Adding Vehicles Data");
         vehicles.addCollection(data);
         //potholes.varLog();
        // mapObject.addLayer(vehicles.getLayer());
@@ -137,6 +146,7 @@ function App(){
     }
 
     function callBackLights(data){
+        console.log("[LOG] : Adding Lights Data");
         lights.addCollection(data);
         //potholes.varLog();
         //mapObject.addLayer(lights.getLayer());
@@ -144,6 +154,7 @@ function App(){
     }
 
     function callBackCrime(data){
+        console.log("[LOG] : Adding Crime Data");
         crimes.addCollection(data);
         //potholes.varLog();
        // mapObject.addLayer(crimes.getLayer());
@@ -154,13 +165,9 @@ function App(){
         getDivvyData();
         potholesAPI.getData(requiredColumns,filterConditions,callBackPotholes);
         vehiclesAPI.getData(requiredColumns,filterConditions,callBackVehicles);
-        //crimesAPI.getData(crimeRequiredColumns,crimeFilterConditions,callBackCrime);
         lightsAPI.getData(requiredColumns,filterConditions,callBackLights);
+        crimesAPI.getData(crimeRequiredColumns,crimeFilterConditions,callBackCrime);
     }
 
     prova();
-
-    //map.addMarker("test",41.87,-87.58);
-
-
 }

@@ -35,6 +35,14 @@ function Map(container){
         return self;
     }
 
+    this.getPointA = function(){
+        return pointA;
+    }
+
+    this.getPointB = function(){
+        return pointB;
+    }
+
     this.addOverLayer = function(name,toAdd){
         overLayers[name] = toAdd;
     }
