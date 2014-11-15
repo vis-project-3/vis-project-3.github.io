@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <link rel="import" href="../include/lib_local.html">
+        <link rel="import" href="../include/components.html">
+        <script src="../api/weatherDataSetMod.js"></script>
+        <style>
+            #weather_box{
+                position : absolute;
+                width: 50%;
+                height: 25%;
+                left: 25%;
+                top : 37%;
+                background-color: grey;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="weather_box"></div>
+
+        <script>
+            var weather_data;
+           /* var test = function(){
+                var data = {
+                    temp_c : "21",
+                    temp_f : "70",
+                    iconName: "sunny",
+                    condition: "Sunny"
+                };
+
+                var box = new weatherBox("#weather_box", data);
+                box.updateTime();
+            }();*/
+
+            var weatherData = new weatherDataSetMod();
+
+            function getWeather(){
+                weatherData.getWeatherData(callBack);
+            }
+
+            function callBack(data){
+                weather_data = data;
+                var box = new weatherBox("#weather_box", data);
+                box.updateTime();
+            }
+
+            getWeather();
+
+
+
+
+        </script>
+    </body>
+</html>
