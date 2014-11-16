@@ -1,185 +1,56 @@
 function App(){
+
     var mapObject = new Map("map");
-    var ui = new UI();
+    var map = mapObject.getMap();
 
-    // ui.createSVG("#top-bar");
-    ui.createSVG("#notifications");
-    //this.ui.createSVG("#layer");
-    // ui.createSVG("#graphs");
 
+    /***** UI COMPONENTS *****/
     var layer = new layerButtons("#layer");
     var controls = new mapControls("#mapcontrol")
     var toggle = new toggleButtons("#toggle");
     var navigation = new navigationBar("#top-bar");
     var graphs = new graphsPane("#graphs");
-    var events = new mapEvents(mapObject.getMap());
+    var weather = new weatherBox("#weather");
+
+
+    /***** CONTROLLERS ******/
     var pointA = mapObject.getPointA();
     var pointB = mapObject.getPointB();
 
-
-    /*** TEMPORARY BINDINGS ***/
-
-    d3  .select("#icon-minus")
-        .on("click",function(){
-            events.zoomOut();
-        });
-
-    d3  .select("#icon-plus")
-        .on("click", function(){
-            events.zoomIn();
-        });
-
-    d3  .select("#satellite")
-        .on("click", function(){
-            events.changeToSat();
-        });
-
-    d3  .select("#street")
-        .on("click", function(){
-            events.changeToMap();
-        });
-
-    d3  .select("#divvy-layer")
-        .on("click", function(){
-            events.toggleLayer(divvy.getLayer());
-        });
-
-    d3  .select("#potholes-layer")
-        .on("click", function(){
-            events.toggleLayer(potholes.getLayer());
-        });
-
-    d3  .select("#vehicles-layer")
-        .on("click", function(){
-            events.toggleLayer(vehicles.getLayer());
-        });
-
-    d3  .select("#lights-layer")
-        .on("click", function(){
-            events.toggleLayer(lights.getLayer());
-        });
-
-    d3  .select("#crimes-layer")
-        .on("click", function(){
-            events.toggleLayer(crimes.getLayer());
-        });
+    var divvy = new controllerDivvy(map);
+    var crimes = new controllerCrimes(map);
+    var potholes = new controllerPotholes(map);
+    var lights = new controllerLights(map);
+    var vehicles = new controllerVehicles(map);
 
 
-    L.Icon.Default.imagePath = "../resources/images";
-    var divvy = new divvyLayer();
-    var divvyAPI = new divvyStationsDataSet();
-
-    var potholes = new potholesLayer();
-    var potholesAPI = new potholesDataSet();
-
-    var vehicles = new vehicleLayer();
-    var vehiclesAPI = new abandonedVehiclesDataSet();
-
-    var crimes = new crimeLayer(4)
-    var crimesAPI = new crimesDataSet();
-
-    var lights = new lightsLayer();
-    var lightsAPI = new streetLightsAllOutDataSet();
-
-    var divvyRequiredColumns = {
-        0: 'id',
-        1: 'stationName',
-        2: 'availableDocks',
-        3: 'availableBikes',
-        4: 'latitude',
-        5: 'longitude'
-    };
-    var divvyFilterConditions = {
-        latitude:[Math.min(pointA[0],pointB[0]),Math.max(pointA[0],pointB[0])],
-        longitude:[Math.min(pointA[1],pointB[1]),Math.max(pointA[1],pointB[1])]
-    };
-
-    var requiredColumns = {
-        0: 'creation_date',
-        1: 'status',
-        2: 'service_request_number',
-        3: 'latitude',
-        4: 'longitude'
-    };
-
-    var crimeRequiredColumns = {
-        0: 'id',
-        1: 'date',
-        3: 'latitude',
-        4: 'longitude'
-    };
-
-    var filterConditions = {
-        timeStamp: 'lastMonth',
-        status: 'Open',
-        latitude:[Math.min(pointA[0],pointB[0]),Math.max(pointA[0],pointB[0])],
-        longitude:[Math.min(pointA[1],pointB[1]),Math.max(pointA[1],pointB[1])]
-    };
-
-    var crimeFilterConditions = {
-        timeStamp: 'lastMonth',
-        latitude:[Math.min(pointA[0],pointB[0]),Math.max(pointA[0],pointB[0])],
-        longitude:[Math.min(pointA[1],pointB[1]),Math.max(pointA[1],pointB[1])]
-    };
-
-    function getDivvyData(){
-        $.ajax({
-            url: "http://sortieapp.com/sortie/divvy",
-            dataType: "json",
-            success: function(data){
-                callBackDivvy(data)
-            }
-        });
-    }
-
-    function callBackDivvy(data){
-        console.log("[LOG] : Adding Divvy Data");
-        divvy.addCollection(data);
-        //divvy.varLog();
-       // mapObject.addLayer(divvy.getLayer());
-
-    }
+    /**** LISTENERS *****/
+    new buttonsListeners();
 
 
-    function callBackPotholes(data){
-        console.log("[LOG] : Adding Potholes Data");
-        potholes.addCollection(data);
-        //potholes.varLog();
-        //mapObject.addLayer(potholes.getLayer());
+    /***** INITIALIZERS TEST *****/
+    console.log("[EVENT] : POINT_A");
+    amplify.publish("POINT_A", pointA);
 
-    }
+    console.log("[EVENT] : POINT_B");
+    amplify.publish("POINT_B", pointB);
 
-    function callBackVehicles(data){
-        console.log("[LOG] : Adding Vehicles Data");
-        vehicles.addCollection(data);
-        //potholes.varLog();
-       // mapObject.addLayer(vehicles.getLayer());
+    console.log("[EVENT] : DIVVY_NEW_DATA");
+    amplify.publish("DIVVY_NEW_DATA");
 
-    }
+    console.log("[EVENT] : CRIMES_NEW_DATA");
+    amplify.publish("CRIMES_NEW_DATA");
 
-    function callBackLights(data){
-        console.log("[LOG] : Adding Lights Data");
-        lights.addCollection(data);
-        //potholes.varLog();
-        //mapObject.addLayer(lights.getLayer());
+    console.log("[EVENT] : POTHOLES_NEW_DATA");
+    amplify.publish("POTHOLES_NEW_DATA");
 
-    }
+    console.log("[EVENT] : LIGHTS_NEW_DATA");
+    amplify.publish("LIGHTS_NEW_DATA");
 
-    function callBackCrime(data){
-        console.log("[LOG] : Adding Crime Data");
-        crimes.addCollection(data);
-        //potholes.varLog();
-       // mapObject.addLayer(crimes.getLayer());
+    console.log("[EVENT] : VEHICLES_NEW_DATA");
+    amplify.publish("VEHICLES_NEW_DATA");
 
-    }
-
-    function prova(){
-        divvyAPI.getSurroundingStationsData(divvyRequiredColumns,divvyFilterConditions,callBackDivvy);
-        potholesAPI.getData(requiredColumns,filterConditions,callBackPotholes);
-        vehiclesAPI.getData(requiredColumns,filterConditions,callBackVehicles);
-        lightsAPI.getData(requiredColumns,filterConditions,callBackLights);
-        crimesAPI.getData(crimeRequiredColumns,crimeFilterConditions,callBackCrime);
-    }
-
-    prova();
 }
+
+
+

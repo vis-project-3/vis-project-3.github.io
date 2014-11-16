@@ -10,7 +10,6 @@
                 height: 25%;
                 left: 25%;
                 top : 37%;
-                background-color: grey;
             }
         </style>
     </head>
@@ -20,32 +19,33 @@
 
         <script>
             var weather_data;
-           /* var test = function(){
-                var data = {
-                    temp_c : "21",
-                    temp_f : "70",
-                    iconName: "sunny",
-                    condition: "Sunny"
-                };
+            var box = new weatherBox("#weather_box");
+            var dummy_data = {
+                temp_c : "21",
+                temp_f : "70",
+                iconName: "sunny",
+                condition: "Sunny"
+            };
 
-                var box = new weatherBox("#weather_box", data);
-                box.updateTime();
-            }();*/
 
             var weatherData = new weatherDataSetMod();
 
             function getWeather(){
-                weatherData.getWeatherData(callBack);
+                weatherData.getData(callBack);
             }
 
             function callBack(data){
-                weather_data = data;
-                var box = new weatherBox("#weather_box", data);
-                box.updateTime();
+                box.updateAll(data);
             }
+
+            function dummy_test(){
+                box.updateAll(dummy_data);
+            }
+
 
             getWeather();
 
+            //dummy_test();
 
 
 

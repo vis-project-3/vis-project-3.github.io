@@ -1,6 +1,6 @@
 function weatherIcons() {
 
-    var path= "../resources/icons/weather/";
+    var path= "resources/icons/weather/";
 
     this.getIcon = function (kind) {
 

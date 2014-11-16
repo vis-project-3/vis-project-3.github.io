@@ -9,7 +9,7 @@ function weatherDataSetMod(){
     var yahooURL = "https://query.yahooapis.com/v1/public/yql?q=";
     var dataSetEndPoint = 'http://api.wunderground.com/api/' + key + '/';
 
-    this.getWeatherData = function(callBack){
+    this.getData = function(callBack){
         var urlForDataSet = generateQuery();
         $.ajax({
             url: urlForDataSet,

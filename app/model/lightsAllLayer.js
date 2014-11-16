@@ -12,6 +12,12 @@ function lightsAllLayer() {
         console.log(markers)
     }
 
+    this.clearData = function(){
+        collection = {};
+        markers = {};
+        layer = new L.LayerGroup();
+    }
+
     this.addCollection = function (data) {
         for (var i = 0; i < data.length; i++) {
             collection[data[i].service_request_number] = data[i];
@@ -39,7 +45,7 @@ function lightsAllLayer() {
 
     var addToMarkers = function (data) {
         markers[data.service_request_number] = L.marker([parseFloat(data.latitude), parseFloat(data.longitude)], {
-            icon : getIcon("light")
+            icon : getIcon("test")
         }).addTo(layer);
     }
 

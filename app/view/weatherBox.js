@@ -1,4 +1,4 @@
-function weatherBox(container, weather){
+function weatherBox(container){
 
     var height = 174;
     var width = 789;
@@ -21,14 +21,13 @@ function weatherBox(container, weather){
     var weather = weather;
     var icons = new weatherIcons();
 
-
     this.updateAll = function(data){
         this.updateTemperature(data);
         this.updateWeather(data);
-
+        this.updateTime();
     }
 
-    this.updateTemperature = function(){
+    this.updateTemperature = function(data){
         d3  .select("#" + id_temp_c)
             .text(data.temp_c);
 
@@ -36,7 +35,7 @@ function weatherBox(container, weather){
             .text(data.temp_f);
     }
 
-    this.updateTime = function(data){
+    this.updateTime = function(){
         var now = new Date();
         var day = now.getDate();
         var month = (now.getMonth());
@@ -107,7 +106,7 @@ function weatherBox(container, weather){
             .attr("x",icon_size)
             .attr("y",yScale(1))
             .style("font-size",text_size)
-            .text("Weather : " + weather.condition);
+            //.text("Weather : " + weather.condition);
 
 
         svg .append("image")
@@ -122,10 +121,10 @@ function weatherBox(container, weather){
         svg .append("text")
             .attr("id",id_temp_c)
             .attr("text-anchor","start")
-            .attr("x",xScale(0))
+            .attr("x",xScale(3))
             .attr("y",yScale(2)-text_size)
             .style("font-size",text_size)
-            .text(weather.temp_c);
+            //.text(weather.temp_c);
 
         svg .append("image")
             .attr("id",id_icon_f)
@@ -147,14 +146,14 @@ function weatherBox(container, weather){
         svg .append("text")
             .attr("id",id_temp_f)
             .attr("text-anchor","start")
-            .attr("x",xScale(3))
+            .attr("x",xScale(0))
             .attr("y",yScale(2)-text_size)
             .style("font-size",text_size)
-            .text(weather.temp_f);
+            //.text(weather.temp_f);
 
         svg .append("image")
             .attr("id",id_icon)
-            .attr("xlink:href", function(d){return icons.getIcon(weather.iconName);})
+            //.attr("xlink:href", function(d){return icons.getIcon(weather.iconName);})
             .attr("x","0")
             .attr("y", height - icon_size)
             .attr("width",icon_size)

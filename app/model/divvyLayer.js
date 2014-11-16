@@ -3,13 +3,14 @@ function divvyLayer() {
     var layer = [];
     var collection = {};
     var markers = {};
+    var popup = new divvyPopUp();
 
     /* Public Methods */
 
-    this.varLog = function(){
-        console.log(layer)
-        console.log(collection)
-        console.log(markers)
+    this.clearData = function(){
+        collection = {};
+        markers = {};
+        layer = new L.LayerGroup();
     }
 
     this.addCollection = function (data) {
@@ -21,6 +22,9 @@ function divvyLayer() {
 
     this.updateMarker = function (data) {
         markers[data.id].setLatLng([parseFloat(data.latitude), parseFloat(data.longitude)]);
+        markers[data.id].bindPopup(function(){
+            return popUp.generatePopUpContent(data);
+        })
         markers[data.id].update();
     }
 
@@ -32,15 +36,21 @@ function divvyLayer() {
         this.collection[data.id] = data;
     }
 
-    /* Private Methods */
-    var init = function(){
-        layer = new L.LayerGroup();
-    }();
+    /***** Private Methods ******/
 
     var addToMarkers = function (data) {
         markers[data.id] = L.marker([parseFloat(data.latitude), parseFloat(data.longitude)], {
             icon : getIcon("divvy")
         }).addTo(layer);
+
+        var content = popup.generatePopUpContent(data);
+        console.log("[DIVVY_LAYER] : Generating Popup");
+        markers[data.id].bindPopup(content);
     }
+
+    var init = function(){
+        layer = new L.LayerGroup();
+
+    }();
 
 }

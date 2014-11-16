@@ -80,28 +80,28 @@ function Map(container){
     }
 
     this.hasLayer = function(layer){
-        console.log("[LOG] : Checking if selected layer exists")
+        console.log("[MAP] : Checking if selected layer exists")
         return map.hasLayer(layer);
     }
 
     this.addLayer = function(layer) {
-        console.log("[LOG] : Adding selected Layer");
+        console.log("[MAP] : Adding selected Layer");
         map.addLayer(layer);
     }
 
     this.removeLayer = function(layer) {
-        console.log("[LOG] : Removing selected Layer")
+        console.log("[MAP] : Removing selected Layer")
         map.removeLayer(layer);
     }
 
     this.switchToMap = function(){
-        console.log("[LOG] : Switching to Street View")
+        console.log("[MAP] : Switching to Street View")
         mapLayer.setUrl(mapView);
         //map.redraw();
     }
 
     this.switchToSat = function(){
-        console.log("[LOG] : Switching to Satellite View")
+        console.log("[MAP] : Switching to Satellite View")
         mapLayer.setUrl(satView);
         //map.redraw();
     }
@@ -154,9 +154,8 @@ function Map(container){
         satView = 'http://{s}.' + sat_base +'.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/satellite.day/{z}/{x}/{y}/256/png8?app_id=' + sat_app_id + '&app_code=' + sat_app_code;
 
         mapLayer = L.tileLayer(mapView, {
-            //attribution: 'Map &copy; 1987-2014 <a href="http://developer.here.com">HERE</a>',
             subdomains: '1234',
-            mapID: 'newest',
+            mapID: 'newest'
         }).addTo(map);
 
         //mapView = 'http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}';
@@ -171,12 +170,11 @@ function Map(container){
         computeRectangle();
         setRectangle();
 
-        /*L.Routing.control({
-            waypoints: [
-                L.latLng(pointA),
-                L.latLng(pointB)
-            ]
-        }).addTo(map);*/
+
+        amplify.subscribe("VIEW_ZOOM_PLUS", self.zoomIn);
+        amplify.subscribe("VIEW_ZOOM_MINUS", self.zoomOut);
+        amplify.subscribe("VIEW_SAT_MAP", self.switchToSat);
+        amplify.subscribe("VIEW_STREET_MAP", self.switchToMap);
 
     }();
 
