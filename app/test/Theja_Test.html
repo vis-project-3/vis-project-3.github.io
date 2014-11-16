@@ -18,6 +18,7 @@
 <script src="../api/abandonedVehiclesDataSet.js"></script>
 <script src="../api/streetLightsOneOutDataSet.js"></script>
 <script src="../api/streetLightsAllOutDataSet.js"></script>
+<script src="../api/foodInspectionDataSet.js"></script>
 <script>
     var potholesData = new potholesDataSet();
     var weatherData = new weatherDataSet();
@@ -26,6 +27,7 @@
     var abandonedVehicles = new abandonedVehiclesDataSet();
     var lightsOneOut = new streetLightsOneOutDataSet();
     var lightsAllOut = new streetLightsAllOutDataSet();
+    var foodInspection = new foodInspectionDataSet();
 </script>
 <body>
 <div class="content">
@@ -44,6 +46,8 @@
     <button class="topcoat-button--cta" onclick="getUpdatedLightsAllOut()">Get Updated Lights All Out</button>
     <button class="topcoat-button--cta" onclick="getWeather()">Get Weather</button>
     <button class="topcoat-button--cta" onclick="getStationsInfo()">Get Divvy Stations</button>
+    <button class="topcoat-button--cta" onclick="getFoodInspectionInfo()">Get Inspection Details</button>
+    <button class="topcoat-button--cta" onclick="updateFoodInspectionInfo()">Update Inspection Data</button>
 </div>
 <script>
     function callBack(data){
@@ -229,6 +233,40 @@
             longitude:[-87.8,-87.6]//[from,to]
         };
         lightsAllOut.getUpdatedData(requiredColumns,filterConditions,callBack);
+    }
+    function getFoodInspectionInfo(){
+        var requiredColumns = {
+            0: 'dba_name',
+            1: 'facility_type',
+            2: 'inspection_date',
+            3: 'results',
+            4: 'latitude',
+            5: 'longitude',
+            6: 'inspection_id'
+        };
+        var filterConditions = {
+            timeStamp: 'lastMonth',
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
+        };
+        foodInspection.getData(requiredColumns,filterConditions,callBack);
+    }
+    function updateFoodInspectionInfo(){
+        var requiredColumns = {
+            0: 'dba_name',
+            1: 'facility_type',
+            2: 'inspection_date',
+            3: 'results',
+            4: 'latitude',
+            5: 'longitude',
+            6: 'inspection_id'
+        };
+        var filterConditions = {
+            timeStamp: 'lastWeek',
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
+        };
+        foodInspection.getUpdatedData(requiredColumns,filterConditions,callBack);
     }
 </script>
 </body>
