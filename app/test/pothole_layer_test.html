@@ -2,8 +2,8 @@
 <head>
     <link rel="import" href="../include/lib_local.html">
     <link rel="import" href="../include/components.html">
-    <script src="../model/divvyLayer.js"></script>
-    <script src="../model/potholesLayer.js"></script>
+    <script src="../model/layerDivvy.js"></script>
+    <script src="../model/layerPotholes.js"></script>
     <script src="../api/potholesDataSet.js"></script>
 </head>
 <body>
@@ -11,8 +11,8 @@
 
 <script>
     L.Icon.Default.imagePath = "../resources/images";
-    var divvy = new divvyLayer();
-    var potholes = new potholesLayer();
+    var divvy = new layerDivvy();
+    var potholes = new layerPotholes();
     var potholesAPI = new potholesDataSet();
     var mapObject = new Map("map");
 

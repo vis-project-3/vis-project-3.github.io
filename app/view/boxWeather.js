@@ -1,4 +1,4 @@
-function weatherBox(container){
+function boxWeather(container){
 
     var height = 174;
     var width = 789;
@@ -19,7 +19,7 @@ function weatherBox(container){
     var text_size = height * 0.2;
 
     var weather = weather;
-    var icons = new weatherIcons();
+    var icons = new iconsWeather();
 
     this.updateAll = function(data){
         this.updateTemperature(data);

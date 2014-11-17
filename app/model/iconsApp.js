@@ -1,4 +1,4 @@
-function appIcons() {
+function iconsApp() {
 
     var path ="resources/icons/"
 

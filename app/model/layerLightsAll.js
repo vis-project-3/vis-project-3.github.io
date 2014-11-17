@@ -1,8 +1,9 @@
-function lightsLayer() {
+function layerLightsAll() {
     var self = this;
     var layer = [];
     var collection = {};
     var markers = {};
+    var popup = new popupLightsAll();
 
     /* Public Methods */
 
@@ -45,8 +46,12 @@ function lightsLayer() {
 
     var addToMarkers = function (data) {
         markers[data.service_request_number] = L.marker([parseFloat(data.latitude), parseFloat(data.longitude)], {
-            icon : getIcon("light")
+            icon : getIcon("test")
         }).addTo(layer);
+
+        var content = popup.generatePopupContent(data);
+        console.log("[LIGHTS_ALL_LAYER] : Generating Popup");
+        markers[data.service_request_number].bindPopup(content);
     }
 
 }

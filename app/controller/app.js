@@ -5,12 +5,12 @@ function App(){
 
 
     /***** UI COMPONENTS *****/
-    var layer = new layerButtons("#layer");
+    var layer = new buttonsLayer("#layer");
     var controls = new mapControls("#mapcontrol")
-    var toggle = new toggleButtons("#toggle");
+    var toggle = new buttonsToggle("#toggle");
     var navigation = new navigationBar("#top-bar");
-    var graphs = new graphsPane("#graphs");
-    var box = new weatherBox("#weather");
+    var graphs = new boxGraphs("#graphs");
+    var box = new boxWeather("#weather");
 
 
     /***** CONTROLLERS ******/

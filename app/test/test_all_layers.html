@@ -16,11 +16,11 @@
     //this.ui.createSVG("#layer");
     // ui.createSVG("#graphs");
 
-    var layer = new layerButtons("#layer");
+    var layer = new buttonsLayer("#layer");
     var controls = new mapControls("#mapcontrol")
-    var toggle = new toggleButtons("#toggle");
+    var toggle = new buttonsToggle("#toggle");
     var navigation = new navigationBar("#top-bar");
-    var graphs = new graphsPane("#graphs");
+    var graphs = new boxGraphs("#graphs");
     var events = new mapEvents(mapObject.getMap());
     var pointA = mapObject.getPointA();
     var pointB = mapObject.getPointB();
@@ -75,19 +75,19 @@
 
 
     L.Icon.Default.imagePath = "../resources/images";
-    var divvy = new divvyLayer();
+    var divvy = new layerDivvy();
     var divvyAPI = new divvyStationsDataSet();
 
-    var potholes = new potholesLayer();
+    var potholes = new layerPotholes();
     var potholesAPI = new potholesDataSet();
 
-    var vehicles = new vehicleLayer();
+    var vehicles = new layerVehicles();
     var vehiclesAPI = new abandonedVehiclesDataSet();
 
-    var crimes = new crimeLayer(4)
+    var crimes = new layerCrimes(4)
     var crimesAPI = new crimesDataSet();
 
-    var lights = new lightsLayer();
+    var lights = new layerLights();
     var lightsAPI = new streetLightsAllOutDataSet();
 
     var divvyRequiredColumns = {

@@ -1,4 +1,4 @@
-function layerButtons(container){
+function buttonsLayer(container){
     var svg;
     var svgBackdrop;
     var layer;

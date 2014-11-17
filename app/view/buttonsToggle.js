@@ -1,4 +1,4 @@
-function toggleButtons(container){
+function buttonsToggle(container){
     var transitionTime = 500;
     var svg;
     var width = 1500;

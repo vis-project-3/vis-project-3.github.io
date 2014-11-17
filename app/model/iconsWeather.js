@@ -1,4 +1,4 @@
-function weatherIcons() {
+function iconsWeather() {
 
     var path= "resources/icons/weather/";
 

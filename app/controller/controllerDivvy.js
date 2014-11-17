@@ -2,7 +2,7 @@ function controllerDivvy(mapObject) {
     var pointA = [];
     var pointB = [];
     var map = mapObject.getMap();
-    var divvy = new divvyLayer();
+    var divvy = new layerDivvy();
     var divvyAPI = new divvyStationsDataSet();
 
     var requiredColumns = {

@@ -1,9 +1,9 @@
-function divvyLayer() {
+function layerDivvy() {
     var self = this;
     var layer = [];
     var collection = {};
     var markers = {};
-    var popup = new divvyPopUp();
+    var popup = new popupDivvy();
 
     /* Public Methods */
 
@@ -43,7 +43,7 @@ function divvyLayer() {
             icon : getIcon("divvy")
         }).addTo(layer);
 
-        var content = popup.generatePopUpContent(data);
+        var content = popup.generatePopupContent(data);
         console.log("[DIVVY_LAYER] : Generating Popup");
         markers[data.id].bindPopup(content);
     }

@@ -3,10 +3,10 @@ function controllerLights(mapObject) {
     var pointB = [];
     var map = mapObject.getMap();
 
-    var lights = new lightsLayer();
+    var lights = new layerLights();
     var lightsAPI = new streetLightsOneOutDataSet();
 
-    var lightsAll = new lightsAllLayer();
+    var lightsAll = new layerLightsAll();
     var lightsAllAPI = new streetLightsAllOutDataSet();
 
     var requiredColumns = {

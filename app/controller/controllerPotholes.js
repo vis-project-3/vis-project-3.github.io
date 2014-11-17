@@ -2,7 +2,7 @@ function controllerPotholes(mapObject) {
     var pointA = [];
     var pointB = [];
     var map = mapObject.getMap();
-    var potholes = new potholesLayer();
+    var potholes = new layerPotholes();
     var potholesAPI = new potholesDataSet();
 
     var requiredColumns = {

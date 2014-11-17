@@ -1,4 +1,4 @@
-function graphsPane(container){
+function boxGraphs(container){
     var svg;
     var layer;
     var background = "#FFFFFF";

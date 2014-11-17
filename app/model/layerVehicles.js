@@ -1,8 +1,9 @@
-function crimeLayer() {
+function layerVehicles() {
     var self = this;
     var layer = [];
     var collection = {};
     var markers = {};
+    var popup = new popupVehicles();
 
     /* Public Methods */
 
@@ -20,14 +21,14 @@ function crimeLayer() {
 
     this.addCollection = function (data) {
         for (var i = 0; i < data.length; i++) {
-            collection[data[i].id] = data[i];
+            collection[data[i].service_request_number] = data[i];
             addToMarkers(data[i]);
         }
     }
 
     this.updateMarker = function (data) {
-        markers[data.id].setLatLng([parseFloat(data.latitude), parseFloat(data.longitude)]);
-        markers[data.id].update();
+        markers[data.service_request_number].setLatLng([parseFloat(data.latitude), parseFloat(data.longitude)]);
+        markers[data.service_request_number].update();
     }
 
     this.getLayer = function () {
@@ -35,7 +36,7 @@ function crimeLayer() {
     }
 
     this.updateCollectionElement = function (data) {
-        this.collection[data.id] = data;
+        this.collection[data.service_request_number] = data;
     }
 
     /* Private Methods */
@@ -44,9 +45,13 @@ function crimeLayer() {
     }();
 
     var addToMarkers = function (data) {
-        markers[data.id] = L.marker([parseFloat(data.latitude), parseFloat(data.longitude)], {
-            icon : getIcon("crime")
+        markers[data.service_request_number] = L.marker([parseFloat(data.latitude), parseFloat(data.longitude)], {
+            icon : getIcon("vehicle")
         }).addTo(layer);
+
+        var content = popup.generatePopupContent(data);
+        console.log("[VEHICLES_LAYER] : Generating Popup");
+        markers[data.service_request_number].bindPopup(content);
     }
 
 }

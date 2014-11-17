@@ -2,7 +2,7 @@ function controllerCrimes(mapObject) {
     var pointA = [];
     var pointB = [];
     var map = mapObject.getMap();
-    var crimes = new crimeLayer()
+    var crimes = new layerCrimes()
     var crimesAPI = new crimesDataSet();
 
     var requiredColumns = {

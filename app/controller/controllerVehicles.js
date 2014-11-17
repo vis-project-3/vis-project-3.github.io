@@ -2,7 +2,7 @@ function controllerVehicles(mapObject) {
     var pointA = [];
     var pointB = [];
     var map = mapObject.getMap();
-    var vehicles = new vehicleLayer();
+    var vehicles = new layerVehicles();
     var vehiclesAPI = new abandonedVehiclesDataSet();
 
     var requiredColumns = {

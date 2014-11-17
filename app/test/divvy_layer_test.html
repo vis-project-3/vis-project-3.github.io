@@ -2,14 +2,14 @@
     <head>
         <link rel="import" href="../include/lib_local.html">
         <link rel="import" href="../include/components.html">
-        <script src="../model/divvyLayer.js"></script>
+        <script src="../model/layerDivvy.js"></script>
     </head>
     <body>
         <div id="map"></div>
 
         <script>
             L.Icon.Default.imagePath = "../resources/images";
-            var divvy = new divvyLayer();
+            var divvy = new layerDivvy();
             var updatedMarker = {
                 id: 5,
                 latitude : 41.87,
