@@ -10,7 +10,7 @@ function App(){
     var toggle = new toggleButtons("#toggle");
     var navigation = new navigationBar("#top-bar");
     var graphs = new graphsPane("#graphs");
-    var weather = new weatherBox("#weather");
+    var box = new weatherBox("#weather");
 
 
     /***** CONTROLLERS ******/
@@ -22,7 +22,11 @@ function App(){
     var potholes = new controllerPotholes(map);
     var lights = new controllerLights(map);
     var vehicles = new controllerVehicles(map);
+    var weather = new controllerWeather(box);
 
+
+    /**** UPDATES HANDLER *****/
+    new updatesHandler();
 
     /**** LISTENERS *****/
     new buttonsListeners();

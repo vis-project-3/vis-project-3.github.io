@@ -15,9 +15,7 @@ function weatherDataSetMod(){
             url: urlForDataSet,
             dataType: "json",
             success: function(data){
-                console.log(data);
                 var weatherData = modifyJSON(data);
-                console.log(weatherData)
                 callBack(weatherData);
             }
         });
