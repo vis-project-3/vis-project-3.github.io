@@ -9,7 +9,7 @@ function boxWeather(container){
     var id_icon = "weather_icon";
     var id_icon_c = "icon_c";
     var id_icon_f = "icon_f";
-    var id_icon_temp = "icon_thremo";
+    var id_icon_temp = "icon_thermo";
     var icon_size = height;
 
     var rows = 2;
