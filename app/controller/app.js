@@ -33,6 +33,13 @@ function App(){
 
 
     /***** INITIALIZERS TEST *****/
+
+    console.log("[EVENT] : SUNRISE_SUNSET");
+    amplify.publish("SUNRISE_SUNSET");
+
+    console.log("[EVENT] : WEATHER");
+    amplify.publish("WEATHER");
+
     console.log("[EVENT] : POINT_A");
     amplify.publish("POINT_A", pointA);
 

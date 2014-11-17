@@ -21,6 +21,18 @@ function weatherDataSetMod(){
         });
     }
 
+    this.getSunriseSunset = function(callBack){
+        var urlForDataSet = generateQuery2();
+        $.ajax({
+            url: urlForDataSet,
+            dataType: "json",
+            success: function(data){
+                var weatherData = modifyJSON2(data);
+                callBack(weatherData);
+            }
+        });
+    }
+
     var generateQuery = function(){
 
         /*var requiredQuery = dataSetEndPoint;
@@ -39,12 +51,38 @@ function weatherDataSetMod(){
     }
 
     var modifyJSON = function(json){
-
         var modifiedJSON = {
             temp_c : json.query.results.json.current_observation.temp_c,
             temp_f : json.query.results.json.current_observation.temp_f,
             iconName: json.query.results.json.current_observation.icon,
             condition : json.query.results.json.current_observation.weather
+        }
+        return modifiedJSON;
+    }
+
+    var generateQuery2 = function(){
+
+        /*var requiredQuery = dataSetEndPoint;
+         //specify latitude and longitude
+         requiredQuery += 'astronomy/';
+         requiredQuery += 'q/';
+         requiredQuery += 'IL/Chicago';
+         requiredQuery += '.json';
+
+         var yql = yahooURL;
+         yql += "select * from json where url='" + requiredQuery + "'"  +  "&format='json'";*/
+
+        var yql = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20json%20where%20url%3D'http%3A%2F%2Fapi.wunderground.com%2Fapi%2F83a7051e2edc5e81%2Fastronomy%2Fq%2FIL%2FChicago.json'&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys"
+
+        return yql;
+    }
+
+    var modifyJSON2 = function(json){
+        var modifiedJSON = {
+            sunrise_hour : json.query.results.json.sun_phase.sunrise.hour,
+            sunrise_minute : json.query.results.json.sun_phase.sunrise.minute,
+            sunset_hour: json.query.results.json.sun_phase.sunset.hour,
+            sunset_minute: json.query.results.json.sun_phase.sunset.minute
         }
         return modifiedJSON;
     }

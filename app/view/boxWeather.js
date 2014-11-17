@@ -12,6 +12,10 @@ function boxWeather(container){
     var id_icon_temp = "icon_thermo";
     var icon_size = height;
 
+    var sunset;
+    var sunrise;
+    var time;
+
     var rows = 2;
     var svg;
     var xScale;
@@ -21,11 +25,23 @@ function boxWeather(container){
     var weather = weather;
     var icons = new iconsWeather();
 
+    this.setSunriseSunset = function(data) {
+        var sunrise_hour = data.sunrise_hour;
+        var sunrise_minute = data.sunrise_minute;
+        var sunset_hour = data.sunset_hour;
+        var sunset_minute = data.sunset_minute;
+
+        var format = d3.time.format("%H-%M");
+        sunrise = format.parse(sunrise_hour + "-" + sunrise_minute);
+        sunset = format.parse(sunset_hour + "-" + sunset_minute);
+
+    };
+
     this.updateAll = function(data){
+        this.updateTime();
         this.updateTemperature(data);
         this.updateWeather(data);
-        this.updateTime();
-    }
+    };
 
     this.updateTemperature = function(data){
         d3  .select("#" + id_temp_c)
@@ -33,7 +49,7 @@ function boxWeather(container){
 
         d3  .select("#" + id_temp_f)
             .text(data.temp_f);
-    }
+    };
 
     this.updateTime = function(){
         var now = new Date();
@@ -42,6 +58,10 @@ function boxWeather(container){
         var year = now.getFullYear();
         var hours = now.getHours();
         var minutes = now.getMinutes();
+
+        var format = d3.time.format("%H-%M");
+        time = format.parse(hours + "-" + minutes);
+
         var monthNames = [ "January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December" ];
 
@@ -66,11 +86,22 @@ function boxWeather(container){
 
     this.updateWeather = function(data){
         d3  .select("#" + id_icon)
-            .attr("xlink:href", function(){return icons.getIcon(data.iconName);});
+            .attr("xlink:href", function(){
+                if (isSunny()){
+                    return icons.getIcon(data.iconName)}
+                else
+                    return icons.getIcon(data.iconName+"Moon")});
 
         d3  .select("#" + id_condition)
             .text("Condition : " + data.condition);
 
+    };
+
+    var isSunny = function(){
+        if(time>=sunrise && time<=sunset) {
+            return true;
+        }
+        else return false;
     };
 
     var init = function(){

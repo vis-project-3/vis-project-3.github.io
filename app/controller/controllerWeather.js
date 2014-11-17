@@ -3,15 +3,22 @@ function controllerWeather(weatherBox){
     var weather = weatherBox;
     var weatherData = new weatherDataSetMod();
 
-    function getWeather(){
+    var getSunriseSunset = function() {
+        weatherData.getSunriseSunset(callBackSunriseSunset);
+    };
+
+    var getWeather = function(){
         weatherData.getData(callBack);
-    }
+    };
 
-    function callBack(data){
+    var callBack = function(data){
         weather.updateAll(data);
-    }
+    };
 
-    getWeather();
+    var callBackSunriseSunset = function(data){
+        weather.setSunriseSunset(data);
+    };
 
+    amplify.subscribe("SUNRISE_SUNSET",getSunriseSunset)
     amplify.subscribe("WEATHER", getWeather);
 }
