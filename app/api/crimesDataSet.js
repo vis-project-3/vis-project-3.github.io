@@ -17,24 +17,34 @@ function crimesDataSet(){
             url: urlForDataSet,
             dataType: "json",
             success: function(data){
-                self.crimesJSON = data;
-                self.previouCrimesJSON = data;
-                callBack(data);
+                var newData = self.filterData(requiredColumns,data);
+                self.crimesJSON = newData;
+                self.previouCrimesJSON = newData;
+                callBack(newData);
             }
         });
     }
-
+    this.filterData = function(requiredColumns,data){
+        var newData = [];
+        for( var i = 0; i < data.length; i++) {
+            if(Object.keys(data[i]).length === Object.keys(requiredColumns).length){
+                newData.push(data[i]);
+            }
+        }
+        return newData;
+    }
     this.getUpdatedData = function(requiredColumns,filterConditions,callBack){
         var urlForDataSet = this.generateQuery(requiredColumns,filterConditions);
         $.ajax({
             url: urlForDataSet,
             dataType: "json",
             success: function(data){
-                self.crimesJSON = data;
+                var newData = self.filterData(requiredColumns,data);
+                self.crimesJSON = newData;
                 var previousData = self.previouCrimesJSON;
-                self.previouCrimesJSON = data;
+                self.previouCrimesJSON = newData;
                 self.nullifyChanges();
-                self.startCompare(previousData,data);
+                self.startCompare(previousData,newData);
                 var modifiedData = {
                     addedData : self.addedContent,
                     deletedData: self.deletedContent,
@@ -62,15 +72,15 @@ function crimesDataSet(){
     this.appendTimeStamp = function(timeFrame,requiredQuery){
         var frequency;
         if(timeFrame === 'lastWeek'){
-            frequency = d3.time.day.offset(new Date(), -2);
+            frequency = d3.time.day.offset(new Date(), -7);
         }
         else if(timeFrame === 'lastMonth'){
 
-            frequency = d3.time.day.offset(new Date(), -3);
+            frequency = d3.time.day.offset(new Date(), -30);
         }
         var day = d3.time.day(frequency);
         var iso = day.toISOString();
-        requiredQuery += "creation_date >= \'"+ iso + '\' AND ' ;
+        requiredQuery += "date >= \'"+ iso + '\' AND ' ;
         return requiredQuery;
     }
 
@@ -113,7 +123,7 @@ function crimesDataSet(){
             }
         }
         requiredQuery = requiredQuery.substr(0, requiredQuery.length - 4);
-        return requiredQuery;
+        return requiredQuery+'&$order=id DESC';
     }
     // Reference: http://tlrobinson.net/projects/javascript-fun/jsondiff
     this.startCompare = function(objectA,objectB){

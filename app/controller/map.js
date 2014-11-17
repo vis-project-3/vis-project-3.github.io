@@ -4,7 +4,7 @@
 // L.marker.update()
 
 function Map(container){
-
+    var self = this;
     var southWest;
     var northEast;
     var bounds;
@@ -13,6 +13,16 @@ function Map(container){
     var mapView;
     var mapView2;
     var satView;
+    var satView2;
+
+    var map_app_id = 'bInsuD6J2viFbpUIsQyZ';
+    var map_app_code = 'PlxtcGU1qGFBdLzv0KZ84w';
+    var map_base = "base"
+
+    var sat_app_id ="dbiVypDUKUMokmrn9C91";
+    var sat_app_code = "Bz4hzFLMyMM5-5opQRUJTQ";
+    var sat_base = "aerial";
+
     var baseLayers = {}
     var overLayers = {};
     var controls;
@@ -32,7 +42,15 @@ function Map(container){
     }
 
     this.getMap = function(){
-        return map;
+        return self;
+    }
+
+    this.getPointA = function(){
+        return pointA;
+    }
+
+    this.getPointB = function(){
+        return pointB;
     }
 
     this.addOverLayer = function(name,toAdd){
@@ -61,20 +79,29 @@ function Map(container){
         map.zoomOut();
     }
 
+    this.hasLayer = function(layer){
+        console.log("[MAP] : Checking if selected layer exists")
+        return map.hasLayer(layer);
+    }
+
     this.addLayer = function(layer) {
+        console.log("[MAP] : Adding selected Layer");
         map.addLayer(layer);
     }
 
     this.removeLayer = function(layer) {
+        console.log("[MAP] : Removing selected Layer")
         map.removeLayer(layer);
     }
 
     this.switchToMap = function(){
+        console.log("[MAP] : Switching to Street View")
         mapLayer.setUrl(mapView);
         //map.redraw();
     }
 
     this.switchToSat = function(){
+        console.log("[MAP] : Switching to Satellite View")
         mapLayer.setUrl(satView);
         //map.redraw();
     }
@@ -112,7 +139,7 @@ function Map(container){
         map = L.map(container, {
             //maxBounds : bounds,
             minZoom: 10,
-            zoomControl:true,
+            zoomControl:false,
             attributionControl : false
 
             //maxZoom: 18
@@ -122,30 +149,32 @@ function Map(container){
         //                     subdomains: '1234'
         //                 }).addTo(map);
 
-        mapLayer = L.tileLayer('http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}', {
-            //attribution: 'Map &copy; 1987-2014 <a href="http://developer.here.com">HERE</a>',
+
+        mapView = 'http://{s}.' + map_base + '.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id=' + map_app_id + '&app_code=' + map_app_code;
+        satView = 'http://{s}.' + sat_base +'.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/satellite.day/{z}/{x}/{y}/256/png8?app_id=' + sat_app_id + '&app_code=' + sat_app_code;
+
+        mapLayer = L.tileLayer(mapView, {
             subdomains: '1234',
-            mapID: 'newest',
-            app_id: 'bInsuD6J2viFbpUIsQyZ',
-            app_code: 'PlxtcGU1qGFBdLzv0KZ84w',
-            base: 'base'
-            //minZoom: 0,
-            //maxZoom: 20
+            mapID: 'newest'
         }).addTo(map);
 
-        mapView = 'http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}'
-        mapView2 = 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
-        satView = 'http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpeg';
+        //mapView = 'http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}';
+        //mapView2 = 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
+        //satView2 = 'http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/satellite.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}';
+        //satView = 'http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpeg';
+
+
+
+
 
         computeRectangle();
         setRectangle();
 
-        /*L.Routing.control({
-            waypoints: [
-                L.latLng(pointA),
-                L.latLng(pointB)
-            ]
-        }).addTo(map);*/
+
+        amplify.subscribe("VIEW_ZOOM_PLUS", self.zoomIn);
+        amplify.subscribe("VIEW_ZOOM_MINUS", self.zoomOut);
+        amplify.subscribe("VIEW_SAT_MAP", self.switchToSat);
+        amplify.subscribe("VIEW_STREET_MAP", self.switchToMap);
 
     }();
 

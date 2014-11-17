@@ -2,73 +2,6 @@
     <head>
         <link rel="import" href="include/lib_local.html">
         <link rel="import" href="include/components.html">
-        <style type="text/css">
-
-            #mapTiles {
-                position: absolute;
-                bottom: 11%;
-                left: 1%;
-                width : 10%;
-                height: 10%;
-            }
-
-            .map-preview-tile {
-                width: 40%;
-                height: 72%;
-                margin-right: 10%;
-                float: left;
-                border: 3px solid #CCCCCC;
-            }
-
-            .map-preview-tile span {
-                background-color: #666666;
-                color: #FFFF99;
-                padding: 2px 10px 4px 6px;
-                font-family: Courier, Serif;
-                font-size: 13px;
-                font-weight: lighter;
-            }
-
-            .map-preview-tile.selected {
-                border: 3px solid #CC9933;
-            }
-
-            .map-preview-tile.streetview {
-                background-image: url("resources/images/streetview.png");
-                background-size: 100% 100%;
-            }
-
-            .map-preview-tile.satellite {
-                background-image: url("resources/images/satellite.png");
-                background-size: 100% 100%;
-            }
-
-            #UI-feature-toggle {
-                width: 100%;
-                padding: 6px;
-                background-color: #333333;
-                float: left;
-
-            }
-
-            #UI-feature-toggle span {
-                color: #FFFFFF;
-                margin-right: 10px;
-                font-family: Helvetica, 'Open Sans', Sans-serif;
-                font-weight: lighter;
-                font-size: 11px;
-                text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.65);
-                padding: 3px;
-            }
-
-            #UI-feature-toggle span.selected {
-                -moz-border-radius:1px 1px 1px 1px;  // rounds corners for firefox
-            border-radius:1px 1px 1px 1px;
-                background-color: #66CC66;
-            }
-
-
-        </style>
     </head>
     <body>
         <div id="map"></div>
@@ -77,50 +10,11 @@
         <div id="notifications"></div>
         <div id="layer"></div>
         <div id="graphs"></div>
-        <div id="mapselection"></div>
-
-        <div id="toggle">
-            <button id="toggle_all">Toggle</button>
-            <button id="toggle_weather">Weather</button>
-            <button id="toggle_layer">Layer</button>
-            <button id="toggle_mapselection">Selection</button>
-            <button id="toggle_graphs">Graphs</button>
-            <button id="toggle_notifications">Notifications</button>
-        </div>
+        <div id="mapcontrol"></div>
+        <div id="toggle"></div>
 
         <script>
             var app = new App();
-            var transitionTime = 500;
-
-
-                $("#toggle_all").click(function(){
-                    $("#weather").toggle(transitionTime);
-                    $("#layer").toggle(transitionTime);
-                    $("#mapselection").toggle(transitionTime);
-                    $("#notifications").toggle(transitionTime);
-                    $("#graphs").toggle(transitionTime);
-                });
-
-                $("#toggle_weather").click(function(){
-                    $("#weather").toggle(transitionTime);
-                });
-
-                $("#toggle_notifications").click(function(){
-                    $("#notifications").toggle(transitionTime);
-                });
-
-                $("#toggle_layer").click(function(){
-                    $("#layer").toggle(transitionTime);
-                });
-
-                $("#toggle_mapselection").click(function(){
-                    $("#mapselection").toggle(transitionTime);
-                });
-
-                $("#toggle_graphs").click(function(){
-                    $("#graphs").toggle(transitionTime);
-                });
-
         </script>
     </body>
 </html>

@@ -1,0 +1,107 @@
+/*
+Error: Undefined operation: "sin(0)/2 times -17.5px".
+        on line 403 of weatherIcons.sass
+
+398:   50%
+399:     transform: translateY($svgSize * .25)
+400:   @while $i <= 100
+401:     #{$i}%
+402:       $eq: sin($t)/2
+403:       transform: translateY($eq*-($svgSize*.25)+($svgSize*.25)) translateX(-.3px * ($i - 50))
+404:       //-webkit-filter: hue-rotate(360 * $eq + deg)
+405:       //border-radius: 50% * $eq
+406:     $t: $t + $increase * $animationStep * 2
+407:     $i: $i + $animationStep
+408: 
+
+Backtrace:
+weatherIcons.sass:403
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/operation.rb:85:in `rescue in _perform'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/operation.rb:81:in `_perform'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/node.rb:50:in `perform'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/operation.rb:64:in `_perform'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/node.rb:50:in `perform'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/funcall.rb:170:in `perform_arg'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/funcall.rb:124:in `block in _perform'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/funcall.rb:124:in `each'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/funcall.rb:124:in `each_with_index'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/funcall.rb:124:in `each'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/funcall.rb:124:in `map'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/funcall.rb:124:in `_perform'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/node.rb:50:in `perform'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/list_literal.rb:62:in `block in _perform'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/list_literal.rb:62:in `map'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/list_literal.rb:62:in `_perform'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/script/tree/node.rb:50:in `perform'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:384:in `visit_prop'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/stack.rb:79:in `block in with_base'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/stack.rb:115:in `with_frame'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/stack.rb:79:in `with_base'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:158:in `visit'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:409:in `block (2 levels) in visit_rule'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:409:in `map'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:409:in `block in visit_rule'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:408:in `visit_rule'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/stack.rb:79:in `block in with_base'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/stack.rb:115:in `with_frame'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/stack.rb:79:in `with_base'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:158:in `visit'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:482:in `block (2 levels) in visit_while'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:482:in `map'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:482:in `block in visit_while'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:481:in `visit_while'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/stack.rb:79:in `block in with_base'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/stack.rb:115:in `with_frame'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/stack.rb:79:in `with_base'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:158:in `visit'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:491:in `block (2 levels) in visit_directive'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:491:in `map'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:491:in `block in visit_directive'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:490:in `visit_directive'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/stack.rb:79:in `block in with_base'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/stack.rb:115:in `with_frame'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/stack.rb:79:in `with_base'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:158:in `visit'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/base.rb:52:in `map'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/base.rb:36:in `visit'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:157:in `visit'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/visitors/perform.rb:8:in `visit'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/root_node.rb:36:in `css_tree'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/engine.rb:368:in `_render_with_sourcemap'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/engine.rb:285:in `render_with_sourcemap'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/plugin/compiler.rb:489:in `update_stylesheet'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/plugin/compiler.rb:209:in `each'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/plugin.rb:82:in `update_stylesheets'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/exec/sass_scss.rb:350:in `watch_or_update'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/exec/sass_scss.rb:50:in `process_result'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/exec/base.rb:52:in `parse'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/lib/sass/exec/base.rb:19:in `parse!'
+C:/Ruby21/lib/ruby/gems/2.1.0/gems/sass-3.4.7/bin/sass:13:in `<top (required)>'
+C:/Ruby21/bin/sass:23:in `load'
+C:/Ruby21/bin/sass:23:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Undefined operation: \"sin(0)/2 times -17.5px\".\A         on line 403 of weatherIcons.sass\A \A 398:   50%\A 399:     transform: translateY($svgSize * .25)\A 400:   @while $i <= 100\A 401:     #{$i}%\A 402:       $eq: sin($t)/2\A 403:       transform: translateY($eq*-($svgSize*.25)+($svgSize*.25)) translateX(-.3px * ($i - 50))\A 404:       //-webkit-filter: hue-rotate(360 * $eq + deg)\A 405:       //border-radius: 50% * $eq\A 406:     $t: $t + $increase * $animationStep * 2\A 407:     $i: $i + $animationStep\A 408: "; }

@@ -1,0 +1,38 @@
+<html>
+<head>
+    <link rel="import" href="../include/lib_local.html">
+    <link rel="import" href="../include/components.html">
+
+
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAO591-H_CwTxh-Zu9BQiR7SWTdRfq1wmQ">
+    </script>
+
+
+</head>
+<body>
+<div id="map"></div>
+
+<script>
+    L.Icon.Default.imagePath = "../resources/images";
+
+    var mapObject = new Map("map");
+    var map = mapObject.getMapVar();
+    var pointA = mapObject.getPointA();
+    var pointB = mapObject.getPointB();
+
+    console.log(pointA);
+    console.log(pointB);
+
+    L.Routing.control({
+        waypoints: [
+            L.latLng(pointA[0],pointA[1]),
+            L.latLng(pointB[0],pointB[1])
+        ]
+    }).addTo(map);
+
+
+
+</script>
+</body>
+</html>

@@ -14,26 +14,46 @@
 <script src="../api/potholesDataSet.js"></script>
 <script src="../api/weatherDataSet.js"></script>
 <script src="../api/divvyStationsDataSet.js"></script>
+<script src="../api/crimesDataSet.js"></script>
+<script src="../api/abandonedVehiclesDataSet.js"></script>
+<script src="../api/streetLightsOneOutDataSet.js"></script>
+<script src="../api/streetLightsAllOutDataSet.js"></script>
+<script src="../api/foodInspectionDataSet.js"></script>
 <script>
     var potholesData = new potholesDataSet();
     var weatherData = new weatherDataSet();
     var bikeStations = new divvyStationsDataSet();
+    var crimes = new crimesDataSet();
+    var abandonedVehicles = new abandonedVehiclesDataSet();
+    var lightsOneOut = new streetLightsOneOutDataSet();
+    var lightsAllOut = new streetLightsAllOutDataSet();
+    var foodInspection = new foodInspectionDataSet();
 </script>
 <body>
 <div class="content">
     <h1>Pulling JSON data from SODA API</h1>
     <p>The following example will pull and display data from the Chicago Potholes database.
 
-    <button class="topcoat-button--cta" onclick="getInfo()">Show Potholes Data</button>
-    <button class="topcoat-button--cta" onclick="updateInfo()">Update Data</button>
+    <button class="topcoat-button--cta" onclick="getPotHolesInfo()">Show Potholes Data</button>
+    <button class="topcoat-button--cta" onclick="updatePotHolesInfo()">Update Potholes Data</button>
+    <button class="topcoat-button--cta" onclick="getCrimesInfo()">Get Crimes</button>
+    <button class="topcoat-button--cta" onclick="getUpdatedCrimesInfo()">Update Crimes</button>
+    <button class="topcoat-button--cta" onclick="getAbandonedVehicles()">Get Abandoned Vehicles</button>
+    <button class="topcoat-button--cta" onclick="getUpdatedAbandonedVehicles()">Get Updated Abandoned Vehicles</button>
+    <button class="topcoat-button--cta" onclick="getLightsOneOut()">Get Lights One out</button>
+    <button class="topcoat-button--cta" onclick="getUpdatedLightsOneOut()">Get Updated Lights One Out</button>
+    <button class="topcoat-button--cta" onclick="getLightsAllOut()">Get Lights All out</button>
+    <button class="topcoat-button--cta" onclick="getUpdatedLightsAllOut()">Get Updated Lights All Out</button>
     <button class="topcoat-button--cta" onclick="getWeather()">Get Weather</button>
     <button class="topcoat-button--cta" onclick="getStationsInfo()">Get Divvy Stations</button>
+    <button class="topcoat-button--cta" onclick="getFoodInspectionInfo()">Get Inspection Details</button>
+    <button class="topcoat-button--cta" onclick="updateFoodInspectionInfo()">Update Inspection Data</button>
 </div>
 <script>
     function callBack(data){
         console.log(data);
     }
-    function getInfo(){filtered
+    function getPotHolesInfo(){
         var requiredColumns = {
             0: 'creation_date',
             1: 'status',
@@ -49,7 +69,7 @@
         };
         potholesData.getData(requiredColumns,filterConditions,callBack);
     }
-    function updateInfo(){
+    function updatePotHolesInfo(){
         var requiredColumns = {
             0: 'creation_date',
             1: 'status',
@@ -69,13 +89,184 @@
         var latitude = 41.870452;
         var longitude =  -87.647978;
         var num_of_days = 0;
-        weatherData.getWeatherData(latitude,longitude,num_of_days);
+        weatherData.getWeatherData(latitude,longitude,num_of_days,callBack);
     }
     function getStationsInfo(){
-        var latitude = 41.870452;
-        var longitude =  -87.647978;
-        var num_of_stns = 5;
-        bikeStations.getSurroundingStationsData(latitude,longitude,num_of_stns,callBack);
+        var requiredColumns = {
+            0: 'id',
+            1: 'stationName',
+            2: 'availableDocks',
+            3: 'availableBikes',
+            4: 'latitude',
+            5: 'longitude'
+        };
+        var filterConditions = {
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
+        };
+        bikeStations.getSurroundingStationsData(requiredColumns,filterConditions,callBack);
+    }
+    function getCrimesInfo(){
+        var requiredColumns = {
+            0: 'date',
+            1: 'primary_type',
+            2: 'case_number',
+            3: 'latitude',
+            4: 'longitude',
+            5: 'id'
+        };
+        var filterConditions = {
+            timeStamp: 'lastMonth',
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
+        };
+        crimes.getData(requiredColumns,filterConditions,callBack);
+    }
+    function getUpdatedCrimesInfo(){
+        var requiredColumns = {
+            0: 'date',
+            1: 'primary_type',
+            2: 'case_number',
+            3: 'latitude',
+            4: 'longitude',
+            5: 'id'
+        };
+        var filterConditions = {
+            timeStamp: 'lastWeek',
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
+        };
+        crimes.getUpdatedData(requiredColumns,filterConditions,callBack);
+    }
+    function getAbandonedVehicles(){
+        var requiredColumns = {
+            0: 'creation_date',
+            1: 'status',
+            2: 'service_request_number',
+            3: 'latitude',
+            4: 'longitude'
+        };
+        var filterConditions = {
+            timeStamp: 'lastMonth',
+            status: 'Open',
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
+        };
+        abandonedVehicles.getData(requiredColumns,filterConditions,callBack);
+    }
+    function getUpdatedAbandonedVehicles(){
+        var requiredColumns = {
+            0: 'creation_date',
+            1: 'status',
+            2: 'service_request_number',
+            3: 'latitude',
+            4: 'longitude'
+        };
+        var filterConditions = {
+            timeStamp: 'lastWeek',
+            status: 'Open',
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
+        };
+        abandonedVehicles.getUpdatedData(requiredColumns,filterConditions,callBack);
+    }
+    function getLightsOneOut(){
+        var requiredColumns = {
+            0: 'creation_date',
+            1: 'status',
+            2: 'service_request_number',
+            3: 'latitude',
+            4: 'longitude'
+        };
+        var filterConditions = {
+            timeStamp: 'lastMonth',
+            status: 'Open',
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
+        };
+        lightsOneOut.getData(requiredColumns,filterConditions,callBack);
+    }
+    function getUpdatedLightsOneOut(){
+        var requiredColumns = {
+            0: 'creation_date',
+            1: 'status',
+            2: 'service_request_number',
+            3: 'latitude',
+            4: 'longitude'
+        };
+        var filterConditions = {
+            timeStamp: 'lastWeek',
+            status: 'Open',
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
+        };
+        lightsOneOut.getUpdatedData(requiredColumns,filterConditions,callBack);
+    }
+    function getLightsAllOut(){
+        var requiredColumns = {
+            0: 'creation_date',
+            1: 'status',
+            2: 'service_request_number',
+            3: 'latitude',
+            4: 'longitude'
+        };
+        var filterConditions = {
+            timeStamp: 'lastMonth',
+            status: 'Open',
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
+        };
+        lightsAllOut.getData(requiredColumns,filterConditions,callBack);
+    }
+    function getUpdatedLightsAllOut(){
+        var requiredColumns = {
+            0: 'creation_date',
+            1: 'status',
+            2: 'service_request_number',
+            3: 'latitude',
+            4: 'longitude'
+        };
+        var filterConditions = {
+            timeStamp: 'lastWeek',
+            status: 'Open',
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
+        };
+        lightsAllOut.getUpdatedData(requiredColumns,filterConditions,callBack);
+    }
+    function getFoodInspectionInfo(){
+        var requiredColumns = {
+            0: 'dba_name',
+            1: 'facility_type',
+            2: 'inspection_date',
+            3: 'results',
+            4: 'latitude',
+            5: 'longitude',
+            6: 'inspection_id'
+        };
+        var filterConditions = {
+            timeStamp: 'lastMonth',
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
+        };
+        foodInspection.getData(requiredColumns,filterConditions,callBack);
+    }
+    function updateFoodInspectionInfo(){
+        var requiredColumns = {
+            0: 'dba_name',
+            1: 'facility_type',
+            2: 'inspection_date',
+            3: 'results',
+            4: 'latitude',
+            5: 'longitude',
+            6: 'inspection_id'
+        };
+        var filterConditions = {
+            timeStamp: 'lastWeek',
+            latitude:[41.8,41.9],//[from,to]
+            longitude:[-87.8,-87.6]//[from,to]
+        };
+        foodInspection.getUpdatedData(requiredColumns,filterConditions,callBack);
     }
 </script>
 </body>

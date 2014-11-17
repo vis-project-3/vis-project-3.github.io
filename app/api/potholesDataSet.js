@@ -18,11 +18,22 @@ function potholesDataSet(){
             url: urlForDataSet,
             dataType: "json",
             success: function(data){
-                self.potholesJSON = data;
-                self.previousPotholesJSON = data;
-                callBack(data);
+                var newData = self.filterData(requiredColumns,data);
+                self.potholesJSON = newData;
+                self.previousPotholesJSON = newData;
+                callBack(newData);
             }
         });
+    }
+
+    this.filterData = function(requiredColumns,data){
+        var newData = [];
+        for( var i = 0; i < data.length; i++) {
+            if(Object.keys(data[i]).length === Object.keys(requiredColumns).length){
+                newData.push(data[i]);
+            }
+        }
+        return newData;
     }
 
     this.getUpdatedData = function(requiredColumns,filterConditions,callBack){
@@ -31,11 +42,12 @@ function potholesDataSet(){
             url: urlForDataSet,
             dataType: "json",
             success: function(data){
-                self.potholesJSON = data;
+                var newData = self.filterData(requiredColumns,data);
+                self.potholesJSON = newData;
                 var previousData = self.previousPotholesJSON;
-                self.previousPotholesJSON = data;
+                self.previousPotholesJSON = newData;
                 self.nullifyChanges();
-                self.startCompare(previousData,data);
+                self.startCompare(previousData,newData);
                 var modifiedData = {
                     addedData : self.addedContent,
                     deletedData: self.deletedContent,
@@ -113,7 +125,7 @@ function potholesDataSet(){
             }
         }
         requiredQuery = requiredQuery.substr(0, requiredQuery.length - 4);
-        return requiredQuery;
+        return requiredQuery+'&$order=service_request_number DESC';
     }
 
     // Reference: http://tlrobinson.net/projects/javascript-fun/jsondiff

@@ -17,11 +17,22 @@ function abandonedVehiclesDataSet(){
             url: urlForDataSet,
             dataType: "json",
             success: function(data){
-                self.abandonedVehiclesJSON = data;
-                self.previousAbandonedVehiclesJSON = data;
-                callBack(data);
+                var newData = self.filterData(requiredColumns,data);
+                self.abandonedVehiclesJSON = newData;
+                self.previousAbandonedVehiclesJSON = newData;
+                callBack(newData);
             }
         });
+    }
+
+    this.filterData = function(requiredColumns,data){
+        var newData = [];
+        for( var i = 0; i < data.length; i++) {
+            if(Object.keys(data[i]).length === Object.keys(requiredColumns).length){
+                newData.push(data[i]);
+            }
+        }
+        return newData;
     }
 
     this.getUpdatedData = function(requiredColumns,filterConditions,callBack){
@@ -30,11 +41,12 @@ function abandonedVehiclesDataSet(){
             url: urlForDataSet,
             dataType: "json",
             success: function(data){
-                self.abandonedVehiclesJSON = data;
+                var newData = self.filterData(requiredColumns,data);
+                self.abandonedVehiclesJSON = newData;
                 var previousData = self.previousAbandonedVehiclesJSON;
-                self.previousAbandonedVehiclesJSON = data;
+                self.previousAbandonedVehiclesJSON = newData;
                 self.nullifyChanges();
-                self.startCompare(previousData,data);
+                self.startCompare(previousData,newData);
                 var modifiedData = {
                     addedData : self.addedContent,
                     deletedData: self.deletedContent,
@@ -61,11 +73,11 @@ function abandonedVehiclesDataSet(){
     this.appendTimeStamp = function(timeFrame,requiredQuery){
         var frequency;
         if(timeFrame === 'lastWeek'){
-            frequency = d3.time.day.offset(new Date(), -2);
+            frequency = d3.time.day.offset(new Date(), -7);
         }
         else if(timeFrame === 'lastMonth'){
 
-            frequency = d3.time.day.offset(new Date(), -3);
+            frequency = d3.time.day.offset(new Date(), -30);
         }
         var day = d3.time.day(frequency);
         var iso = day.toISOString();
@@ -112,7 +124,7 @@ function abandonedVehiclesDataSet(){
             }
         }
         requiredQuery = requiredQuery.substr(0, requiredQuery.length - 4);
-        return requiredQuery;
+        return requiredQuery+'&$order=service_request_number DESC';
     }
     // Reference: http://tlrobinson.net/projects/javascript-fun/jsondiff
     this.startCompare = function(objectA,objectB){
