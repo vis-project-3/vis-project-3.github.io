@@ -12,6 +12,7 @@ function boxWeather(container){
     var id_icon_temp = "icon_thermo";
     var icon_size = height;
 
+
     var sunset;
     var sunrise;
     var time;
@@ -49,6 +50,20 @@ function boxWeather(container){
 
         d3  .select("#" + id_temp_f)
             .text(data.temp_f);
+
+        d3  .select("#" + id_icon_temp)
+            .attr("xlink:href", function(d){
+                if (data.temp_f<=0 && data.temp_f<=25)
+                    return icons.getIcon("thermo0");
+                if (data.temp_f>0 && data.temp_f<=25)
+                    return icons.getIcon("thermo25");
+                if (data.temp_f>25 && data.temp_f<=50)
+                    return icons.getIcon("thermo50");
+                if (data.temp_f>50 && data.temp_f<=75)
+                    return icons.getIcon("thermo75");
+                if (data.temp_f>100)
+                    return icons.getIcon("thermo100");
+            })
     };
 
     this.updateTime = function(){
@@ -167,8 +182,8 @@ function boxWeather(container){
 
         svg .append("image")
             .attr("id",id_icon_temp)
-            .attr("xlink:href", function(d){return icons.getIcon("thermo50");
-                })
+            //.attr("xlink:href", function(d){return icons.getIcon("thermo50");
+              //  })
             .attr("x", xScale(2))
             .attr("y", yScale(1) - text_size)
             .attr("width",100)
