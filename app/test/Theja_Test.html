@@ -8,7 +8,36 @@
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/topcoat/0.8.0/css/topcoat-desktop-light.min.css">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link href="http://fonts.googleapis.com/css?family=Fjalla+One|Cantarell:400,400italic,700italic,700" rel="stylesheet" type="text/css" />
+    <style>
+        .button1 {
+            background-image: url('../resources/icons/UBER.png');
+            background-size: cover;
+            width: 280px;
+            height: 44px;
+            margin: 0 auto;
+        }
+        .button2 {
+            background-image: url('../resources/icons/UBER.png');
+            background-size: cover;
+            width: 280px;
+            height: 44px;
+            margin: 0 auto;
+        }
+        #time {
+            text-align: right;
+            margin-top: 2%;
+            padding-top: 12px;
+            padding-right: 14px;
+        }
+        #price {
+            text-align: right;
+            margin-top: 2%;
+            padding-top: 12px;
+            padding-right: 14px;
+        }
+    </style>
 </head>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="../api/potholesDataSet.js"></script>
@@ -19,6 +48,8 @@
 <script src="../api/streetLightsOneOutDataSet.js"></script>
 <script src="../api/streetLightsAllOutDataSet.js"></script>
 <script src="../api/foodInspectionDataSet.js"></script>
+<script src="../api/uberDataSet.js"></script>
+
 <script>
     var potholesData = new potholesDataSet();
     var weatherData = new weatherDataSet();
@@ -28,6 +59,8 @@
     var lightsOneOut = new streetLightsOneOutDataSet();
     var lightsAllOut = new streetLightsAllOutDataSet();
     var foodInspection = new foodInspectionDataSet();
+    var uberDetails = new uberDataSet();
+
 </script>
 <body>
 <div class="content">
@@ -48,11 +81,41 @@
     <button class="topcoat-button--cta" onclick="getStationsInfo()">Get Divvy Stations</button>
     <button class="topcoat-button--cta" onclick="getFoodInspectionInfo()">Get Inspection Details</button>
     <button class="topcoat-button--cta" onclick="updateFoodInspectionInfo()">Update Inspection Data</button>
+    <div class="button1">
+        <p id="time">ESTIMATING TIME</p>
+    </div>
+    <div class="button2">
+        <p id="price">ESTIMATING PRICE</p>
+    </div>
+    </div>
 </div>
 <script>
     function callBack(data){
         console.log(data);
     }
+    ////////////////////////////////////////////////////Uber API/////////////////////////////////////////////////
+    ////////////////////Price Estimates/////////////////////////
+    //TODO: Update the ORIGIN URI field in Uber App management to our app. Currently it is set to localhost.,i.e., http://localhost:8888
+    var fromCoordinates = {
+        latitude:41.8,
+        longitude:-87.8
+    };
+    var toCoordinates = {
+        latitude:41.9,
+        longitude:-87.6
+    };
+    if (typeof timer === typeof undefined) {
+        timer = setInterval(function() {
+            uberDetails.getTimeEstimates(fromCoordinates,callBack)
+        }, 60000);
+
+        // Query Uber API if needed
+        uberDetails.getPriceEstimates(fromCoordinates,toCoordinates,callBack)
+        uberDetails.getTimeEstimates(fromCoordinates,callBack);
+        //Cross-Origin error. Have to check
+        //uberDetails.getAvailableUberProducts(fromCoordinates,callBack);
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function getPotHolesInfo(){
         var requiredColumns = {
             0: 'creation_date',

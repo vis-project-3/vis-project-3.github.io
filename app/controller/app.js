@@ -21,12 +21,13 @@ function App(){
     var crimes = new controllerCrimes(map);
     var potholes = new controllerPotholes(map);
     var lights = new controllerLights(map);
+    var lightsAll = new controllerLightsAll(map);
     var vehicles = new controllerVehicles(map);
     var weather = new controllerWeather(box);
 
 
     /**** UPDATES HANDLER *****/
-    new updatesHandler();
+    //new updatesHandler();
 
     /**** LISTENERS *****/
     new buttonsListeners();
@@ -34,11 +35,11 @@ function App(){
 
     /***** INITIALIZERS TEST *****/
 
-    console.log("[EVENT] : SUNRISE_SUNSET");
+    /*console.log("[EVENT] : SUNRISE_SUNSET");
     amplify.publish("SUNRISE_SUNSET");
 
     console.log("[EVENT] : WEATHER");
-    amplify.publish("WEATHER");
+    amplify.publish("WEATHER");*/
 
     console.log("[EVENT] : POINT_A");
     amplify.publish("POINT_A", pointA);

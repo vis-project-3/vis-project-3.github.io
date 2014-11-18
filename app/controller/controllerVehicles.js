@@ -1,9 +1,11 @@
 function controllerVehicles(mapObject) {
+    var controller = new genericController();
+    var name = "VEHICLE";
+    var layer = new genericLayer();
+    var api = new potholesDataSet();
+    var popup = new popupPotholes();
     var pointA = [];
     var pointB = [];
-    var map = mapObject.getMap();
-    var vehicles = new layerVehicles();
-    var vehiclesAPI = new abandonedVehiclesDataSet();
 
     var requiredColumns = {
         0: 'creation_date',
@@ -20,41 +22,9 @@ function controllerVehicles(mapObject) {
         longitude:[Math.min(pointA[1],pointB[1]),Math.max(pointA[1],pointB[1])]
     };
 
-    var callBackAdd = function(data){
-        console.log("[VEHICLES] : Adding Data");
-        vehicles.clearData();
-        vehicles.addCollection(data);
-    };
-
-    var callBackUpdate = function(data){
-        console.log("[VEHICLES] : Updating Data");
-        //divvy.update
-    }
-
-    var clearData = function () {
-        vehicles.clearData();
-    }
-
-    var newData = function () {
-        vehiclesAPI.getData(requiredColumns,filterConditions,callBackAdd);
-    };
-
-    var updateData = function () {
-        //divvyAPI.getUpdatedData(requiredColumns, filterConditions, callBackUpdate)
-    };
-
-    //Toggle Layer
-    var toggleLayer = function(){
-        console.log("[VEHICLES] : Toggling Layer");
-        var layer = vehicles.getLayer();
-        if(map.hasLayer(layer)==true){
-            map.removeLayer(layer);}
-        else map.addLayer(layer);
-    };
-
     var setPointA = function(data){
         pointA = data;
-        setBoundaries();
+        setBoundaries()
     };
     var setPointB = function(data){
         pointB = data;
@@ -66,10 +36,23 @@ function controllerVehicles(mapObject) {
         filterConditions.longitude =  [Math.min(pointA[1], pointB[1]), Math.max(pointA[1], pointB[1])];
     };
 
-    amplify.subscribe("VEHICLES_CLEAR_DATA", clearData);
-    amplify.subscribe("VEHICLES_UPDATE_DATA", updateData);
-    amplify.subscribe("VEHICLES_NEW_DATA", newData);
-    amplify.subscribe("VIEW_LAYER_VEHICLES", toggleLayer);
+    layer.setKey("service_request_number");
+    layer.setName(name);
+    layer.setIcon("vehicle");
+    layer.setPopup(popup);
+
+    controller.setName(name);
+    controller.setMap(mapObject);
+    controller.setLayer(layer);
+    controller.setfilterConditions(filterConditions);
+    controller.setRequiredColumns(requiredColumns);
+    controller.setAPI(api);
+
+    controller.subscribe(name + "_CLEAR_DATA", controller.clearData);
+    controller.subscribe(name + "_UPDATE_DATA", controller.updateData);
+    controller.subscribe(name + "_NEW_DATA", controller.newData);
+    controller.subscribe("VIEW_LAYER_" + name, controller.toggleLayer);
+
     amplify.subscribe("POINT_A", setPointA);
     amplify.subscribe("POINT_B", setPointB);
 }
