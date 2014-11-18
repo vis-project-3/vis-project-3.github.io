@@ -5,7 +5,7 @@ function divvyStationsDataSet(){
     //constructor code goes here
     this.dataSetEndPoint = 'https://query.yahooapis.com/v1/public/yql?q=';
 
-    this.getSurroundingStationsData = function(requiredColumns,filterConditions,callBack){
+    this.getData = function(requiredColumns,filterConditions,callBack){
         var urlForDataSet = this.generateQuery(requiredColumns,filterConditions);
         $.ajax({
             url: urlForDataSet,

@@ -1,9 +1,11 @@
 function controllerPotholes(mapObject) {
+    var controller = new genericController();
+    var name = "POTHOLES";
+    var layer = new genericLayer();
+    var api = new potholesDataSet();
+    var popup = new popupPotholes();
     var pointA = [];
     var pointB = [];
-    var map = mapObject.getMap();
-    var potholes = new layerPotholes();
-    var potholesAPI = new potholesDataSet();
 
     var requiredColumns = {
         0: 'creation_date',
@@ -20,41 +22,9 @@ function controllerPotholes(mapObject) {
         longitude:[Math.min(pointA[1],pointB[1]),Math.max(pointA[1],pointB[1])]
     };
 
-    var callBackAdd = function(data){
-        console.log("[POTHOLES] : Adding Data");
-        potholes.clearData();
-        potholes.addCollection(data);
-    };
-
-    var callBackUpdate = function(data){
-        console.log("[POTHOLES] : Updating Data");
-        //divvy.update
-    }
-
-    var clearData = function () {
-        potholes.clearData();
-    }
-
-    var newData = function () {
-        potholesAPI.getData(requiredColumns,filterConditions,callBackAdd);
-    };
-
-    var updateData = function () {
-        //divvyAPI.getUpdatedData(requiredColumns, filterConditions, callBackUpdate)
-    };
-
-    //Toggle Layer
-    var toggleLayer = function(){
-        console.log("[POTHOLES] : Toggling Layer");
-        var layer = potholes.getLayer();
-        if(map.hasLayer(layer)==true){
-            map.removeLayer(layer);}
-        else map.addLayer(layer);
-    };
-
     var setPointA = function(data){
         pointA = data;
-        setBoundaries();
+        setBoundaries()
     };
     var setPointB = function(data){
         pointB = data;
@@ -66,10 +36,23 @@ function controllerPotholes(mapObject) {
         filterConditions.longitude =  [Math.min(pointA[1], pointB[1]), Math.max(pointA[1], pointB[1])];
     };
 
-    amplify.subscribe("POTHOLES_CLEAR_DATA", clearData);
-    amplify.subscribe("POTHOLES_UPDATE_DATA", updateData);
-    amplify.subscribe("POTHOLES_NEW_DATA", newData);
-    amplify.subscribe("VIEW_LAYER_POTHOLES", toggleLayer);
+    layer.setKey("service_request_number");
+    layer.setName(name);
+    layer.setIcon("pothole");
+    layer.setPopup(popup);
+
+    controller.setName(name);
+    controller.setMap(mapObject);
+    controller.setLayer(layer);
+    controller.setfilterConditions(filterConditions);
+    controller.setRequiredColumns(requiredColumns);
+    controller.setAPI(api);
+
+    controller.subscribe(name + "_CLEAR_DATA", controller.clearData);
+    controller.subscribe(name + "_UPDATE_DATA", controller.updateData);
+    controller.subscribe(name + "_NEW_DATA", controller.newData);
+    controller.subscribe("VIEW_LAYER_" + name, controller.toggleLayer);
+
     amplify.subscribe("POINT_A", setPointA);
     amplify.subscribe("POINT_B", setPointB);
 }

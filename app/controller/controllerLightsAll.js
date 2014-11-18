@@ -1,25 +1,26 @@
-function controllerCrimes(mapObject) {
+function controllerLightsAll(mapObject) {
     var controller = new genericController();
-    var name = "CRIMES";
+    var name = "LIGHTS";
     var layer = new genericLayer();
-    var api = new crimesDataSet();
-    var popup = new popupCrimes();
+    var api = new streetLightsAllOutDataSet();
+    var popup = new popupLightsAll();
     var pointA = [];
     var pointB = [];
 
     var requiredColumns = {
-        0: 'id',
-        1: 'date',
+        0: 'creation_date',
+        1: 'status',
+        2: 'service_request_number',
         3: 'latitude',
         4: 'longitude'
     };
 
     var filterConditions = {
         timeStamp: 'lastMonth',
+        status: 'Open',
         latitude:[Math.min(pointA[0],pointB[0]),Math.max(pointA[0],pointB[0])],
         longitude:[Math.min(pointA[1],pointB[1]),Math.max(pointA[1],pointB[1])]
     };
-
 
     var setPointA = function(data){
         pointA = data;
@@ -35,9 +36,9 @@ function controllerCrimes(mapObject) {
         filterConditions.longitude =  [Math.min(pointA[1], pointB[1]), Math.max(pointA[1], pointB[1])];
     };
 
-    layer.setKey("id");
+    layer.setKey("service_request_number");
     layer.setName(name);
-    layer.setIcon("crime");
+    layer.setIcon("test");
     layer.setPopup(popup);
 
     controller.setName(name);
@@ -55,3 +56,4 @@ function controllerCrimes(mapObject) {
     amplify.subscribe("POINT_A", setPointA);
     amplify.subscribe("POINT_B", setPointB);
 }
+

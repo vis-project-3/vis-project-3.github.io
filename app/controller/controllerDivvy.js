@@ -1,9 +1,11 @@
 function controllerDivvy(mapObject) {
+    var controller = new genericController();
+    var name = "DIVVY";
+    var layer = new genericLayer();
+    var api = new divvyStationsDataSet();
+    var popup = new popupVehicles();
     var pointA = [];
     var pointB = [];
-    var map = mapObject.getMap();
-    var divvy = new layerDivvy();
-    var divvyAPI = new divvyStationsDataSet();
 
     var requiredColumns = {
         0: 'id',
@@ -15,47 +17,13 @@ function controllerDivvy(mapObject) {
     };
 
     var filterConditions = {
-        latitude: [Math.min(pointA[0], pointB[0]), Math.max(pointA[0], pointB[0])],
-        longitude: [Math.min(pointA[1], pointB[1]), Math.max(pointA[1], pointB[1])]
-    };
-
-    var callBackAdd = function(data){
-        console.log("[DIVVY] : Adding Data");
-        divvy.clearData();
-        divvy.addCollection(data);
-    };
-
-    var callBackUpdate = function(data){
-        console.log("[DIVVY] : Updating Data");
-        //divvy.update
-    }
-
-    var clearData = function () {
-        divvy.clearData();
-    }
-
-    var newData = function () {
-        //divvyAPI.getData(requiredColumns, filterConditions, callBackDivvy);
-        divvyAPI.getSurroundingStationsData(requiredColumns, filterConditions, callBackAdd);
-
-    }
-
-    var updateData = function () {
-        //divvyAPI.getUpdatedData(requiredColumns, filterConditions, callBackUpdate)
-    }
-
-    //Toggle Layer
-    var toggleLayer = function(){
-        console.log("[DIVVY] : Toggling Layer");
-        layer = divvy.getLayer();
-        if(map.hasLayer(layer)==true){
-            map.removeLayer(layer);}
-        else map.addLayer(layer);
+            latitude: [Math.min(pointA[0], pointB[0]), Math.max(pointA[0], pointB[0])],
+            longitude: [Math.min(pointA[1], pointB[1]), Math.max(pointA[1], pointB[1])]
     };
 
     var setPointA = function(data){
         pointA = data;
-        setBoundaries();
+        setBoundaries()
     };
     var setPointB = function(data){
         pointB = data;
@@ -67,10 +35,23 @@ function controllerDivvy(mapObject) {
         filterConditions.longitude =  [Math.min(pointA[1], pointB[1]), Math.max(pointA[1], pointB[1])];
     };
 
-    amplify.subscribe("DIVVY_CLEAR_DATA", clearData);
-    amplify.subscribe("DIVVY_UPDATE_DATA", updateData);
-    amplify.subscribe("DIVVY_NEW_DATA", newData);
-    amplify.subscribe("VIEW_LAYER_DIVVY", toggleLayer);
+    layer.setKey("id");
+    layer.setName(name);
+    layer.setIcon("divvy");
+    layer.setPopup(popup);
+
+    controller.setName(name);
+    controller.setMap(mapObject);
+    controller.setLayer(layer);
+    controller.setfilterConditions(filterConditions);
+    controller.setRequiredColumns(requiredColumns);
+    controller.setAPI(api);
+
+    controller.subscribe(name + "_CLEAR_DATA", controller.clearData);
+    controller.subscribe(name + "_UPDATE_DATA", controller.updateData);
+    controller.subscribe(name + "_NEW_DATA", controller.newData);
+    controller.subscribe("VIEW_LAYER_" + name, controller.toggleLayer);
+
     amplify.subscribe("POINT_A", setPointA);
     amplify.subscribe("POINT_B", setPointB);
 }
