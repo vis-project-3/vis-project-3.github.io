@@ -1,6 +1,14 @@
 function Switchboard(controllers, layerButtons) {
 
-    console.log(layerButtons.getSelection());
+    /****** LAYER BUTTONS ******/
+
+    layerButtons.getSelection().selectAll("g.button rect")
+        .on("click.foo", function(d) {
+            var topic = "VIEW_LAYER_" + d.eventId;
+            amplify.subscribe(topic, (new Utility).i(topic));
+            amplify.publish(topic);
+            console.log(topic);
+        })
 
     /***** MAP CONTROLS *****/
 
@@ -28,37 +36,5 @@ function Switchboard(controllers, layerButtons) {
         amplify.publish("VIEW_STREET_MAP");
     });
 
-    /****** LAYER BUTTONS ******/
 
-
-
-    d3.select("#divvy-layer")
-    .on("click", function () {
-        console.log("[EVENT] : VIEW_LAYER_DIVVY");
-        amplify.publish("VIEW_LAYER_DIVVY");
-    });
-
-    d3.select("#potholes-layer")
-    .on("click", function () {
-        console.log("[EVENT] : VIEW_LAYER_POTHOLES");
-        amplify.publish("VIEW_LAYER_POTHOLES")
-    });
-
-    d3.select("#vehicles-layer")
-    .on("click", function () {
-        console.log("[EVENT] : VIEW_LAYER_VEHICLES");
-        amplify.publish("VIEW_LAYER_VEHICLES");
-    });
-
-    d3.select("#lights-layer")
-    .on("click", function () {
-        console.log("[EVENT] : VIEW_LAYER_LIGHTS");
-        amplify.publish("VIEW_LAYER_LIGHTS");
-    });
-
-    d3.select("#crimes-layer")
-    .on("click", function () {
-        console.log("[EVENT] : VIEW_LAYER_CRIMES");
-        amplify.publish("VIEW_LAYER_CRIMES");
-    });
 }
