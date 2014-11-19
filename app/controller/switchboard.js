@@ -53,7 +53,13 @@ function Switchboard(map, route, controllers, layerButtons) {
             controller.toggleLayer();
             controller.updateData(bounds);
         }
-    })
+    });
+
+    /*console.log("[EVENT] : SUNRISE_SUNSET");
+    amplify.publish("SUNRISE_SUNSET");
+
+    console.log("[EVENT] : WEATHER");
+    amplify.publish("WEATHER");*/
 
     /***** MAP CONTROLS *****/
 
