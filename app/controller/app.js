@@ -4,7 +4,9 @@ function App(){
     var map = mapObject.getMap();
 
     var route = new Route();
+    amplify.subscribe("UPDATE_WAYPOINTS", route.setWaypoints);
 
+    route.getRouteControl().addTo(map);
 
     /***** UI COMPONENTS *****/
     var layer = new buttonsLayer("#layer");
@@ -34,7 +36,20 @@ function App(){
     /**** LISTENERS *****/
     new buttonsListeners();
 
+    /**** INITIAL APP STATE *****/
+    var uic_west = L.latLng( 41.874255, -87.676353),
+        museum = L.latLng( 41.861466, -87.614935);
 
+
+    amplify.subscribe("UPDATE_WAYPOINTS", i("UPDATE_WAYPOINTS"));
+    amplify.publish("UPDATE_WAYPOINTS", [uic_west, museum]);
+
+
+    function i(text) {
+        return function(data) {
+            console.info("[EVENT] : %s : %o", text, data);
+        }
+    }
     /***** INITIALIZERS TEST *****/
 
     /*console.log("[EVENT] : SUNRISE_SUNSET");

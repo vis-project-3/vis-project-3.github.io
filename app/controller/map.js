@@ -42,7 +42,9 @@ function Map(container){
     }
 
     this.getMap = function(){
-        return self;
+        /* This code doesn't make sense to me. - Paul */
+        // return self;
+        return map;
     }
 
     this.getPointA = function(){
