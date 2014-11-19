@@ -12,88 +12,36 @@ function genericController() {
 
     var getSet = (new Utility()).getSet;
 
-    var label;
-    this.label = getSet.bind(this)(label);
+    var label = this.label = getSet.bind(this)();
 
-    var id;
-    this.id = getSet.bind(this)(id);
+    var id = this.id = getSet.bind(this)(id);
 
-    var iconPath;
-    this.iconPath = getSet.bind(this)(iconPath);
+    var iconPath = this.iconPath = getSet.bind(this)(iconPath);
 
-    var map;
-    this.map = getSet.bind(this)(map);
+    var map = this.map = getSet.bind(this)(map);
 
-    var layer;
-    this.layer = getSet.bind(this)(layer);
+    var layer = this.layer = getSet.bind(this)();
 
-    var query;
-    this.query = getSet.bind(this)(query);
-
-
-    // this.setRequiredColumns = function(columns){
-    //     requiredColumns = columns;
-    // };
-    //
-    // this.setfilterConditions = function(conditions){
-    //     filterConditions = conditions;
-    // };
-    //
-    // this.setName = function(logName){
-    //     name = logName;
-    // }
-    //
-    // this.setMap = function(mapObject){
-    //     map = mapObject;
-    // };
-
-    // this.setLayer = function(layerObject){
-    //     // console.log(layerObject);
-    //     layer = layerObject;
-    // };
-    //
-    // this.setAPI = function(objectAPI){
-    //     api = objectAPI;
-    // };
-    //
-    // var query;
-    // this.setQuery = function(q) { query = q; };
-    //
-    // /**** PUBLISHER SUBSCRIBER METHODS ****/
-    // this.subscribe = function(event, callback){
-    //     amplify.subscribe(event,callback);
-    // };
-    //
-    // this.publish = function(event,data){
-    //     amplify.publish(event, data);
-    // };
-
+    var query = this.query = getSet.bind(this)();
 
     /**** PUBLIC METHODS *****/
     this.layerIsActive = function() {
-        return map.hasLayer(layer.getLayer());
+        return this.map().hasLayer( this.layer().getLayer() );
     }
-
-    // this.clearData = function () {
-    //     //layer.clearData();
-    // };
-
-    // this.newData = function () {
-    //     api.getData(requiredColumns, filterConditions, callBackAdd);
-    // };
 
     this.updateData = function (bounds) {
         console.info("Layer %s is updating data with %o", name, bounds);
-        if (! query) return;
-        var fullQuery = query().queryRect(bounds);
+        var getQuery = query();
+        var fullQuery = getQuery().queryRect(bounds);
         d3.json(fullQuery(), _updateData)
     };
 
     //Toggle Layer
     this.toggleLayer = function(){
         console.log("[" + name + "] : Toggling Layer");
-        temp = layer.getLayer();
-        if(map.hasLayer(temp) == true){
+        var temp = this.layer().getLayer();
+        var map = this.map();
+        if( map.hasLayer(temp) == true ){
             map.removeLayer(temp);
         }
         else map.addLayer(temp);
@@ -103,7 +51,8 @@ function genericController() {
     var dataList = d3.select(fragment).append("ul");
     function _updateData(newData) {
         console.info("New data length:", newData.length);
-        var keyFunction = function(d) { return d[layer.getKey()]; };
+        var key = layer().getKey();
+        var keyFunction = function(d) { return d[layer().getKey()]; };
         var items = dataList.selectAll("li").data(newData, keyFunction);
 
         // console.log(layer.getIcon());
@@ -113,13 +62,13 @@ function genericController() {
 
                 var latLng = [parseFloat(d.latitude), parseFloat(d.longitude)];
 
-                var marker = L.marker(latLng, { icon: layer.getIcon() });
+                var marker = L.marker(latLng, { icon: layer().getIcon() });
 
-                var content = layer.getPopup().generatePopupContent(d);
+                var content = layer().getPopup().generatePopupContent(d);
                 console.log("[" + name + "_LAYER] : Generating Popup");
                 marker.bindPopup(content);
 
-                marker.addTo(layer.getLayer());
+                marker.addTo(layer().getLayer());
 
                 this._marker = marker;
 
@@ -129,7 +78,7 @@ function genericController() {
 
         items.exit()
             .each(function(d) {
-                layer.getLayer().removeLayer(this._marker);
+                layer().getLayer().removeLayer(this._marker);
                 d3.select(this).remove();
             });
     }

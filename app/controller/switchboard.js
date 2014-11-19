@@ -19,10 +19,10 @@ function Switchboard(map, route, controllers, layerButtons) {
     amplify.subscribe("ROUTE_BOUNDS_UPDATED", map.setQueryRect);
 
     amplify.subscribe("QUERY_RECT_UPDATED", function(bounds) {
-        controllers.forEach(function(layer) {
-            if (layer.getController && layer.getController().layerIsActive()) {
-                console.info("Layer %s is active.", layer.label);
-                layer.getController().updateData(bounds);
+        controllers.forEach(function(controller) {
+            if (controller.layerIsActive()) {
+                console.info("Layer %s is active.", controller.label());
+                controller.updateData(bounds);
             }
         })
     })
@@ -43,14 +43,10 @@ function Switchboard(map, route, controllers, layerButtons) {
             amplify.publish(topic, d);
         });
 
-    amplify.subscribe("TOGGLE_LAYER", function(cont) {
-        // console.log(controller);
-        if (cont.getController) {
-            var bounds = map.getQueryRect();
-            var controller = cont.getController();
-            controller.toggleLayer();
-            controller.updateData(bounds);
-        }
+    amplify.subscribe("TOGGLE_LAYER", function(controller) {
+        var bounds = map.getQueryRect();
+        controller.toggleLayer();
+        controller.updateData(bounds);
     })
 
     /***** MAP CONTROLS *****/

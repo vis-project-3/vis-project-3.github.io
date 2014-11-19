@@ -1,7 +1,6 @@
 function App(){
 
     var map = new Map("map");
-    // var map = mapObject.getMap();
 
     var route = new Route();
 
@@ -31,6 +30,8 @@ function App(){
     // var ctaBus = new controllerCtaBus(map);
     // var weather = new controllerWeather(box);
 
+    // console.log(potholes._map());
+
     var controllers = [
         // ctaStation, ctaBus, divvy, crimes, lights,
         potholes,
@@ -39,7 +40,7 @@ function App(){
 
     var layerButtons = new buttonsLayer(map, controllers);
 
-    // var switchboard = new Switchboard(map, route, controllers, layerButtons);
+    var switchboard = new Switchboard(map, route, controllers, layerButtons);
 
 
     /**** UPDATES HANDLER *****/
@@ -77,10 +78,10 @@ function App(){
 
 
     /**** INITIAL APP STATE *****/
-    // var uic_west = L.latLng( 41.874255, -87.676353),
-    // museum = L.latLng( 41.861466, -87.614935);
-    //
-    // amplify.publish("UPDATE_WAYPOINTS", [uic_west, museum]);
+    var uic_west = L.latLng( 41.874255, -87.676353),
+    museum = L.latLng( 41.861466, -87.614935);
+
+    amplify.publish("UPDATE_WAYPOINTS", [uic_west, museum]);
 
     // console.log("[EVENT] : POINT_A");
     // amplify.publish("POINT_A", pointA);
