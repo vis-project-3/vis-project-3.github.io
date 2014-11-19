@@ -17,16 +17,16 @@ body{
     /*background-color: rgba(255,255,255,0.66);*/
 }
 
-#layer{
+#layer {
     position : absolute;
-    top : 12%;
-    left : 1%;
-    width : 20%;
-    height : 60%;
-    background-color: none;
+    top : 15vh;
+    width : 20vw;
+    height : 40vh;
+    background: rgba(255,255,255,0.5);
+    /* background-color: none; */
 }
 
-#layer svg rect {
+#layer g.button rect {
     fill: #FFFFFF;
 }
 
@@ -38,8 +38,9 @@ body{
     fill: #6699CC;
 }
 
-#layer svg text {
+#layer g.button text {
     font-family: Helvetica, 'Open Sans', sans-serif;
+    font-size: 2vh;
 }
 
 #layer svg text.selected {

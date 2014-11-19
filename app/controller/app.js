@@ -8,7 +8,7 @@ function App(){
     route.addTo(map.getMap());
 
     /***** UI COMPONENTS *****/
-    var layer = new buttonsLayer("#layer");
+    // var layer = new buttonsLayer("#layer", map);
     // var controls = new mapControls("#mapcontrol")
     // var toggle = new buttonsToggle("#toggle");
     // var navigation = new navigationBar("#top-bar");
@@ -26,11 +26,15 @@ function App(){
     var lights = new controllerLights(map);
     var lightsAll = new controllerLightsAll(map);
     var vehicles = new controllerVehicles(map);
+    var ctaStation = new controllerCtaStation(map);
+    var ctaBus = new controllerCtaBus(map);
     // var weather = new controllerWeather(box);
 
     var controllers = [
-        divvy, crimes, potholes, lights, lightsAll, vehicles
+        ctaStation, ctaBus, divvy, crimes, lights, potholes, vehicles
     ];
+
+    var layer = new buttonsLayer(null, map, controllers);
 
 
     /**** UPDATES HANDLER *****/

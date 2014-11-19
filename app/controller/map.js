@@ -59,6 +59,11 @@ function Map(container){
         dispatch.queryRectUpdated(rectangle.getBounds());
     }
 
+    this.addControl = function() {
+        var map = this.getMap();
+        map.addControl.apply(map, arguments);
+    }
+
     this.addMarker = function(kind, lat, long){
         var marker = L.marker([lat, long], {
             icon: getIcon(kind)

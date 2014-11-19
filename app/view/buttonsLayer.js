@@ -1,4 +1,4 @@
-function buttonsLayer(container){
+function buttonsLayer(container, map, controllers){
     var svg;
     var svgBackdrop;
     var layer;
@@ -12,115 +12,58 @@ function buttonsLayer(container){
     var buttonHeight;
     var iconSize;
 
-    var buttonObjects = [
-        {
-            text:"Bus Station",
-            iconPath:"resources/icons/icon-bus-station.svg",
-            iconHoverPath:"",
-            id: "bus-layer"
-        },
-        {
-            text:"CTA Buses",
-            iconPath:"resources/icons/icon-bus.svg",
-            iconHoverPath:"",
-            id: "live-bus-layer"
-        },
-        {
-            text:"Divvy Station",
-            iconPath:"resources/icons/icon-divvy.svg",
-            iconHoverPath:"",
-            id: "divvy-layer"
-        },
-        {
-            text:"Crime Reports",
-            iconPath:"resources/icons/icon-crime.svg",
-            iconHoverPath:"",
-            id: "crimes-layer"
-        },
-        {
-            text:"Street Light Out",
-            iconPath:"resources/icons/icon-light.svg",
-            iconHoverPath:"",
-            id: "lights-layer"
-        },
-        {
-            text:"Potholes",
-            iconPath:"resources/icons/icon-pot-hole.svg",
-            iconHoverPath:"",
-            id: "potholes-layer"
-        },
-        {
-            text:"Abandoned Cars",
-            iconPath:"resources/icons/icon-abandoned-car.svg",
-            iconHoverPath:"",
-            id: "vehicles-layer"
-        }
-    ];
+    function addButtons(selection) {
+        selection.attr("id", "layer");
 
-    /******** Initializer  ******/
-
-    var init = function(){
-
-
-
-
+        var height = 600, width = 350, padding = 7;
 
         // These variables set the height of each button and use it to scale the size of each icon to fit within the button
         // TODO: Just use an ordinal scale instead.
+
+        var buttonObjects = controllers;
+
         buttonHeight = ( buttonObjects.length > 0 ) ? ( ( height - ( buttonObjects.length + 1 ) * padding ) / ( buttonObjects.length ) ) : ( height - 2 * padding );
         iconSize = 0.7 * buttonHeight;
 
-        yScale =  d3 	.scale
-                        .linear()
-                        .domain([0, buttonObjects.length])
-                        .range([0,height - padding]);
+        var y = d3.scale.linear()
+            .domain([0, buttonObjects.length])
+            .range([0, height - padding]);
 
-        svg = d3    .select(container)
-                    .append("svg")
-                    .attr("viewBox","0 0 " + width + " " + height)
-                    .attr("preserveAspectRatio", "xMidYMid meet")
-                    .attr("width", "100%")
-                    .attr("height", "100%")
-                    // .style("background-color" , background);
-
-        // TODO: Switch to rect.
-        svg     .append("polygon")
-                .attr("points", "0,0 " + width + ",0 " + width + "," + height + " 0," + height)
-                .attr("fill", background)
-                .attr("opacity", opacity)
-                .attr("pointer-events", "none");
-
-        layer = svg.append("g");
+        var svg = selection.append("svg")
+            .attr("viewBox","0 0 " + width + " " + height)
+            .attr("preserveAspectRatio", "xMidYMid meet")
+            .attr("width", "100%")
+            .attr("height", "100%");
 
         // Draws the buttons
-        var button = layer.selectAll("g.button").data(buttonObjects);
+        var button = svg.selectAll("g.button").data(buttonObjects);
 
         button.enter().append("g").attr("class", "button")
             .call(function(enter) {
                 enter.attr("transform", function(d, i) {
-                    return "translate(" + padding + "," + yScale(i) + padding + ")";
+                    return "translate(" + padding + "," + y(i) + padding + ")";
                 });
                 enter.append("rect")
-                    .attr({
-                        id: function(d) { return d.id; },
-                        width: width - 2 * padding,
-                        height: buttonHeight
-                    });
+                .attr({
+                    id: function(d) { return d.id ? d.id : "NULL"; },
+                    width: width - 2 * padding,
+                    height: buttonHeight
+                });
                 enter.append("text")
-                    .text( function(d) { return d.text })
-                    .attr({
-                        x: 4 * padding + iconSize,
-                        y: 0.6 * buttonHeight,
-                        "pointer-events": "none"
-                    });
+                .text( function(d) { return d.label })
+                .attr({
+                    x: 4 * padding + iconSize,
+                    y: 0.6 * buttonHeight,
+                    "pointer-events": "none"
+                });
                 enter.append("image")
-                    .attr({
-                        "xlink:href": function(d) { return d.iconPath; },
-                        x: 2 * padding,
-                        y: 0.25 * buttonHeight,
-                        width: iconSize, height: iconSize,
-                        "pointer-events": "none"
-                    })
+                .attr({
+                    "xlink:href": function(d) { return d.iconPath; },
+                    x: 2 * padding,
+                    y: 0.25 * buttonHeight,
+                    width: iconSize, height: iconSize,
+                    "pointer-events": "none"
+                })
             })
 
         button.select("rect").on("click.toggle", function() {
@@ -128,8 +71,36 @@ function buttonsLayer(container){
                 console.log(d3.select(this).classed("selected"));
                 return ! d3.select(this).classed("selected");
             })
-
         })
+    }
+
+    /******** Initializer  ******/
+
+    var init = function(){
+
+        var ButtonsControl = L.Control.extend({
+            options: {
+                position: 'topleft'
+            },
+
+            initialize: function (foo, options) {
+                L.Util.setOptions(this, options);
+            },
+
+            onAdd: function(map) {
+                var className = 'leaflet-control-layers leaflet-control-layers-expanded';
+
+                var container = L.DomUtil.create('div', className);
+
+                d3.select(container).call(addButtons);
+
+                return container;
+            }
+        });
+
+        // TODO: Remove – dev only!!!!!
+        map.addControl(new ButtonsControl());
+
 
     }();
 }

@@ -7,6 +7,11 @@ function controllerVehicles(mapObject) {
     var pointA = [];
     var pointB = [];
 
+    this.label = "Abandoned Cars";
+    this.id = "vehicles-layer";
+    this.iconPath = "resources/icons/icon-abandoned-car.svg";
+    this.eventId = "VEHICLE";
+
     var requiredColumns = {
         0: 'creation_date',
         1: 'status',
@@ -56,4 +61,3 @@ function controllerVehicles(mapObject) {
     amplify.subscribe("POINT_A", setPointA);
     amplify.subscribe("POINT_B", setPointB);
 }
-

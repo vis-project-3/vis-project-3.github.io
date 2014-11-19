@@ -7,6 +7,11 @@ function controllerCrimes(mapObject) {
     var pointA = [];
     var pointB = [];
 
+    this.label = "Crime Reports";
+    this.iconPath = "resources/icons/icon-crime.svg";
+    this.eventId = "CRIMES";
+    this.id = "crimes-layer";
+
     var requiredColumns = {
         0: 'id',
         1: 'date',

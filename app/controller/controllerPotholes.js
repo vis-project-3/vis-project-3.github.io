@@ -7,6 +7,11 @@ function controllerPotholes(mapObject) {
     var pointA = [];
     var pointB = [];
 
+    this.label = "Potholes";
+    this.id = "potholes-layer";
+    this.iconPath = "resources/icons/icon-pot-hole.svg";
+    this.eventId = "POTHOLES";
+
     var requiredColumns = {
         0: 'creation_date',
         1: 'status',
@@ -56,4 +61,3 @@ function controllerPotholes(mapObject) {
     amplify.subscribe("POINT_A", setPointA);
     amplify.subscribe("POINT_B", setPointB);
 }
-

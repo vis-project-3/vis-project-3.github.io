@@ -7,6 +7,11 @@ function controllerLights(mapObject) {
     var pointA = [];
     var pointB = [];
 
+    this.label = "Street Light Out";
+    this.id = "lights-layer";
+    this.eventId = "LIGHTS";
+    this.iconPath = "resources/icons/icon-light.svg";
+
     var requiredColumns = {
         0: 'creation_date',
         1: 'status',
@@ -56,4 +61,3 @@ function controllerLights(mapObject) {
     amplify.subscribe("POINT_A", setPointA);
     amplify.subscribe("POINT_B", setPointB);
 }
-

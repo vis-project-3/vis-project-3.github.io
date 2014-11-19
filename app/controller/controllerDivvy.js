@@ -7,6 +7,11 @@ function controllerDivvy(mapObject) {
     var pointA = [];
     var pointB = [];
 
+    this.label = "Divvy Station";
+    this.id = "divvy-layer";
+    this.eventId = "DIVVY";
+    this.iconPath = "resources/icons/icon-divvy.svg";
+
     var requiredColumns = {
         0: 'id',
         1: 'stationName',
@@ -55,4 +60,3 @@ function controllerDivvy(mapObject) {
     amplify.subscribe("POINT_A", setPointA);
     amplify.subscribe("POINT_B", setPointB);
 }
-

@@ -73,7 +73,6 @@ function App(){
         },
 
         initialize: function (foo, options) {
-            // ...
             L.Util.setOptions(this, options);
         },
 
