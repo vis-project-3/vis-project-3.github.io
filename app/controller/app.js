@@ -5,8 +5,9 @@ function App(){
 
     var route = new Route();
     amplify.subscribe("UPDATE_WAYPOINTS", route.setWaypoints);
+    route.on("boundsUpdated", function(bounds) { console.log("bounds updated"); })
 
-    route.getRouteControl().addTo(map);
+    route.addTo(map);
 
     /***** UI COMPONENTS *****/
     var layer = new buttonsLayer("#layer");

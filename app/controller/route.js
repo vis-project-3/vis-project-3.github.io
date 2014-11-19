@@ -1,6 +1,6 @@
 
 function Route(){
-    var dispatch = d3.dispatch("routesFound");
+    var dispatch = d3.dispatch("routesFound", "boundsUpdated");
 
     var r = 10;
 
@@ -23,25 +23,35 @@ function Route(){
         geocoder: L.Control.Geocoder.nominatim()
     });
 
-    function getBounds(array) {
-        return L.polyline(array).getBounds();
-    }
-
     var route = L.Routing.control({
         plan: plan,
         geocoder: L.Control.Geocoder.nominatim(),
         fitSelectedRoutes: false,
         show: false
-    }).on("routesfound", function(e) {
+    });
+
+    route.on("routesfound", function(e) {
         dispatch.routesFound.apply(this, arguments);
     });
 
-    this.getRouteControl = function() { return route; };
+    var bounds;
+    dispatch.on("routesFound", function(e) {
+        bounds = getBounds(e.routes[0].coordinates);
+        dispatch.boundsUpdated(bounds);
+    })
 
-    // this.setWaypoints = function(array) {
-    //     route.setWaypoints(array);
-    // }
+    /****** PRIVATE METHODS ******/
+
+    function getBounds(array) {
+        return L.polyline(array).getBounds();
+    }
+
+    /****** PUBLIC METHODS ******/
+
+    this.addTo = route.addTo.bind(route);
 
     this.setWaypoints = route.setWaypoints.bind(route);
+
+    d3.rebind(this, dispatch, "on");
 
 }
