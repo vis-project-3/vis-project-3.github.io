@@ -26,7 +26,7 @@ function genericController() {
 
     //Toggle Layer
     this.toggleLayer = function(){
-        console.log("[" + name() + "] : Toggling Layer");
+        console.log("[%s] : Toggling Layer", name());
         var temp = layer().getLayer();
         if( map().hasLayer(temp) == true ){
             map().removeLayer(temp);
@@ -37,7 +37,7 @@ function genericController() {
     var fragment = new DocumentFragment();
     var dataList = d3.select(fragment).append("ul");
     function _updateData(newData) {
-        console.info("New data length:", newData.length);
+        console.info("[%s] : New data, length: %i", name(), newData.length);
 
         var key = layer().getKey();
         var keyFunction = function(d) { return d[layer().getKey()]; };
