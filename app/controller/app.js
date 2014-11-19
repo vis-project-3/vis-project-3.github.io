@@ -28,6 +28,10 @@ function App(){
     var vehicles = new controllerVehicles(map);
     // var weather = new controllerWeather(box);
 
+    var controllers = [
+        divvy, crimes, potholes, lights, lightsAll, vehicles
+    ];
+
 
     /**** UPDATES HANDLER *****/
     //new updatesHandler();

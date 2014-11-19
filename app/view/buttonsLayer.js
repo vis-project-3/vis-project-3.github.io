@@ -61,6 +61,10 @@ function buttonsLayer(container){
 
     var init = function(){
 
+        
+
+
+
         // These variables set the height of each button and use it to scale the size of each icon to fit within the button
         // TODO: Just use an ordinal scale instead.
         buttonHeight = ( buttonObjects.length > 0 ) ? ( ( height - ( buttonObjects.length + 1 ) * padding ) / ( buttonObjects.length ) ) : ( height - 2 * padding );
