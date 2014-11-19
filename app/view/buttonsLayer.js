@@ -61,7 +61,7 @@ function buttonsLayer(container){
 
     var init = function(){
 
-        
+
 
 
 
@@ -128,6 +128,7 @@ function buttonsLayer(container){
                 console.log(d3.select(this).classed("selected"));
                 return ! d3.select(this).classed("selected");
             })
+
         })
 
     }();
