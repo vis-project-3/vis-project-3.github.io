@@ -22,7 +22,7 @@ function App(){
     // var pointB = map.getPointB();
 
     // var divvy = new controllerDivvy(map);
-    // var crimes = new controllerCrimes(map);
+    var crimes = (new controllerCrimes(map)).get();
     var potholes = (new controllerPotholes(map)).get();
     var lights = (new controllerLights(map)).get();
     // var lightsAll = new controllerLightsAll(map);
@@ -35,7 +35,7 @@ function App(){
 
     var controllers = [
         // ctaStation, ctaBus, divvy, crimes,
-        lights, potholes,
+        crimes, lights, potholes,
         // vehicles
     ];
 
@@ -115,7 +115,8 @@ function Utility() {
         }
     }
 
-    this.getSet = function(variable) {
+    this.getSet = function(defaultValue) {
+        var variable = defaultValue;
         return function(value) {
             return (arguments.length) ? (variable = value, this) : variable;
         }

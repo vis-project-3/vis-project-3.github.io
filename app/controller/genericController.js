@@ -18,7 +18,7 @@ function genericController() {
     }
 
     this.updateData = function (bounds) {
-        console.info("Layer %s is updating data with %o", name, bounds);
+        console.info("[%s] : Updating data within bounds %o", name(), bounds);
         var getQuery = query();
         var fullQuery = getQuery().queryRect(bounds);
         d3.json(fullQuery(), _updateData)

@@ -13,8 +13,6 @@
 function chicagoQuery() {
 	var chicago = "http://data.cityofchicago.org/resource/";
 
-	// var endPoint = apiEndpoints[type],
-
 	var where = "",
 		limit = "",
 		minLongitude = -88,
@@ -23,16 +21,9 @@ function chicagoQuery() {
 		maxLatitude = 42.2,
 		fromLng, toLng,
 		fromLat, toLat;
-	// my = function() {};
-
-	// var lastChar = endPoint.substr(endPoint.length - 1);
-	// if (lastChar !== "?") endPoint += "?";
-
-	// var query = endPoint;
 
 	my = function() {
 		buildQuery();
-		// console.info("Query: ", query);
 		return query;
 	}
 
@@ -43,7 +34,6 @@ function chicagoQuery() {
 
 	function addParam(param) {
 		var lastChar = query.substr(query.length - 1);
-		// var isFirstParam = lastChar === "?";
 		var ampersand = (lastChar === "?") ? "" : "&";
 		query += ampersand + param;
 	}
@@ -127,10 +117,12 @@ function chicagoQuery() {
 		return my;
 	}
 
+	var dateColumn = my.dateColumn = (new Utility).getSet.bind(this)("creation_date");
+
 	my.fromDate = function(date) {
 		var day = d3.time.day(date);
 		var iso = day.toISOString();
-		addWhere("creation_date >= '" + iso + "'");
+		addWhere(dateColumn() + " >= '" + iso + "'");
 		return my;
 	}
 
@@ -138,30 +130,3 @@ function chicagoQuery() {
 
 	return my;
 }
-
-// var lastWeek = d3.time.day.offset(new Date(), -7);
-// var yesterday = d3.time.day.offset(new Date(), -2);
-// var date = lastWeek;
-
-// var potholesQuery = ctaQuery("potholes")
-// 	.fromLat("41.8")
-// 	.fromLng("-87.8")
-// 	.toLat("41.9")
-// 	.toLng("-87.6")
-// 	.fromDate(date)
-// 	.limit(100)
-// 	.where("status = 'open'");
-//
-// var vehiclesQuery = ctaQuery("vehicles")
-// 	.fromLat("41.8")
-// 	.fromLng("-87.8")
-// 	.toLat("41.9")
-// 	.toLng("-87.6")
-// 	.fromDate(date)
-// 	.limit(100);
-
-// d3.json(potholesQuery(), function(data) { console.log(potholesQuery.type(), data); });
-// d3.json(vehiclesQuery.get(), function(data) { console.log(vehiclesQuery.type(), data); });
-
-// No access-control-allow-origin ?!
-// d3.json.query("divvy").get(), function(data) { console.log("divvy", data); });

@@ -7,11 +7,11 @@ function controllerLights(mapObject) {
         .iconPath("resources/icons/icon-light.svg");
 
     var layer = new genericLayer();
-        layer.setKey("service_request_number");
-        layer.setIcon("light");
+    layer.setKey("service_request_number");
+    layer.setIcon("light");
 
     var popup = new popupLights();
-        layer.setPopup(popup);
+    layer.setPopup(popup);
 
     controller.layer(layer);
 

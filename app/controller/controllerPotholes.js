@@ -1,8 +1,7 @@
 function controllerPotholes(mapObject) {
-
     var controller = (new genericController())
         .map(mapObject)
-        .label("Potholes!!")
+        .label("Potholes")
         .name("POTHOLES")
         .id("potholes-layer")
         .iconPath("resources/icons/icon-pot-hole.svg");
