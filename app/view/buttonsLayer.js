@@ -119,17 +119,11 @@ function buttonsLayer(container){
                     })
             })
 
-
-        // Highlight rectangles when they've been selected
-        $(container + " svg rect").click(function () {
-
-            if ( $( this ).attr("class") == "selected") {
-                this.classList.remove("selected");
-            }
-            else {
-                this.classList.add("selected");
-            }
-
+        button.select("rect").on("click.toggle", function() {
+            d3.select(this).classed("selected", function() {
+                console.log(d3.select(this).classed("selected"));
+                return ! d3.select(this).classed("selected");
+            })
         })
 
     }();

@@ -9,11 +9,11 @@ function App(){
 
     /***** UI COMPONENTS *****/
     var layer = new buttonsLayer("#layer");
-    var controls = new mapControls("#mapcontrol")
-    var toggle = new buttonsToggle("#toggle");
-    var navigation = new navigationBar("#top-bar");
-    var graphs = new boxGraphs("#graphs");
-    var box = new boxWeather("#weather");
+    // var controls = new mapControls("#mapcontrol")
+    // var toggle = new buttonsToggle("#toggle");
+    // var navigation = new navigationBar("#top-bar");
+    // var graphs = new boxGraphs("#graphs");
+    // var box = new boxWeather("#weather");
 
 
     /***** CONTROLLERS ******/
@@ -26,7 +26,7 @@ function App(){
     var lights = new controllerLights(map);
     var lightsAll = new controllerLightsAll(map);
     var vehicles = new controllerVehicles(map);
-    var weather = new controllerWeather(box);
+    // var weather = new controllerWeather(box);
 
 
     /**** UPDATES HANDLER *****/
