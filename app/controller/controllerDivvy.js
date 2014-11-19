@@ -12,6 +12,8 @@ function controllerDivvy(mapObject) {
     this.eventId = "DIVVY";
     this.iconPath = "resources/icons/icon-divvy.svg";
 
+    this.getController = function() { return controller };
+
     var requiredColumns = {
         0: 'id',
         1: 'stationName',

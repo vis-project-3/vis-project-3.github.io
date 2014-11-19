@@ -12,6 +12,8 @@ function controllerPotholes(mapObject) {
     this.iconPath = "resources/icons/icon-pot-hole.svg";
     this.eventId = "POTHOLES";
 
+    this.getController = function() { return controller };
+
     var requiredColumns = {
         0: 'creation_date',
         1: 'status',
@@ -56,7 +58,7 @@ function controllerPotholes(mapObject) {
     controller.subscribe(name + "_CLEAR_DATA", controller.clearData);
     controller.subscribe(name + "_UPDATE_DATA", controller.updateData);
     controller.subscribe(name + "_NEW_DATA", controller.newData);
-    controller.subscribe("VIEW_LAYER_" + name, controller.toggleLayer);
+    // controller.subscribe("VIEW_LAYER_" + name, controller.toggleLayer);
 
     amplify.subscribe("POINT_A", setPointA);
     amplify.subscribe("POINT_B", setPointB);

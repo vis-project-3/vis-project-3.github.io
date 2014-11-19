@@ -12,6 +12,8 @@ function controllerLights(mapObject) {
     this.eventId = "LIGHTS";
     this.iconPath = "resources/icons/icon-light.svg";
 
+    this.getController = function() { return controller };
+
     var requiredColumns = {
         0: 'creation_date',
         1: 'status',

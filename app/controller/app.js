@@ -36,7 +36,7 @@ function App(){
 
     var layerButtons = new buttonsLayer(null, map, controllers);
 
-    var switchboard = new Switchboard(controllers, layerButtons);
+    var switchboard = new Switchboard(map, route, controllers, layerButtons);
 
 
     /**** UPDATES HANDLER *****/
@@ -46,23 +46,23 @@ function App(){
     // new buttonsListeners();
 
     /**** EVENTS *****/
-    amplify.subscribe("UPDATE_WAYPOINTS", route.setWaypoints);
-    amplify.subscribe("ROUTE_BOUNDS_UPDATED", map.setQueryRect);
+    // amplify.subscribe("UPDATE_WAYPOINTS", route.setWaypoints);
+    // amplify.subscribe("ROUTE_BOUNDS_UPDATED", map.setQueryRect);
+    //
+    // route.on("boundsUpdated", function(bounds) {
+    //     amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);
+    // });
+    //
+    // map.on("queryRectUpdated", function(bounds) {
+    //     amplify.publish("QUERY_RECT_UPDATED", bounds);
+    // });
 
-    route.on("boundsUpdated", function(bounds) {
-        amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);
-    });
-
-    map.on("queryRectUpdated", function(bounds) {
-        amplify.publish("QUERY_RECT_UPDATED", bounds);
-    });
-
-    /**** Set up event logging *****/
-    [
-        "UPDATE_WAYPOINTS", "ROUTE_BOUNDS_UPDATED", "QUERY_RECT_UPDATED"
-    ].forEach(function(name) {
-        amplify.subscribe(name, (new Utility).i(name));
-    })
+    // /**** Set up event logging *****/
+    // [
+    //     "UPDATE_WAYPOINTS", "ROUTE_BOUNDS_UPDATED", "QUERY_RECT_UPDATED"
+    // ].forEach(function(name) {
+    //     amplify.subscribe(name, (new Utility).i(name));
+    // })
 
     /***** INITIALIZERS TEST *****/
 

@@ -11,6 +11,8 @@ function controllerCtaBus(mapObject) {
     this.label = "CTA Buses";
     this.iconPath = "resources/icons/icon-bus.svg";
     this.eventId = "CTA_STATION";
+
+    
     //
     // var requiredColumns = {
     //     0: 'id',

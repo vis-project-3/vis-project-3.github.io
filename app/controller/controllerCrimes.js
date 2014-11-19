@@ -12,6 +12,8 @@ function controllerCrimes(mapObject) {
     this.eventId = "CRIMES";
     this.id = "crimes-layer";
 
+    this.getController = function() { return controller };
+
     var requiredColumns = {
         0: 'id',
         1: 'date',

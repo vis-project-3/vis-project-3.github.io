@@ -11,6 +11,8 @@ function controllerCtaStation(mapObject) {
     this.label = "CTA Bus Station";
     this.iconPath = "resources/icons/icon-bus-station.svg";
     this.eventId = "CTA_STATION";
+
+    // this.getController = function() { return controller };
     //
     // var requiredColumns = {
     //     0: 'id',

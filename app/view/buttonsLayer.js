@@ -65,7 +65,6 @@ function buttonsLayer(container, map, controllers){
 
         button.select("rect").on("click.toggle", function() {
             d3.select(this).classed("selected", function() {
-                console.log(d3.select(this).classed("selected"));
                 return ! d3.select(this).classed("selected");
             })
         })
