@@ -1,20 +1,22 @@
 function controllerPotholes(mapObject) {
     var controller = new genericController();
-    var name = "POTHOLES";
+    // var name = "POTHOLES";
     var layer = new genericLayer();
     var api = new potholesDataSet();
     var popup = new popupPotholes();
     var pointA = [];
     var pointB = [];
 
-    this.label = "Potholes";
-    this.id = "potholes-layer";
+    // this.label = "Potholes";
+    // this.id = "potholes-layer";
     this.iconPath = "resources/icons/icon-pot-hole.svg";
-    this.eventId = "POTHOLES";
+    // this.eventId = "POTHOLES";
 
     this.get = this.getController = function() { return controller };
 
     controller.label("Potholes!!");
+    // controller.eventId("POTHOLES");
+    controller.id("potholes-layer");
 
     var requiredColumns = {
         0: 'creation_date',

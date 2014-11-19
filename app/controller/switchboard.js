@@ -43,11 +43,11 @@ function Switchboard(map, route, controllers, layerButtons) {
             amplify.publish(topic, d);
         });
 
-    amplify.subscribe("TOGGLE_LAYER", function(layer) {
-        console.log(layer);
-        if (layer.getController) {
+    amplify.subscribe("TOGGLE_LAYER", function(cont) {
+        // console.log(controller);
+        if (cont.getController) {
             var bounds = map.getQueryRect();
-            var controller = layer.getController()
+            var controller = cont.getController();
             controller.toggleLayer();
             controller.updateData(bounds);
         }

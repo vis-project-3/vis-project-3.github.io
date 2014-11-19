@@ -14,6 +14,16 @@ function genericController() {
         return (arguments.length) ? (label = l, this) : label;
     };
 
+    var id;
+    this.id = function(value) {
+        return (arguments.length) ? (id = value, this) : id;
+    };
+
+    var eventId;
+    this.eventId = function(e) {
+        return (arguments.length) ? (eventId = e, this) : eventId;
+    };
+
 
     this.setRequiredColumns = function(columns){
         requiredColumns = columns;

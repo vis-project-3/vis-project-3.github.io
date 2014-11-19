@@ -42,7 +42,7 @@ function buttonsLayer(container, map, controllers){
                 });
                 enter.append("rect")
                 .attr({
-                    id: function(d) { return d.id ? d.id : "NULL"; },
+                    id: function(d) { return (d.get) ? d.get().id() : d.id },
                     width: width - 2 * padding,
                     height: buttonHeight
                 });
