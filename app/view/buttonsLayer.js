@@ -1,6 +1,6 @@
 function buttonsLayer(map, controllers){
 
-    var ButtonsControl = L.Control.extend({
+    var CustomControl = L.Control.extend({
         options: { position: 'topleft' },
 
         initialize: function (func, options) {
@@ -17,7 +17,7 @@ function buttonsLayer(map, controllers){
     });
 
     // TODO: Remove – dev only!!!!!
-    map.addControl(new ButtonsControl(addButtons));
+    map.addControl(new CustomControl(addButtons));
 
     function addButtons(selection) {
         selection.attr("id", "layer");

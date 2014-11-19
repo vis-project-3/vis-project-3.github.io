@@ -21,7 +21,9 @@ function App(){
     // var pointA = map.getPointA();
     // var pointB = map.getPointB();
 
-    // var divvy = new controllerDivvy(map);
+
+    var ctaStation = (new controllerCtaStation(map)).get();
+    var divvy = (new controllerDivvy(map)).get();
     var crimes = (new controllerCrimes(map)).get();
     var potholes = (new controllerPotholes(map)).get();
     var lights = (new controllerLights(map)).get();
@@ -34,8 +36,8 @@ function App(){
     // console.log(potholes._map());
 
     var controllers = [
-        // ctaStation, ctaBus, divvy, crimes,
-        crimes, lights, potholes,
+        // ctaBus,
+        ctaStation, divvy, crimes, lights, potholes,
         // vehicles
     ];
 
