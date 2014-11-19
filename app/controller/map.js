@@ -155,10 +155,14 @@ function Map(container){
         mapView = 'http://{s}.' + map_base + '.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id=' + map_app_id + '&app_code=' + map_app_code;
         satView = 'http://{s}.' + sat_base +'.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/satellite.day/{z}/{x}/{y}/256/png8?app_id=' + sat_app_id + '&app_code=' + sat_app_code;
 
-        mapLayer = L.tileLayer(mapView, {
-            subdomains: '1234',
-            mapID: 'newest'
-        }).addTo(map);
+        mapLayer = L.tileLayer(
+            'http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}'
+        ).addTo(map);
+
+        // mapLayer = L.tileLayer(mapView, {
+        //     subdomains: '1234',
+        //     mapID: 'newest'
+        // }).addTo(map);
 
         //mapView = 'http://{s}.{base}.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id={app_id}&app_code={app_code}';
         //mapView2 = 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg';
