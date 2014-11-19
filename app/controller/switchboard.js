@@ -2,9 +2,13 @@ function Switchboard(map, route, controllers, layerButtons) {
 
     /**** Set up event logging *****/
 
-    [   "UPDATE_WAYPOINTS", "ROUTE_BOUNDS_UPDATED",
-        "QUERY_RECT_UPDATED"
-    ].forEach(function(name) {
+    [
+        "UPDATE_WAYPOINTS",
+        "ROUTE_BOUNDS_UPDATED",
+        "QUERY_RECT_UPDATED",
+        "TOGGLE_LAYER"
+    ]
+    .forEach(function(name) {
         amplify.subscribe(name, (new Utility).i(name));
     });
 
@@ -34,15 +38,19 @@ function Switchboard(map, route, controllers, layerButtons) {
     /****** LAYER BUTTONS ******/
 
     layerButtons.getSelection().selectAll("g.button rect")
-        .on("click.foo", function(d) {
+        .on("click.toggledata", function(d) {
             var topic = "TOGGLE_LAYER";
-            amplify.subscribe(topic, (new Utility).i(topic));
             amplify.publish(topic, d);
         });
 
     amplify.subscribe("TOGGLE_LAYER", function(layer) {
         console.log(layer);
-        if (layer.getController) layer.getController().toggleLayer();
+        if (layer.getController) {
+            var bounds = map.getQueryRect();
+            var controller = layer.getController()
+            controller.toggleLayer();
+            controller.updateData(bounds);
+        }
     })
 
     /***** MAP CONTROLS *****/

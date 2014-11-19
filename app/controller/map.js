@@ -59,6 +59,10 @@ function Map(container){
         dispatch.queryRectUpdated(rectangle.getBounds());
     }
 
+    this.getQueryRect = function() {
+        return rectangle.getBounds();
+    }
+
     this.addControl = function() {
         var map = this.getMap();
         map.addControl.apply(map, arguments);

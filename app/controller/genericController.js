@@ -9,6 +9,12 @@ function genericController() {
     var filterConditions = {};
 
     /*** SETTERS AND GETTERS ***/
+    var label;
+    this.label = function(l) {
+        return (arguments.length) ? (label = l, this) : label;
+    };
+
+
     this.setRequiredColumns = function(columns){
         requiredColumns = columns;
     };

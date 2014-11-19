@@ -47,7 +47,7 @@ function buttonsLayer(container, map, controllers){
                     height: buttonHeight
                 });
                 enter.append("text")
-                .text( function(d) { return d.label })
+                .text( function(d) { return (d.get) ? d.get().label() : d.label })
                 .attr({
                     x: 4 * padding + iconSize,
                     y: 0.6 * buttonHeight,

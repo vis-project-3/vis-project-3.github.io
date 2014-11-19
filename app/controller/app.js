@@ -79,26 +79,26 @@ function App(){
 
     amplify.publish("UPDATE_WAYPOINTS", [uic_west, museum]);
 
-    console.log("[EVENT] : POINT_A");
-    amplify.publish("POINT_A", pointA);
+    // console.log("[EVENT] : POINT_A");
+    // amplify.publish("POINT_A", pointA);
+    //
+    // console.log("[EVENT] : POINT_B");
+    // amplify.publish("POINT_B", pointB);
+    //
+    // console.log("[EVENT] : DIVVY_NEW_DATA");
+    // amplify.publish("DIVVY_NEW_DATA");
+    //
+    // console.log("[EVENT] : CRIMES_NEW_DATA");
+    // amplify.publish("CRIMES_NEW_DATA");
 
-    console.log("[EVENT] : POINT_B");
-    amplify.publish("POINT_B", pointB);
+    // console.log("[EVENT] : POTHOLES_NEW_DATA");
+    // amplify.publish("POTHOLES_NEW_DATA");
 
-    console.log("[EVENT] : DIVVY_NEW_DATA");
-    amplify.publish("DIVVY_NEW_DATA");
-
-    console.log("[EVENT] : CRIMES_NEW_DATA");
-    amplify.publish("CRIMES_NEW_DATA");
-
-    console.log("[EVENT] : POTHOLES_NEW_DATA");
-    amplify.publish("POTHOLES_NEW_DATA");
-
-    console.log("[EVENT] : LIGHTS_NEW_DATA");
-    amplify.publish("LIGHTS_NEW_DATA");
-
-    console.log("[EVENT] : VEHICLES_NEW_DATA");
-    amplify.publish("VEHICLES_NEW_DATA");
+    // console.log("[EVENT] : LIGHTS_NEW_DATA");
+    // amplify.publish("LIGHTS_NEW_DATA");
+    //
+    // console.log("[EVENT] : VEHICLES_NEW_DATA");
+    // amplify.publish("VEHICLES_NEW_DATA");
 
 }
 

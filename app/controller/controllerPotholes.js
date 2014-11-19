@@ -12,7 +12,9 @@ function controllerPotholes(mapObject) {
     this.iconPath = "resources/icons/icon-pot-hole.svg";
     this.eventId = "POTHOLES";
 
-    this.getController = function() { return controller };
+    this.get = this.getController = function() { return controller };
+
+    controller.label("Potholes!!");
 
     var requiredColumns = {
         0: 'creation_date',
