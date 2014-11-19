@@ -19,6 +19,7 @@ function controllerVehicles(mapObject) {
         var fromDate = d3.time.day.offset(new Date(), -30);
 
         return chicagoQuery()
+        .where("status = 'open'")
         .setEndPoint("3c9v-pnva.json?")
         .fromDate(fromDate);
     }
