@@ -5,6 +5,8 @@ function App(){
 
     L.Icon.Default.imagePath = "resources/images";
 
+    // console.log
+
     var getServiceRequest = function(d) { return d.service_request_number; }
 
     var oneWeekAgo = d3.time.day.offset(new Date(), -7);
@@ -54,6 +56,23 @@ function App(){
 
     control.addTo(map.getMap());
 
+    /********** TEST CUSTOM CONTROL */
+
+    var legend = L.control({position: 'bottomright'});
+
+    var color = d3.scale.category10();
+
+    legend.onAdd = function (map) {
+
+        var div = L.DomUtil.create('div', 'info legend');
+
+        div.innerHTML = '<h1>custom control</h1>';
+
+        return div;
+    };
+
+    legend.addTo(map.getMap());
+
     map.getMap()
         .on("overlayadd overlayremove", function(event) {
             var queryRect = map.getQueryRectangle().getBounds();
@@ -69,7 +88,7 @@ function App(){
         })
     }
 
-    var color = d3.scale.category10();
+
 
     function updateData(layer) {
         return function(newData) {

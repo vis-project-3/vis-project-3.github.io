@@ -20,13 +20,13 @@ function App(){
     var pointA = map.getPointA();
     var pointB = map.getPointB();
 
-    var divvy = new controllerDivvy(map);
-    var crimes = new controllerCrimes(map);
-    var potholes = new controllerPotholes(map);
-    var lights = new controllerLights(map);
-    var lightsAll = new controllerLightsAll(map);
-    var vehicles = new controllerVehicles(map);
-    var weather = new controllerWeather(box);
+    // var divvy = new controllerDivvy(map);
+    // var crimes = new controllerCrimes(map);
+    // var potholes = new controllerPotholes(map);
+    // var lights = new controllerLights(map);
+    // var lightsAll = new controllerLightsAll(map);
+    // var vehicles = new controllerVehicles(map);
+    // var weather = new controllerWeather(box);
 
 
     /**** UPDATES HANDLER *****/
@@ -37,15 +37,19 @@ function App(){
 
     /**** EVENTS *****/
     amplify.subscribe("UPDATE_WAYPOINTS", route.setWaypoints);
-    amplify.subscribe("BOUNDS_UPDATED", map.setQueryRect);
+    amplify.subscribe("ROUTE_BOUNDS_UPDATED", map.setQueryRect);
 
     route.on("boundsUpdated", function(bounds) {
-        amplify.publish("BOUNDS_UPDATED", bounds);
+        amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);
     });
 
-    /**** INITIAL APP STATE *****/
+    map.on("queryRectUpdated", function(bounds) {
+        amplify.publish("QUERY_RECT_UPDATED", bounds);
+    });
+
+    /**** Set up event logging *****/
     [
-        "UPDATE_WAYPOINTS", "BOUNDS_UPDATED"
+        "UPDATE_WAYPOINTS", "ROUTE_BOUNDS_UPDATED", "QUERY_RECT_UPDATED"
     ].forEach(function(name) {
         amplify.subscribe(name, (new Utility).i(name));
     })
@@ -58,8 +62,10 @@ function App(){
     console.log("[EVENT] : WEATHER");
     amplify.publish("WEATHER");*/
 
+
+    /**** INITIAL APP STATE *****/
     var uic_west = L.latLng( 41.874255, -87.676353),
-        museum = L.latLng( 41.861466, -87.614935);
+    museum = L.latLng( 41.861466, -87.614935);
 
     amplify.publish("UPDATE_WAYPOINTS", [uic_west, museum]);
 

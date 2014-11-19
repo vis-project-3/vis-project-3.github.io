@@ -36,6 +36,7 @@ function Map(container){
     /************* EVENTS ************/
 
     var dispatch = d3.dispatch("queryRectUpdated");
+    d3.rebind(this, dispatch, "on");
 
     /*************** Public Methods *****************/
 
@@ -55,7 +56,7 @@ function Map(container){
             rectangle.setBounds(padded);
         }
 
-        dispatch.queryRectUpdated(rectangle);
+        dispatch.queryRectUpdated(rectangle.getBounds());
     }
 
     this.addMarker = function(kind, lat, long){
@@ -211,7 +212,5 @@ function Map(container){
         amplify.subscribe("VIEW_STREET_MAP", self.switchToMap);
 
     }();
-
-    d3.rebind(this, dispatch, "on");
 
 }
