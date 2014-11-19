@@ -17,11 +17,9 @@ function buttonsLayer(container, map, controllers){
 
         var height = 600, width = 350, padding = 7;
 
-        // These variables set the height of each button and use it to scale the size of each icon to fit within the button
-        // TODO: Just use an ordinal scale instead.
-
         var buttonObjects = controllers;
 
+        // TODO: Fix this.
         buttonHeight = ( buttonObjects.length > 0 ) ? ( ( height - ( buttonObjects.length + 1 ) * padding ) / ( buttonObjects.length ) ) : ( height - 2 * padding );
         iconSize = 0.7 * buttonHeight;
 
@@ -79,9 +77,7 @@ function buttonsLayer(container, map, controllers){
     var init = function(){
 
         var ButtonsControl = L.Control.extend({
-            options: {
-                position: 'topleft'
-            },
+            options: { position: 'topleft' },
 
             initialize: function (foo, options) {
                 L.Util.setOptions(this, options);

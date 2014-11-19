@@ -23,8 +23,8 @@ function controllerPotholes(mapObject) {
     var filterConditions = {
         timeStamp: 'lastMonth',
         status: 'Open',
-        latitude:[Math.min(pointA[0],pointB[0]),Math.max(pointA[0],pointB[0])],
-        longitude:[Math.min(pointA[1],pointB[1]),Math.max(pointA[1],pointB[1])]
+        latitude: [Math.min(pointA[0],pointB[0]),Math.max(pointA[0],pointB[0])],
+        longitude: [Math.min(pointA[1],pointB[1]),Math.max(pointA[1],pointB[1])]
     };
 
     var setPointA = function(data){

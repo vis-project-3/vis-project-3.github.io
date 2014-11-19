@@ -60,8 +60,9 @@ function genericController() {
     this.toggleLayer = function(){
         console.log("[" + name + "] : Toggling Layer");
         temp = layer.getLayer();
-        if(map.hasLayer(temp)==true){
-            map.removeLayer(temp);}
+        if(map.hasLayer(temp) == true){
+            map.removeLayer(temp);
+        }
         else map.addLayer(temp);
     };
 

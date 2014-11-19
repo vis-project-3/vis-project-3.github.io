@@ -185,13 +185,22 @@ function Map(container){
         //     mapID: 'newest'
         // }).addTo(map);
 
+        // ESRI WorldGrayCanvas
         mapLayer = L.tileLayer(
             'http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
             {
                 mapID: 'newest',
-                subdomains: '1234'
+                subdomains: '1234',
+                maxZoom: 16
             }
         ).addTo(map);
+
+        // Open map surfer greyscale
+        // L.tileLayer('http://openmapsurfer.uni-hd.de/tiles/roadsg/x={x}&y={y}&z={z}', {
+        //     minZoom: 0,
+        //     maxZoom: 19,
+        //     attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+        // });
 
         // mapLayer = L.tileLayer(mapView, {
         //     subdomains: '1234',
