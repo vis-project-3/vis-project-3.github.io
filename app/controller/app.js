@@ -32,7 +32,9 @@ function App(){
         ctaStation, ctaBus, divvy, crimes, lights, potholes, vehicles
     ];
 
-    var layerButtons = new buttonsLayer(map, controllers);
+    var customControl = (new Utility).customControl;
+
+    var layerButtons = new buttonsLayer(map, controllers, customControl);
 
     var switchboard = new Switchboard(map, route, controllers, layerButtons);
 
@@ -64,6 +66,22 @@ function Utility() {
             return (arguments.length) ? (variable = value, this) : variable;
         }
     }
+
+    this.customControl = L.Control.extend({
+        options: { position: 'topleft' },
+
+        initialize: function (func, options) {
+            L.Util.setOptions(this, options);
+            this._func = func;
+        },
+
+        onAdd: function(map) {
+            var className = 'leaflet-control-layers leaflet-control-layers-expanded';
+            var container = L.DomUtil.create('div', className);
+            selection = d3.select(container).call(this._func);
+            return container;
+        }
+    });
 
     this.zoomFix = function() {
         var lastScroll = new Date().getTime();

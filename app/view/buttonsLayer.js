@@ -1,23 +1,12 @@
-function buttonsLayer(map, controllers){
+function buttonsLayer(map, controllers, customControl){
 
-    var CustomControl = L.Control.extend({
-        options: { position: 'topleft' },
+    var control = new customControl(addButtons);
+    map.addControl( control );
 
-        initialize: function (func, options) {
-            L.Util.setOptions(this, options);
-            this._func = func;
-        },
-
-        onAdd: function(map) {
-            var className = 'leaflet-control-layers leaflet-control-layers-expanded';
-            var container = L.DomUtil.create('div', className);
-            selection = d3.select(container).call(this._func);
-            return container;
-        }
-    });
-
-    // TODO: Remove – dev only!!!!!
-    map.addControl(new CustomControl(addButtons));
+    var selection = d3.select(control._container);
+    this.getSelection = function() {
+        return selection;
+    };
 
     function addButtons(selection) {
         selection.attr("id", "layer");
@@ -78,10 +67,5 @@ function buttonsLayer(map, controllers){
             })
         })
     }
-
-    var selection;
-    this.getSelection = function() {
-        return selection;
-    };
 
 }
