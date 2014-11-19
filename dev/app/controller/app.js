@@ -5,7 +5,7 @@ function App(){
 
     L.Icon.Default.imagePath = "resources/images";
 
-    // console.log
+    // console.log(L);
 
     var getServiceRequest = function(d) { return d.service_request_number; }
 
@@ -56,22 +56,52 @@ function App(){
 
     control.addTo(map.getMap());
 
+    var color = d3.scale.category10();
+
     /********** TEST CUSTOM CONTROL */
 
     var legend = L.control({position: 'bottomright'});
 
-    var color = d3.scale.category10();
+    // console.log(d3.select(".leaflet-control-container").node());
 
-    legend.onAdd = function (map) {
+    // console.log(map.getMap().getContainer());
+    var container = d3.select(".leaflet-control-container").node();
 
-        var div = L.DomUtil.create('div', 'info legend');
+    var MyControl = L.Control.extend({
+        options: {
+            position: 'bottomright'
+        },
 
-        div.innerHTML = '<h1>custom control</h1>';
+        initialize: function (foo, options) {
+            // ...
+            L.Util.setOptions(this, options);
+        },
 
-        return div;
-    };
+        onAdd: function(map) {
+            var className = 'leaflet-control-layers leaflet-control-layers-expanded';
 
-    legend.addTo(map.getMap());
+            var container = L.DomUtil.create('div', className);
+
+            container.innerHTML = '<h1>custom control</h1>';
+
+            return container;
+        }
+    });
+
+    map.getMap().addControl(new MyControl());
+
+    // L.DomUtil.create('div', "leaflet-middle leaflet-right", container);
+
+    // legend.onAdd = function (map) {
+    //
+    //     var div = L.DomUtil.create('div', 'leaflet-control-layers');
+    //
+    //     div.innerHTML = '<h1>custom control</h1>';
+    //
+    //     return div;
+    // };
+
+    // legend.addTo(map.getMap());
 
     map.getMap()
         .on("overlayadd overlayremove", function(event) {

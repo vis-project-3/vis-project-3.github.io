@@ -134,7 +134,7 @@ function buttonsLayer(container){
                 this.classList.add("selected");
             }
 
-        })  
+        })
 
     }();
 }
