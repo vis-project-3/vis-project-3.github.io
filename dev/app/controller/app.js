@@ -13,7 +13,7 @@ function App(){
     var twoDaysAgo = d3.time.day.offset(new Date(), -2);
 
     var potholesQuery = function() {
-        return ctaQuery("potholes")
+        return chicagoQuery("potholes")
             .where("status = 'open'");
     }
 

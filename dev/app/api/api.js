@@ -10,7 +10,7 @@ var apiEndpoints = {
 	divvy: "http://sortieapp.com/sortie/divvy"
 }
 
-function ctaQuery(type) {
+function chicagoQuery(type) {
 	var endPoint = apiEndpoints[type],
 		where = "",
 		limit = "",
