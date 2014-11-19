@@ -1,13 +1,11 @@
 function App(){
 
-    var mapObject = new Map("map");
-    var map = mapObject.getMap();
+    var map = new Map("map");
+    // var map = mapObject.getMap();
 
     var route = new Route();
-    amplify.subscribe("UPDATE_WAYPOINTS", route.setWaypoints);
-    route.on("boundsUpdated", function(bounds) { console.log("bounds updated"); })
 
-    route.addTo(map);
+    route.addTo(map.getMap());
 
     /***** UI COMPONENTS *****/
     var layer = new buttonsLayer("#layer");
@@ -19,8 +17,8 @@ function App(){
 
 
     /***** CONTROLLERS ******/
-    var pointA = mapObject.getPointA();
-    var pointB = mapObject.getPointB();
+    var pointA = map.getPointA();
+    var pointB = map.getPointB();
 
     var divvy = new controllerDivvy(map);
     var crimes = new controllerCrimes(map);
@@ -37,20 +35,37 @@ function App(){
     /**** LISTENERS *****/
     new buttonsListeners();
 
+    /**** EVENTS *****/
+    amplify.subscribe("UPDATE_WAYPOINTS", route.setWaypoints);
+
+    amplify.subscribe("BOUNDS_UPDATED", map.setQueryRect);
+
+    route.on("boundsUpdated", function(bounds) {
+        amplify.publish("BOUNDS_UPDATED", bounds);
+    });
+
+
+
     /**** INITIAL APP STATE *****/
-    var uic_west = L.latLng( 41.874255, -87.676353),
-        museum = L.latLng( 41.861466, -87.614935);
 
 
-    amplify.subscribe("UPDATE_WAYPOINTS", i("UPDATE_WAYPOINTS"));
-    amplify.publish("UPDATE_WAYPOINTS", [uic_west, museum]);
+    var names = [
+        "UPDATE_WAYPOINTS", "BOUNDS_UPDATED"
+    ]
+
+    names.forEach(function(name) {
+        amplify.subscribe(name, i(name));
+    })
 
 
+
+    /* Helper closure for logging events */
     function i(text) {
         return function(data) {
             console.info("[EVENT] : %s : %o", text, data);
         }
     }
+
     /***** INITIALIZERS TEST *****/
 
     /*console.log("[EVENT] : SUNRISE_SUNSET");
@@ -58,6 +73,11 @@ function App(){
 
     console.log("[EVENT] : WEATHER");
     amplify.publish("WEATHER");*/
+
+    var uic_west = L.latLng( 41.874255, -87.676353),
+        museum = L.latLng( 41.861466, -87.614935);
+
+    amplify.publish("UPDATE_WAYPOINTS", [uic_west, museum]);
 
     console.log("[EVENT] : POINT_A");
     amplify.publish("POINT_A", pointA);

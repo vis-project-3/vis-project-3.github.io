@@ -33,7 +33,30 @@ function Map(container){
     var rectangle;
     var buffer = 0.005;
 
+    /************* EVENTS ************/
+
+    var dispatch = d3.dispatch("queryRectUpdated");
+
     /*************** Public Methods *****************/
+
+    var buffer_ = 0.20; // Leaflet uses percentage buffers
+    this.setBuffer = function(b) {
+        buffer_ = b;
+        return this;
+    }
+
+    this.setQueryRect = function(latLngBounds) {
+        var padded = latLngBounds.pad(0.20);
+
+        if (! rectangle) {
+            rectangle = L.rectangle(padded, { color: "#222", fill: false, weight: 2 });
+            rectangle.addTo(map);
+        } else {
+            rectangle.setBounds(padded);
+        }
+
+        dispatch.queryRectUpdated(rectangle);
+    }
 
     this.addMarker = function(kind, lat, long){
         var marker = L.marker([lat, long], {
@@ -112,6 +135,18 @@ function Map(container){
 
     /*************** Private Methods ********************/
 
+    var rectangle;
+    function setRectangle(latLngBounds) {
+        if (! rectangle) {
+            rectangle = L.rectangle(latLngBounds, { color: "#222", fill: false, weight: 2 });
+            rectangle.addTo(map);
+        } else {
+            rectangle.setBounds(latLngBounds);
+        }
+
+        return rectangle;
+    }
+
     var computeRectangle = function(){
         lowerLeft = [Math.min(pointA[0], pointB[0])-buffer, Math.min(pointA[1],pointB[1])-buffer];
         upperRight = [Math.max(pointA[0], pointB[0])+buffer,Math.max(pointA[1], pointB[1])+buffer];
@@ -183,5 +218,7 @@ function Map(container){
         amplify.subscribe("VIEW_STREET_MAP", self.switchToMap);
 
     }();
+
+    d3.rebind(this, dispatch, "on");
 
 }
