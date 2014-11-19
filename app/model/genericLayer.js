@@ -24,9 +24,15 @@ function genericLayer() {
         popup = popupKind;
     };
 
+    this.getPopup = function() { return popup; };
+
     this.setIcon = function(markerIcon){
         icon = markerIcon;
     };
+
+    this.getIcon = function() {
+        return getIcon(icon);
+    }
 
     this.getLayer = function () {
         return layer;
@@ -46,6 +52,10 @@ function genericLayer() {
             addToMarkers(data[i]);
         }
     };
+
+    this.addMarker = function(marker) {
+        marker.addTo(layer);
+    }
 
     this.updateMarker = function (data) {
         markers[data[key]].setLatLng([parseFloat(data.latitude), parseFloat(data.longitude)]);
