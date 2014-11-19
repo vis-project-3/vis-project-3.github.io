@@ -26,7 +26,7 @@ function genericController() {
     };
 
     this.setLayer = function(layerObject){
-        console.log(layerObject);
+        // console.log(layerObject);
         layer = layerObject;
     };
 
@@ -78,4 +78,3 @@ function genericController() {
     };
 
 }
-

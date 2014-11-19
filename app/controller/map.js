@@ -17,7 +17,7 @@ function Map(container){
 
     var map_app_id = 'bInsuD6J2viFbpUIsQyZ';
     var map_app_code = 'PlxtcGU1qGFBdLzv0KZ84w';
-    var map_base = "base"
+    var map_base = "base";
 
     var sat_app_id ="dbiVypDUKUMokmrn9C91";
     var sat_app_code = "Bz4hzFLMyMM5-5opQRUJTQ";
@@ -179,4 +179,3 @@ function Map(container){
     }();
 
 }
-
