@@ -20,13 +20,13 @@ function App(){
     var pointA = map.getPointA();
     var pointB = map.getPointB();
 
-    // var divvy = new controllerDivvy(map);
-    // var crimes = new controllerCrimes(map);
-    // var potholes = new controllerPotholes(map);
-    // var lights = new controllerLights(map);
-    // var lightsAll = new controllerLightsAll(map);
-    // var vehicles = new controllerVehicles(map);
-    // var weather = new controllerWeather(box);
+    var divvy = new controllerDivvy(map);
+    var crimes = new controllerCrimes(map);
+    var potholes = new controllerPotholes(map);
+    var lights = new controllerLights(map);
+    var lightsAll = new controllerLightsAll(map);
+    var vehicles = new controllerVehicles(map);
+    var weather = new controllerWeather(box);
 
 
     /**** UPDATES HANDLER *****/

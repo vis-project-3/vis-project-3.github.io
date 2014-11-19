@@ -28,6 +28,8 @@ function buttonsListeners() {
 
     /****** LAYER BUTTONS ******/
 
+    
+
     d3.select("#divvy-layer")
         .on("click", function () {
             console.log("[EVENT] : VIEW_LAYER_DIVVY");
