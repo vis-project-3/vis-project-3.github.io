@@ -147,18 +147,6 @@ function Map(container){
         return rectangle;
     }
 
-    var computeRectangle = function(){
-        lowerLeft = [Math.min(pointA[0], pointB[0])-buffer, Math.min(pointA[1],pointB[1])-buffer];
-        upperRight = [Math.max(pointA[0], pointB[0])+buffer,Math.max(pointA[1], pointB[1])+buffer];
-
-        //console.log(lowerLeft);
-        //console.log(upperRight);
-    }
-
-    var setRectangle= function(){
-        rectangle = L.rectangle([lowerLeft,upperRight], {color: "#ff3c00", weight: 5}).addTo(map);
-    }
-
     var updateRectangle = function(){
         computeRectangle();
         rectangle.setBounds([lowerLeft,upperRight]);
@@ -174,24 +162,29 @@ function Map(container){
         pointB = museum_location;
 
         map = L.map(container, {
-            //maxBounds : bounds,
             minZoom: 10,
             zoomControl:false,
             attributionControl : false
-
-            //maxZoom: 18
         }).setView([41.88,-87.615],13);
 
         // var mapLayer =  L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
         //                     subdomains: '1234'
         //                 }).addTo(map);
 
-
         mapView = 'http://{s}.' + map_base + '.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id=' + map_app_id + '&app_code=' + map_app_code;
         satView = 'http://{s}.' + sat_base +'.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/satellite.day/{z}/{x}/{y}/256/png8?app_id=' + sat_app_id + '&app_code=' + sat_app_code;
 
+        // mapLayer = L.tileLayer(mapView, {
+        //     subdomains: '1234',
+        //     mapID: 'newest'
+        // }).addTo(map);
+
         mapLayer = L.tileLayer(
-            'http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}'
+            'http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+            {
+                mapID: 'newest',
+                subdomains: '1234'
+            }
         ).addTo(map);
 
         // mapLayer = L.tileLayer(mapView, {
@@ -207,9 +200,9 @@ function Map(container){
 
 
 
-
-        computeRectangle();
-        setRectangle();
+        //
+        // computeRectangle();
+        // setRectangle();
 
 
         amplify.subscribe("VIEW_ZOOM_PLUS", self.zoomIn);

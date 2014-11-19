@@ -37,34 +37,18 @@ function App(){
 
     /**** EVENTS *****/
     amplify.subscribe("UPDATE_WAYPOINTS", route.setWaypoints);
-
     amplify.subscribe("BOUNDS_UPDATED", map.setQueryRect);
 
     route.on("boundsUpdated", function(bounds) {
         amplify.publish("BOUNDS_UPDATED", bounds);
     });
 
-
-
     /**** INITIAL APP STATE *****/
-
-
-    var names = [
+    [
         "UPDATE_WAYPOINTS", "BOUNDS_UPDATED"
-    ]
-
-    names.forEach(function(name) {
-        amplify.subscribe(name, i(name));
+    ].forEach(function(name) {
+        amplify.subscribe(name, (new Utility).i(name));
     })
-
-
-
-    /* Helper closure for logging events */
-    function i(text) {
-        return function(data) {
-            console.info("[EVENT] : %s : %o", text, data);
-        }
-    }
 
     /***** INITIALIZERS TEST *****/
 
@@ -100,4 +84,13 @@ function App(){
     console.log("[EVENT] : VEHICLES_NEW_DATA");
     amplify.publish("VEHICLES_NEW_DATA");
 
+}
+
+function Utility() {
+    /* Helper closure for logging events */
+    this.i = function (text) {
+        return function(data) {
+            console.info("[EVENT] : %s : %o", text, data);
+        }
+    }
 }

@@ -1,7 +1,7 @@
 
 function Route(){
-    var dispatch = d3.dispatch("routesFound", "boundsUpdated");
 
+    /******* SETUP *********/
     var r = 10;
 
     var iconHtml = d3.select(new DocumentFragment())
@@ -30,6 +30,11 @@ function Route(){
         show: false
     });
 
+    /******** EVENTS ********/
+
+    var dispatch = d3.dispatch("routesFound", "boundsUpdated");
+    d3.rebind(this, dispatch, "on");
+
     route.on("routesfound", function(e) {
         dispatch.routesFound.apply(this, arguments);
     });
@@ -52,6 +57,6 @@ function Route(){
 
     this.setWaypoints = route.setWaypoints.bind(route);
 
-    d3.rebind(this, dispatch, "on");
+
 
 }
