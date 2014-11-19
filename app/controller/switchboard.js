@@ -1,7 +1,9 @@
-function Switchboard() {
+function Switchboard(controllers, layerButtons) {
+
+    console.log(layerButtons.getSelection());
 
     /***** MAP CONTROLS *****/
-    
+
     d3.select("#icon-minus")
     .on("click", function () {
         console.log("[EVENT] : VIEW_ZOOM_MINUS");

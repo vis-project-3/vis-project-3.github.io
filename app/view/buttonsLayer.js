@@ -19,19 +19,12 @@ function buttonsLayer(container, map, controllers){
 
         var buttonObjects = controllers;
 
-        // TODO: Fix this.
-        buttonHeight = ( buttonObjects.length > 0 ) ? ( ( height - ( buttonObjects.length + 1 ) * padding ) / ( buttonObjects.length ) ) : ( height - 2 * padding );
-        iconSize = 0.7 * buttonHeight;
-
-        var y = d3.scale.linear()
-            .domain([0, buttonObjects.length ])
-            .range([0, height - padding]);
-
-        var y_ = d3.scale.ordinal()
+        var y = d3.scale.ordinal()
             .domain(d3.range(buttonObjects.length))
-            .rangeBands([0, height])
+            .rangeBands([0, height]);
 
-        console.log(buttonObjects.length, y_(0));
+        buttonHeight = y.rangeBand() * 0.9;
+        iconSize = 0.7 * buttonHeight;
 
         var svg = selection.append("svg")
             .attr("viewBox","0 0 " + width + " " + height)
@@ -45,7 +38,7 @@ function buttonsLayer(container, map, controllers){
         button.enter().append("g").attr("class", "button")
             .call(function(enter) {
                 enter.attr("transform", function(d, i) {
-                    return "translate(" + padding + "," + y_(i) + ")";
+                    return "translate(" + padding + "," + y(i) + ")";
                 });
                 enter.append("rect")
                 .attr({
@@ -78,6 +71,11 @@ function buttonsLayer(container, map, controllers){
         })
     }
 
+    var selection;
+    this.getSelection = function() {
+        return selection;
+    }
+
     /******** Initializer  ******/
 
     var init = function(){
@@ -94,7 +92,7 @@ function buttonsLayer(container, map, controllers){
 
                 var container = L.DomUtil.create('div', className);
 
-                d3.select(container).call(addButtons);
+                selection = d3.select(container).call(addButtons);
 
                 return container;
             }
