@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <link rel="import" href="include/lib_local.html">
+        <link rel="import" href="include/components.html">
+        <script src="model/divvyLayer.js"></script>
+    </head>
+    <body>
+        <div id="map"></div>
+
+        <script>
+            L.Icon.Default.imagePath = "../resources/images";
+            var divvy = new divvyLayer();
+            var updatedMarker = {
+                id: 5,
+                latitude : 41.87,
+                longitude: -87.58
+            };
+            var map;
+
+            function getData(){
+                $.ajax({
+                    url: "http://sortieapp.com/sortie/divvy",
+                    dataType: "json",
+                    success: function(data){
+                        callBack(data)
+                    }
+                });
+            }
+
+            function callBack(data){
+                divvy.addCollection(data);
+                divvy.varLog();
+                var mapObject = new Map("map");
+                //mapObject.addOverLayer("Divvy", divvy.getLayer());
+                mapObject.addLayer(divvy.getLayer());
+                //mapObject.zoomIn();
+
+                //divvy.updateMarker(updatedMarker);
+
+            }
+
+            function prova(){
+                getData();
+            }
+
+
+
+            prova();
+
+
+        </script>
+    </body>
+</html>

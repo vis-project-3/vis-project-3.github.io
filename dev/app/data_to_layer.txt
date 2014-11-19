@@ -1,0 +1,24 @@
+var markers = new L.FeatureGroup();
+function populate() {
+ csv = d3.csv(url)
+   .get(function(error, data) {
+     stations = data;
+     var badcount = 0;
+     for (i=0; i<stations.length; i++) {
+       n = stationPop.get(stations[i].name);
+       if (!n) {
+         badcount++;
+       }
+       var marker = L.marker([parseFloat(stations[i].latitude), 
+                              parseFloat(stations[i].longitude)], 
+         {icon: icons[stationPop.get(stations[i].name)]})
+       station_id = window.stations_ids.get(stations[i].name);
+       marker.station_id = station_id;
+       marker.name = stations[i].name;
+       marker.on("dblclick", doTheSelect);
+       markers.addLayer(marker);
+       marker.bindPopup('<div id="pin-container"><div class="pin"><div class="pin-name"><span>'+stations[i].name+'</span></div><img src="images/icon-inflow-outflow-pin.png" class="pin-icon"/><div class="pin-inflow highlight" onclick="drawInflow('+station_id+')"><span>In: '+window.inflow.get(parseInt(station_id))+'</span></div><div class="pin-outflow" onclick="drawOutflow('+station_id+')"><span>Out: '+window.outflow.get(parseInt(station_id))+'</span></div></div></div>');
+     }
+   })
+ return false;
+}

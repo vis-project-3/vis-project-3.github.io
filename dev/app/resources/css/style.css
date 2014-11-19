@@ -1,0 +1,95 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+
+body{
+    margin:0;
+}
+
+#map {
+    height: 100%;
+}
+
+#top-bar{
+    position : absolute;
+    top : 1%;
+    left : 1%;
+    width : 67.5%;
+    height : 10%;
+    background-color: rgba(255,255,255,0.66);
+}
+
+#layer{
+    position : absolute;
+    top : 12%;
+    left : 1%;
+    width : 20%;
+    height : 60%;
+    background-color: rgba(255,255,255,0.66);
+}
+
+#layer svg rect {
+    fill: #FFFFFF;
+}
+
+#layer svg rect:hover {
+    fill: #76B3E5;
+}
+
+#layer svg rect.selected {
+    fill: #6699CC;
+}
+
+#layer svg text {
+    font-family: Helvetica, 'Open Sans', sans-serif;
+}
+
+#layer svg text.selected {
+    font-family: Helvetica, 'Open Sans', sans-serif;
+    color: #FFFFFF;
+}
+
+#weather{
+    position: absolute;
+    top: 1%;
+    right: 1%;
+    width : 30%;
+    height: 10%;
+    background-color: rgba(255,255,255,0.66);
+}
+
+#mapselection{
+    position : absolute;
+    bottom : 7%;
+    left : 1%;
+    width : 20%;
+    height : 20%;
+    background-color: rgba(255,255,255,0.66);
+}
+
+#graphs{
+    position : absolute;
+    top : 12%;
+    right : 1%;
+    width : 30%;
+    height : 60%;
+    background-color: rgba(255,255,255,0.66);
+
+}
+
+#notifications{
+    position : absolute;
+    bottom : 7%;
+    right: 1%;
+    width : 30%;
+    height : 20%;
+    background-color: rgba(255,255,255,0.66);
+}
+
+#toggle{
+    position : absolute;
+    bottom : 1%;
+    left : 1%;
+    width : 98%;
+    height : 5%;
+    background-color: rgba(255,255,255,0.66);
+
+}
