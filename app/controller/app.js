@@ -17,26 +17,29 @@ function App(){
 
 
     /***** CONTROLLERS ******/
-    var pointA = map.getPointA();
-    var pointB = map.getPointB();
+    // var pointA = map.getPointA();
+    // var pointB = map.getPointB();
 
-    var divvy = new controllerDivvy(map);
-    var crimes = new controllerCrimes(map);
-    var potholes = new controllerPotholes(map);
-    var lights = new controllerLights(map);
-    var lightsAll = new controllerLightsAll(map);
-    var vehicles = new controllerVehicles(map);
-    var ctaStation = new controllerCtaStation(map);
-    var ctaBus = new controllerCtaBus(map);
+    // var divvy = new controllerDivvy(map);
+    // var crimes = new controllerCrimes(map);
+    var potholes = (new controllerPotholes(map)).get();
+
+    // var lights = new controllerLights(map);
+    // var lightsAll = new controllerLightsAll(map);
+    // var vehicles = new controllerVehicles(map);
+    // var ctaStation = new controllerCtaStation(map);
+    // var ctaBus = new controllerCtaBus(map);
     // var weather = new controllerWeather(box);
 
     var controllers = [
-        ctaStation, ctaBus, divvy, crimes, lights, potholes, vehicles
+        // ctaStation, ctaBus, divvy, crimes, lights,
+        potholes,
+        // vehicles
     ];
 
-    var layerButtons = new buttonsLayer(null, map, controllers);
+    var layerButtons = new buttonsLayer(map, controllers);
 
-    var switchboard = new Switchboard(map, route, controllers, layerButtons);
+    // var switchboard = new Switchboard(map, route, controllers, layerButtons);
 
 
     /**** UPDATES HANDLER *****/
@@ -74,10 +77,10 @@ function App(){
 
 
     /**** INITIAL APP STATE *****/
-    var uic_west = L.latLng( 41.874255, -87.676353),
-    museum = L.latLng( 41.861466, -87.614935);
-
-    amplify.publish("UPDATE_WAYPOINTS", [uic_west, museum]);
+    // var uic_west = L.latLng( 41.874255, -87.676353),
+    // museum = L.latLng( 41.861466, -87.614935);
+    //
+    // amplify.publish("UPDATE_WAYPOINTS", [uic_west, museum]);
 
     // console.log("[EVENT] : POINT_A");
     // amplify.publish("POINT_A", pointA);
@@ -107,6 +110,12 @@ function Utility() {
     this.i = function (text) {
         return function(data) {
             console.info("[EVENT] : %s : %o", text, data);
+        }
+    }
+
+    this.getSet = function(variable) {
+        return function(value) {
+            return (arguments.length) ? (variable = value, this) : variable;
         }
     }
 }

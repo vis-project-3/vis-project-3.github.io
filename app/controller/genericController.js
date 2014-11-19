@@ -1,66 +1,72 @@
 function genericController() {
-    var name;
-    var pointA = [];
-    var pointB = [];
-    var map;
-    var layer;
-    var api;
-    var requiredColumns = {};
-    var filterConditions = {};
+    // var name;
+    // var pointA = [];
+    // var pointB = [];
+    // var map;
+    // var layer;
+    // var api;
+    // var requiredColumns = {};
+    // var filterConditions = {};
 
     /*** SETTERS AND GETTERS ***/
+
+    var getSet = (new Utility()).getSet;
+
     var label;
-    this.label = function(l) {
-        return (arguments.length) ? (label = l, this) : label;
-    };
+    this.label = getSet.bind(this)(label);
 
     var id;
-    this.id = function(value) {
-        return (arguments.length) ? (id = value, this) : id;
-    };
+    this.id = getSet.bind(this)(id);
 
-    var eventId;
-    this.eventId = function(e) {
-        return (arguments.length) ? (eventId = e, this) : eventId;
-    };
+    var iconPath;
+    this.iconPath = getSet.bind(this)(iconPath);
 
+    var map;
+    this.map = getSet.bind(this)(map);
 
-    this.setRequiredColumns = function(columns){
-        requiredColumns = columns;
-    };
-
-    this.setfilterConditions = function(conditions){
-        filterConditions = conditions;
-    };
-
-    this.setName = function(logName){
-        name = logName;
-    }
-
-    this.setMap = function(mapObject){
-        map = mapObject;
-    };
-
-    this.setLayer = function(layerObject){
-        // console.log(layerObject);
-        layer = layerObject;
-    };
-
-    this.setAPI = function(objectAPI){
-        api = objectAPI;
-    };
+    var layer;
+    this.layer = getSet.bind(this)(layer);
 
     var query;
-    this.setQuery = function(q) { query = q; };
+    this.query = getSet.bind(this)(query);
 
-    /**** PUBLISHER SUBSCRIBER METHODS ****/
-    this.subscribe = function(event, callback){
-        amplify.subscribe(event,callback);
-    };
 
-    this.publish = function(event,data){
-        amplify.publish(event, data);
-    };
+    // this.setRequiredColumns = function(columns){
+    //     requiredColumns = columns;
+    // };
+    //
+    // this.setfilterConditions = function(conditions){
+    //     filterConditions = conditions;
+    // };
+    //
+    // this.setName = function(logName){
+    //     name = logName;
+    // }
+    //
+    // this.setMap = function(mapObject){
+    //     map = mapObject;
+    // };
+
+    // this.setLayer = function(layerObject){
+    //     // console.log(layerObject);
+    //     layer = layerObject;
+    // };
+    //
+    // this.setAPI = function(objectAPI){
+    //     api = objectAPI;
+    // };
+    //
+    // var query;
+    // this.setQuery = function(q) { query = q; };
+    //
+    // /**** PUBLISHER SUBSCRIBER METHODS ****/
+    // this.subscribe = function(event, callback){
+    //     amplify.subscribe(event,callback);
+    // };
+    //
+    // this.publish = function(event,data){
+    //     amplify.publish(event, data);
+    // };
 
 
     /**** PUBLIC METHODS *****/
@@ -68,20 +74,19 @@ function genericController() {
         return map.hasLayer(layer.getLayer());
     }
 
-    this.clearData = function () {
-        //layer.clearData();
-    };
+    // this.clearData = function () {
+    //     //layer.clearData();
+    // };
 
-    this.newData = function () {
-        api.getData(requiredColumns, filterConditions, callBackAdd);
-    };
+    // this.newData = function () {
+    //     api.getData(requiredColumns, filterConditions, callBackAdd);
+    // };
 
     this.updateData = function (bounds) {
         console.info("Layer %s is updating data with %o", name, bounds);
         if (! query) return;
         var fullQuery = query().queryRect(bounds);
         d3.json(fullQuery(), _updateData)
-        // console.log(fullQuery());
     };
 
     //Toggle Layer
@@ -129,14 +134,14 @@ function genericController() {
             });
     }
 
-    var callBackAdd = function(data){
-        console.log("[" + name + "] : Adding Data");
-        //layer.clearData();
-        layer.addCollection(data);
-    };
-
-    var callBackUpdate = function(data){
-        console.log("[" + name + "] : Updating Data");
-    };
+    // var callBackAdd = function(data){
+    //     console.log("[" + name + "] : Adding Data");
+    //     //layer.clearData();
+    //     layer.addCollection(data);
+    // };
+    //
+    // var callBackUpdate = function(data){
+    //     console.log("[" + name + "] : Updating Data");
+    // };
 
 }
