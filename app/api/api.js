@@ -10,33 +10,41 @@ var apiEndpoints = {
 	divvy: "http://sortieapp.com/sortie/divvy"
 }
 
-function query(type) {
+function chicagoQuery(type) {
 	var endPoint = apiEndpoints[type],
-		where = "",
-		limit = "",
-		minLongitude = -88,
-		maxLongitude = -87.5,
-		minLatitude = 41.6,
-		maxLatitude = 42.2,
-		fromLng, toLng,
-		fromLat, toLat,
-		my = {};
+	where = "",
+	limit = "",
+	minLongitude = -88,
+	maxLongitude = -87.5,
+	minLatitude = 41.6,
+	maxLatitude = 42.2,
+	fromLng, toLng,
+	fromLat, toLat;
+	// my = function() {};
 
 	// var lastChar = endPoint.substr(endPoint.length - 1);
 	// if (lastChar !== "?") endPoint += "?";
 
 	var query = endPoint;
 
+	my = function() {
+		buildQuery();
+		// console.info("Query: ", query);
+		return query;
+	}
+
 	function buildQuery() {
 		if (where.length) addParam(where);
 		if (limit.length) addParam(limit);
 	}
+
 	function addParam(param) {
 		var lastChar = query.substr(query.length - 1);
 		// var isFirstParam = lastChar === "?";
 		var ampersand = (lastChar === "?") ? "" : "&";
 		query += ampersand + param;
 	}
+
 	function addWhere(whereString) {
 		if (! where.length) where = "$where=";
 		else where += " AND ";
@@ -88,12 +96,20 @@ function query(type) {
 
 	my.toLat = function(latitude) {
 		latitude = parseFloat(latitude);
-		if (latitude < minLatitude) 
+		if (latitude < minLatitude)
 			throw new Error("Latitude " + latitude + " is out of bounds.");
 		toLat = latitude;
 		if (fromLat && fromLat >= toLat)
 			throw new Error("FromLat >= ToLat.");
 		addWhere("latitude <= " + toLat);
+		return my;
+	}
+
+	my.queryRect = function(queryRect) {
+		my.fromLat(queryRect.getSouth());
+		my.fromLng(queryRect.getWest());
+		my.toLat(queryRect.getNorth());
+		my.toLng(queryRect.getEast());
 		return my;
 	}
 
@@ -111,39 +127,32 @@ function query(type) {
 
 	my.type = function() { return type; };
 
-	my.get = function() {
-		buildQuery();
-		console.info("Query: ", query);
-		return query;
-	}
-
 	return my;
 }
 
-var lastWeek = d3.time.day.offset(new Date(), -7);
-var yesterday = d3.time.day.offset(new Date(), -2);
-var date = lastWeek;
+// var lastWeek = d3.time.day.offset(new Date(), -7);
+// var yesterday = d3.time.day.offset(new Date(), -2);
+// var date = lastWeek;
 
-var potholesQuery = query("potholes")
-	.fromLat("41.8")
-	.fromLng("-87.8")
-	.toLat("41.9")
-	.toLng("-87.6")
-	.fromDate(date)
-	.limit(100)
-	.where("status = 'open'");
+// var potholesQuery = ctaQuery("potholes")
+// 	.fromLat("41.8")
+// 	.fromLng("-87.8")
+// 	.toLat("41.9")
+// 	.toLng("-87.6")
+// 	.fromDate(date)
+// 	.limit(100)
+// 	.where("status = 'open'");
+//
+// var vehiclesQuery = ctaQuery("vehicles")
+// 	.fromLat("41.8")
+// 	.fromLng("-87.8")
+// 	.toLat("41.9")
+// 	.toLng("-87.6")
+// 	.fromDate(date)
+// 	.limit(100);
 
-var vehiclesQuery = query("vehicles")
-	.fromLat("41.8")
-	.fromLng("-87.8")
-	.toLat("41.9")
-	.toLng("-87.6")
-	.fromDate(date)
-	.limit(100);
-
-// d3.json(potholesQuery.get(), function(data) { console.log(potholesQuery.type(), data); });
+// d3.json(potholesQuery(), function(data) { console.log(potholesQuery.type(), data); });
 // d3.json(vehiclesQuery.get(), function(data) { console.log(vehiclesQuery.type(), data); });
 
 // No access-control-allow-origin ?!
 // d3.json.query("divvy").get(), function(data) { console.log("divvy", data); });
-	
