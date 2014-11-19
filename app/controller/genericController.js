@@ -34,6 +34,9 @@ function genericController() {
         api = objectAPI;
     };
 
+    var query;
+    this.setQuery = function(q) { query = q; };
+
     /**** PUBLISHER SUBSCRIBER METHODS ****/
     this.subscribe = function(event, callback){
         amplify.subscribe(event,callback);
@@ -59,6 +62,10 @@ function genericController() {
 
     this.updateData = function (bounds) {
         console.info("Layer %s is updating data with %o", name, bounds);
+        if (! query) return;
+        var fullQuery = query().queryRect(bounds);
+        d3.json(fullQuery(), _updateData)
+        // console.log(fullQuery());
     };
 
     //Toggle Layer
@@ -71,7 +78,12 @@ function genericController() {
         else map.addLayer(temp);
     };
 
-
+    var fragment = new DocumentFragment();
+    var fragSelect = d3.select(fragment);
+    function _updateData(newData) {
+        console.info("New data length:", newData.length);
+        var keyFunction = function(d) { return d[layer.getKey()]; };
+    }
 
     var callBackAdd = function(data){
         console.log("[" + name + "] : Adding Data");

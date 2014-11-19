@@ -122,7 +122,7 @@ function App(){
     function updateData(layer) {
         return function(newData) {
             console.info("New data length:", newData.length);
-            var className = layer.id + "-marker";
+            // var className = layer.id + "-marker";
             var parent = fragment.select("." + layer.id);
             var li = parent.selectAll("li").data(newData, layer.keyFunction);
             li.enter().append("li")

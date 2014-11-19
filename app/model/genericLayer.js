@@ -18,6 +18,8 @@ function genericLayer() {
         key = dataKey;
     };
 
+    this.getKey = function() { return key; };
+
     this.setPopup = function(popupKind){
         popup = popupKind;
     };

@@ -55,6 +55,17 @@ function controllerPotholes(mapObject) {
     controller.setRequiredColumns(requiredColumns);
     controller.setAPI(api);
 
+    var fromDate = d3.time.day.offset(new Date(), -7);
+
+    var query = function() {
+        return chicagoQuery()
+            .setEndPoint("7as2-ds3y.json?")
+            .where("status = 'open'")
+            .fromDate(fromDate);
+    }
+
+    controller.setQuery(query);
+
     controller.subscribe(name + "_CLEAR_DATA", controller.clearData);
     controller.subscribe(name + "_UPDATE_DATA", controller.updateData);
     controller.subscribe(name + "_NEW_DATA", controller.newData);
