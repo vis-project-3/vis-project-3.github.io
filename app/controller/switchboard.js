@@ -1,15 +1,27 @@
 function Switchboard(map, route, controllers, layerButtons) {
 
     /**** Set up event logging *****/
-    
+
     [   "UPDATE_WAYPOINTS", "ROUTE_BOUNDS_UPDATED",
         "QUERY_RECT_UPDATED"
     ].forEach(function(name) {
         amplify.subscribe(name, (new Utility).i(name));
     });
 
+    /**** Route updates ****/
+
     amplify.subscribe("UPDATE_WAYPOINTS", route.setWaypoints);
+
     amplify.subscribe("ROUTE_BOUNDS_UPDATED", map.setQueryRect);
+
+    amplify.subscribe("QUERY_RECT_UPDATED", function(bounds) {
+        controllers.forEach(function(layer) {
+            if (layer.getController && layer.getController().layerIsActive()) {
+                console.info("Layer %s is active.", layer.label);
+                layer.getController().updateData(bounds);
+            }
+        })
+    })
 
     route.on("boundsUpdated", function(bounds) {
         amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);

@@ -45,6 +45,10 @@ function genericController() {
 
 
     /**** PUBLIC METHODS *****/
+    this.layerIsActive = function() {
+        return map.hasLayer(layer.getLayer());
+    }
+
     this.clearData = function () {
         //layer.clearData();
     };
@@ -53,7 +57,8 @@ function genericController() {
         api.getData(requiredColumns, filterConditions, callBackAdd);
     };
 
-    this.updateData = function () {
+    this.updateData = function (bounds) {
+        console.info("Layer %s is updating data with %o", name, bounds);
     };
 
     //Toggle Layer
