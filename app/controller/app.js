@@ -3,6 +3,8 @@ function App(){
     var mapObject = new Map("map");
     var map = mapObject.getMap();
 
+    var route = new Route();
+
 
     /***** UI COMPONENTS *****/
     var layer = new buttonsLayer("#layer");
@@ -63,6 +65,3 @@ function App(){
     amplify.publish("VEHICLES_NEW_DATA");
 
 }
-
-
-
