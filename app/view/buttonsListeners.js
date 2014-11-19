@@ -1,4 +1,4 @@
-function buttonsListeners() {
+function buttonsListeners(controllers, layerButtons) {
 
     /***** MAP CONTROLS *****/
 
@@ -28,7 +28,7 @@ function buttonsListeners() {
 
     /****** LAYER BUTTONS ******/
 
-    
+
 
     d3.select("#divvy-layer")
         .on("click", function () {

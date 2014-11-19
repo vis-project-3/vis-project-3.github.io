@@ -34,14 +34,16 @@ function App(){
         ctaStation, ctaBus, divvy, crimes, lights, potholes, vehicles
     ];
 
-    var layer = new buttonsLayer(null, map, controllers);
+    var layerButtons = new buttonsLayer(null, map, controllers);
+
+    var switchboard = new Switchboard(controllers, layerButtons);
 
 
     /**** UPDATES HANDLER *****/
     //new updatesHandler();
 
     /**** LISTENERS *****/
-    new buttonsListeners();
+    // new buttonsListeners();
 
     /**** EVENTS *****/
     amplify.subscribe("UPDATE_WAYPOINTS", route.setWaypoints);

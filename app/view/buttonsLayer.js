@@ -24,8 +24,14 @@ function buttonsLayer(container, map, controllers){
         iconSize = 0.7 * buttonHeight;
 
         var y = d3.scale.linear()
-            .domain([0, buttonObjects.length])
+            .domain([0, buttonObjects.length ])
             .range([0, height - padding]);
+
+        var y_ = d3.scale.ordinal()
+            .domain(d3.range(buttonObjects.length))
+            .rangeBands([0, height])
+
+        console.log(buttonObjects.length, y_(0));
 
         var svg = selection.append("svg")
             .attr("viewBox","0 0 " + width + " " + height)
@@ -39,7 +45,7 @@ function buttonsLayer(container, map, controllers){
         button.enter().append("g").attr("class", "button")
             .call(function(enter) {
                 enter.attr("transform", function(d, i) {
-                    return "translate(" + padding + "," + y(i) + padding + ")";
+                    return "translate(" + padding + "," + y_(i) + ")";
                 });
                 enter.append("rect")
                 .attr({
