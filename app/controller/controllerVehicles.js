@@ -6,15 +6,15 @@ function controllerVehicles(mapObject) {
         .id("vehicles-layer")
         .iconPath("resources/icons/icon-abandoned-car.svg");
 
-    // var layer = new genericLayer();
-    // layer.setKey("service_request_number");
-    // layer.setIcon("vehicle");
-    //
-    // var popup = new popupCrimes();
-    // layer.setPopup(popup);
+    var layer = new genericLayer();
+    layer.setKey("service_request_number");
+    layer.setIcon("vehicle");
+
+    var popup = new popupVehicles();
+    layer.setPopup(popup);
+
+    controller.layer(layer);
     // 
-    // controller.layer(layer);
-    //
     // var query = function() {
     //     var fromDate = d3.time.day.offset(new Date(), -30);
     //
