@@ -2,6 +2,8 @@ function App(){
 
     (new Utility).zoomFix();
 
+    L.Icon.Default.imagePath = "resources/images";
+
     var map = new Map("map");
 
     var route = new Route();
@@ -78,7 +80,7 @@ function Utility() {
         onAdd: function(map) {
             var className = 'leaflet-control-layers leaflet-control-layers-expanded';
             var container = L.DomUtil.create('div', className);
-            selection = d3.select(container).call(this._func);
+            d3.select(container).call(this._func);
             return container;
         }
     });

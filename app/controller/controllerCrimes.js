@@ -20,6 +20,7 @@ function controllerCrimes(mapObject) {
 
         return chicagoQuery()
             .setEndPoint("ijzp-q8t2.json?")
+            // .limit(50000)
             .dateColumn("date")
             .fromDate(fromDate);
     }

@@ -41,6 +41,7 @@ function genericController() {
 
         var key = layer().getKey();
         var keyFunction = function(d) { return d[layer().getKey()]; };
+
         var items = dataList.selectAll("li").data(newData, keyFunction);
 
         items.enter().append("li")
