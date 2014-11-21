@@ -9,7 +9,8 @@ function App(){
     var controls = new mapControls("#mapcontrol")
     var toggle = new buttonsToggle("#toggle");
     var navigation = new navigationBar("#top-bar");
-    var graphs = new boxGraphs("#graphs");
+    // var graphs = new boxGraphs("#graphs");
+    var graphs = new drawCharts("#graphs");
     var box = new boxWeather("#weather");
 
 
