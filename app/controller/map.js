@@ -147,7 +147,7 @@ function Map(container){
 
     var getSet = (new Utility).getSet;
     var minIconSize = this.maxIconSize = getSet.bind(this)(10);
-    var maxIconSize = this.maxIconSize = getSet.bind(this)(30);
+    var maxIconSize = this.maxIconSize = getSet.bind(this)(20);
     var minZoom = function() { return getMap().getMinZoom(); };
     var maxZoom = function() { return getMap().getMaxZoom(); };
 

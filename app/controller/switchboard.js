@@ -90,7 +90,6 @@ function Switchboard(map, route, layerControllers, layerButtons) {
     amplify.subscribe("MAP_ZOOM_END", updateMarkerSize);
 
     map.getMap().on("zoomend", function() {
-        console.log(map.getMap().getZoom())
        amplify.publish("MAP_ZOOM_END");
     })
 
