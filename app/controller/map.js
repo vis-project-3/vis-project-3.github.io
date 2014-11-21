@@ -51,7 +51,7 @@ function Map(container){
 
         if (! rectangle) {
             rectangle = L.rectangle(padded, { color: "#222", fill: false, weight: 2 });
-            rectangle.addTo(map);
+            // rectangle.addTo(map);
         } else {
             rectangle.setBounds(padded);
         }
