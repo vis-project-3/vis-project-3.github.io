@@ -344,8 +344,13 @@
             0: 41.9,
             1: -87.6
         };
+        var coordinates = {
+            0: 40.7,
+            1: -74
+        };
         var categoryId = '4d4b7105d754a06376d81259';
         foursquare.getVenues(neCoordinates,swCoordinates,categoryId,callBack);
+        foursquare.getTrendingVenues(coordinates,callBack);
     }
 </script>
 </body>
