@@ -6,7 +6,8 @@ function Switchboard(map, route, layerControllers, layerButtons) {
         "UPDATE_WAYPOINTS",
         "ROUTE_BOUNDS_UPDATED",
         "QUERY_RECT_UPDATED",
-        "TOGGLE_LAYER"
+        "TOGGLE_LAYER",
+        "ROUTE_COORDS_UPDATED"
     ]
     .forEach(function(name) {
         amplify.subscribe(name, (new Utility).i(name));
@@ -18,7 +19,7 @@ function Switchboard(map, route, layerControllers, layerButtons) {
 
     amplify.subscribe("ROUTE_BOUNDS_UPDATED", map.setQueryRect);
 
-    amplify.subscribe("QUERY_RECT_UPDATED", function(bounds) {
+    amplify.subscribe("QUERY_RECT_UPDATED", function(bounds, coords) {
         layerControllers.forEach(function(controller) {
             if (! controller.query()) {
                 console.warn("[%s] : Query undefined.", controller.name());
@@ -27,14 +28,29 @@ function Switchboard(map, route, layerControllers, layerButtons) {
                 controller.updateData(bounds);
             }
         })
-    })
-
-    route.on("boundsUpdated", function(bounds) {
-        amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);
     });
 
-    map.on("queryRectUpdated", function(bounds) {
-        amplify.publish("QUERY_RECT_UPDATED", bounds);
+    // TODO: MOVE THIS FUNCTION
+    // Based on: http://stackoverflow.com/a/1501725/502331
+    function distanceToSegmentSquared(point, lineA, lineB) {
+        console.log("distance %o %o %o", point, lineA, lineB);
+    }
+
+    amplify.subscribe("ROUTE_COORDS_UPDATED", function(coords) {
+
+    })
+
+    route
+        .on("boundsUpdated", function(bounds) {
+            amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);
+        })
+        .on("routeCoordinatesUpdated", function(coords) {
+            amplify.publish("ROUTE_COORDS_UPDATED", coords);
+        });
+
+
+    map.on("queryRectUpdated", function(bounds, coords) {
+        amplify.publish("QUERY_RECT_UPDATED", bounds, coords);
     });
 
     /****** LAYER BUTTONS ******/

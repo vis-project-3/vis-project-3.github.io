@@ -32,8 +32,8 @@ function Route(){
         show: false,
         lineOptions: {
             styles: [
-                {color: 'black', opacity: 0.15, weight: 8}, 
-                {color: 'white', opacity: 0.8, weight: 5}, 
+                {color: 'black', opacity: 0.15, weight: 8},
+                {color: 'white', opacity: 0.8, weight: 5},
                 {color: 'black', opacity: 0.9, weight: 2}
             ]
         }
@@ -41,7 +41,9 @@ function Route(){
 
     /******** EVENTS ********/
 
-    var dispatch = d3.dispatch("routesFound", "boundsUpdated");
+    var dispatch = d3.dispatch(
+        "routesFound", "boundsUpdated", "routeCoordinatesUpdated"
+    );
     d3.rebind(this, dispatch, "on");
 
     route.on("routesfound", function(e) {
@@ -50,8 +52,9 @@ function Route(){
 
     var bounds;
     dispatch.on("routesFound", function(e) {
-        bounds = getBounds(e.routes[0].coordinates);
-        dispatch.boundsUpdated(bounds);
+        var coords = e.routes[0].coordinates;
+        bounds = getBounds(coords);
+        dispatch.boundsUpdated(bounds, coords);
     })
 
     /****** PRIVATE METHODS ******/
