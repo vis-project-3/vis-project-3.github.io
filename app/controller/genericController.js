@@ -52,7 +52,7 @@ function genericController() {
         dataList = d3.select(fragment).append("ul");
     }());
 
-    var threshold = 0.005;
+    var threshold = 0.001, buffer = 0.005;
 
     var quadtree = d3.geom.quadtree()
         .x(function(d) { return d.longitude })
@@ -65,20 +65,54 @@ function genericController() {
 
             // console.log(coords.length);
 
-            // TODO: Speed this up with a quadtree.
-            var filtered = newData.filter(function(d) {
-                var close = false;
-                coords.forEach(function(coord, i, array) {
-                    if (! array[i + 1]) return;
-                    var point = L.point(parseFloat(d.latitude), parseFloat(d.longitude));
-                    var lineA = L.point(coord[0], coord[1]);
+            var root = quadtree(newData);
+
+            var filtered = [];
+
+            root.visit(function(node, x1, y1, x2, y2) {
+                if (node.leaf) {
+                    filtered.push(node.point);
+                    return;
+                }
+                var width = x2 - x1;
+                if (width < threshold) return;
+
+                var southWest = L.latLng(y1, x1),
+                    southEast = L.latLng(y1, x2),
+                    northWest = L.latLng(y2, x1),
+                    northEast = L.latLng(y2, x2);
+
+                var nodeBounds = L.latLngBounds(southWest, northEast).pad(0.30);
+
+                var anyCoordInside = coords.some(function(coord, i, array) {
+                    var lineA = L.latLng(coord[0], coord[1]);
+                    if (nodeBounds.contains(lineA)) return true;
+
                     var next = array[i + 1];
-                    var lineB = L.point(next[0], next[1]);
-                    var distance = distToSeg(point, lineA, lineB);
-                    if (distance < threshold) close = true;
+                    if (! next) return false;
+                    var lineB = L.latLng(next[0], next[1]);
+                    var coordBounds = L.latLngBounds(lineA, lineB);
+                    if (nodeBounds.intersects(coordBounds)) return true;
                 });
-                return close;
+                return (! anyCoordInside);
             })
+
+            // TODO: Speed this up with a quadtree.
+            // filtered = newData.filter(function(d) {
+            //     var close = false;
+            //     coords.forEach(function(coord, i, array) {
+            //         if (! array[i + 1]) return;
+            //         var point = L.point(parseFloat(d.latitude), parseFloat(d.longitude));
+            //         var lineA = L.point(coord[0], coord[1]);
+            //         var next = array[i + 1];
+            //         var lineB = L.point(next[0], next[1]);
+            //         var distance = distToSeg(point, lineA, lineB);
+            //         if (distance < threshold) close = true;
+            //     });
+            //     return close;
+            // })
+
+            // var filtered = newData;
 
             var key = layer().getKey();
             var keyFunction = function(d) { return d[layer().getKey()]; };
