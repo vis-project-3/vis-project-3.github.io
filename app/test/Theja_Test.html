@@ -49,6 +49,7 @@
 <script src="../api/streetLightsAllOutDataSet.js"></script>
 <script src="../api/foodInspectionDataSet.js"></script>
 <script src="../api/uberDataSet.js"></script>
+<script src="../api/fourSquareDataSet.js"></script>
 
 <script>
     var potholesData = new potholesDataSet();
@@ -60,6 +61,7 @@
     var lightsAllOut = new streetLightsAllOutDataSet();
     var foodInspection = new foodInspectionDataSet();
     var uberDetails = new uberDataSet();
+    var foursquare = new fourSquareDataSet();
 
 </script>
 <body>
@@ -81,6 +83,7 @@
     <button class="topcoat-button--cta" onclick="getStationsInfo()">Get Divvy Stations</button>
     <button class="topcoat-button--cta" onclick="getFoodInspectionInfo()">Get Inspection Details</button>
     <button class="topcoat-button--cta" onclick="updateFoodInspectionInfo()">Update Inspection Data</button>
+    <button class="topcoat-button--cta" onclick="getFoursquareDetails()">Foursquare</button>
     <div class="button1">
         <p id="time">ESTIMATING TIME</p>
     </div>
@@ -181,7 +184,8 @@
         var filterConditions = {
             timeStamp: 'lastMonth',
             latitude:[41.8,41.9],//[from,to]
-            longitude:[-87.8,-87.6]//[from,to]
+            longitude:[-87.8,-87.6],//[from,to]
+            primary_type: 'THEFT'
         };
         crimes.getData(requiredColumns,filterConditions,callBack);
     }
@@ -330,6 +334,23 @@
             longitude:[-87.8,-87.6]//[from,to]
         };
         foodInspection.getUpdatedData(requiredColumns,filterConditions,callBack);
+    }
+    function getFoursquareDetails(){
+        var neCoordinates = {
+            0: 41.8,
+            1: -87.8
+        };
+        var swCoordinates = {
+            0: 41.9,
+            1: -87.6
+        };
+        var coordinates = {
+            0: 40.7,
+            1: -74
+        };
+        var categoryId = '4d4b7105d754a06376d81259';
+        foursquare.getVenues(neCoordinates,swCoordinates,categoryId,callBack);
+        foursquare.getTrendingVenues(coordinates,callBack);
     }
 </script>
 </body>
