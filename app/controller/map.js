@@ -140,24 +140,28 @@ function Map(container){
         mapLayer.setUrl(satView);
         //map.redraw();
     }
-    
+
+    this.updateMarkerSize = function() {
+        
+    }
+
     var getSet = (new Utility).getSet;
     var minIconSize = this.maxIconSize = getSet.bind(this)(10);
     var maxIconSize = this.maxIconSize = getSet.bind(this)(50);
     var minZoom = function() { return getMap().getMinZoom(); };
     var maxZoom = function() { return getMap().getMaxZoom(); };
-    
+
+    this.dataMarkerClassName = getSet.bind(this)("data-marker");
+
     var _iconSizeScale = function() {
         return d3.scale.linear()
             .domain([minZoom(), maxZoom()])
-            .range([minIconSize(), maxIconSize()]);
+            .range([maxIconSize(), minIconSize()]);
     }
-    
-    this.getIconSize = function(){
+
+    var getIconSize = this.getIconSize = function(){
         return _iconSizeScale()(map.getZoom());
     }
-
-
 
     /*************** Private Methods ********************/
 
@@ -192,7 +196,7 @@ function Map(container){
             zoomControl:false,
             attributionControl : false
         }).setView([41.88,-87.615],13);
-        
+
         map.on("zoomEnd", function(e) {
             dispatch.zoomEnd.apply(this, arguments);
         })

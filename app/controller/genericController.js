@@ -20,11 +20,11 @@ function genericController() {
     this.updateData = function (bounds) {
         console.info("[%s] : Updating data within bounds %o", name(), bounds);
         var getQuery = query();
-        
+
         var fullQuery = getQuery().queryRect(bounds);
-        
+
         var queryString = fullQuery();
-        
+
         d3.json(queryString, _updateData)
     };
 
@@ -38,8 +38,14 @@ function genericController() {
         else map().addLayer(temp);
     };
 
-    var fragment = new DocumentFragment();
-    var dataList = d3.select(fragment).append("ul");
+    /* Should all this be moved to Layer()? - Paul */
+
+    var fragment, dataList;
+    (function initialize() {
+        fragment = new DocumentFragment();
+        dataList = d3.select(fragment).append("ul");
+    }())
+
     function _updateData(newData) {
         console.info("[%s] : New data, length: %i", name(), newData.length);
 
@@ -47,19 +53,19 @@ function genericController() {
         var keyFunction = function(d) { return d[layer().getKey()]; };
 
         var items = dataList.selectAll("li").data(newData, keyFunction);
-        
-        console.log(map().getIconSize());
 
         items.enter().append("li")
             .each(function(d) {
                 var latLng = [parseFloat(d.latitude), parseFloat(d.longitude)];
                 // console.log("layer().getIcon() %o", layer().getIcon());
+                var size = map().getIconSize();
                 var icon = L.icon({
                     iconUrl: iconPath(),
-                    iconSize: [50, 50]
+                    iconSize: [size, size],
+                    className: map().dataMarkerClassName()
                 });
                 // console.log(iconPath());
-                var marker = L.marker(latLng, { icon: layer().getIcon() });
+                var marker = L.marker(latLng, { icon: icon });
                 var content = layer().getPopup().generatePopupContent(d);
                 console.log("[" + name() + "_LAYER] : Generating Popup");
                 marker.bindPopup(content);
