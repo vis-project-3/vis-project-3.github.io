@@ -5,7 +5,7 @@ function App(){
     L.Icon.Default.imagePath = "resources/images";
 
     var map = new Map("map");
-    
+
     // map.baseIconSize(10);
 
     var route = new Route();
@@ -54,6 +54,8 @@ function App(){
 
     amplify.publish("UPDATE_WAYPOINTS", [uic_west, museum]);
 
+    console.log((new Utility()).distanceToSegment(L.point(205,80), L.point(200,300), L.point(100,50)));
+
 }
 
 function Utility() {
@@ -86,6 +88,51 @@ function Utility() {
             return container;
         }
     });
+
+    this.distanceToSegmentSquared = function(point, lineA, lineB) {
+        console.log("distance %o %o %o", point, lineA, lineB);
+    };
+
+    function square(a) { return Math.pow(a,2); };
+
+    function sum(a, b) { return (a.x + a.x)}
+
+    function _(thing) {
+        var _ = {};
+        _.then = function(func) { return func(thing); }
+        return _;
+    };
+
+    function distanceSquared(a, b) {
+        return _(a.x - b.x).then(square) + _(a.y - b.y).then(square);
+    }
+
+    function dotProduct(a, b) {
+        return a.x * b.x + a.y * b.y;
+    }
+
+    // Based on: http://stackoverflow.com/a/1501725/502331
+    this.distanceToSegment = function(point, lineA, lineB) {
+        var squaredLineDist = _(lineA.distanceTo(lineB)).then(square);
+
+        // If the line is actually a point.
+        if (squaredLineDist == 0) return square(point.distanceTo(lineA));
+
+        var _point = point.subtract(lineA);
+        var _lineB = lineB.subtract(lineA);
+
+        var dot = dotProduct(_point, _lineB);
+
+        var t = dot / squaredLineDist;
+
+        if (t < 0) return point.distanceTo(lineA);
+        if (t > 1) return point.distanceTo(lineB);
+
+        var pointAlongLine = _lineB.multiplyBy(t);
+
+        return _point.distanceTo(pointAlongLine);
+
+    }
 
     this.zoomFix = function() {
         var lastScroll = new Date().getTime();

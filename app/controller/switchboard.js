@@ -30,22 +30,9 @@ function Switchboard(map, route, layerControllers, layerButtons) {
         })
     });
 
-    // TODO: MOVE THIS FUNCTION
-    // Based on: http://stackoverflow.com/a/1501725/502331
-    function distanceToSegmentSquared(point, lineA, lineB) {
-        console.log("distance %o %o %o", point, lineA, lineB);
-    }
-
-    amplify.subscribe("ROUTE_COORDS_UPDATED", function(coords) {
-
-    })
-
     route
         .on("boundsUpdated", function(bounds) {
             amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);
-        })
-        .on("routeCoordinatesUpdated", function(coords) {
-            amplify.publish("ROUTE_COORDS_UPDATED", coords);
         });
 
 
