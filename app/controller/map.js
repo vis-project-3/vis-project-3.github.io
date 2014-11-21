@@ -74,7 +74,7 @@ function Map(container){
         }).addTo(map);
     }
 
-    this.getMap = function(){
+    var getMap = this.getMap = function(){
         /* This code doesn't make sense to me. - Paul */
         // return self;
         return map;
@@ -142,13 +142,19 @@ function Map(container){
     }
     
     var getSet = (new Utility).getSet;
+    var minIconSize = this.maxIconSize = getSet.bind(this)(10);
+    var maxIconSize = this.maxIconSize = getSet.bind(this)(50);
+    var minZoom = function() { return getMap().getMinZoom(); };
+    var maxZoom = function() { return getMap().getMaxZoom(); };
     
-    var baseIconSize = this.baseIconSize = getSet.bind(this)(15);
-    
-    var zoomToIconSizeRatio = this.zoomToIconSizeRatio = getSet.bind(this)();
+    var _iconSizeScale = function() {
+        return d3.scale.linear()
+            .domain([minZoom(), maxZoom()])
+            .range([minIconSize(), maxIconSize()]);
+    }
     
     this.getIconSize = function(){
-        return map.getZoom();
+        return _iconSizeScale()(map.getZoom());
     }
 
 
