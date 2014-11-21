@@ -38,6 +38,14 @@ function genericController() {
         else map().addLayer(temp);
     };
 
+    this.getMarkers = function() {
+        var markers = [];
+        d3.select(fragment).selectAll("li").each(function(d) {
+            markers.push(this._marker);
+        });
+        return markers;
+    }
+
     /* Should all this be moved to Layer()? - Paul */
 
     var fragment, dataList;

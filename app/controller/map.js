@@ -141,13 +141,13 @@ function Map(container){
         //map.redraw();
     }
 
-    this.updateMarkerSize = function() {
-        
+    this.getZoom = function() {
+        map.getZoom();
     }
 
     var getSet = (new Utility).getSet;
     var minIconSize = this.maxIconSize = getSet.bind(this)(10);
-    var maxIconSize = this.maxIconSize = getSet.bind(this)(50);
+    var maxIconSize = this.maxIconSize = getSet.bind(this)(30);
     var minZoom = function() { return getMap().getMinZoom(); };
     var maxZoom = function() { return getMap().getMaxZoom(); };
 
@@ -156,7 +156,7 @@ function Map(container){
     var _iconSizeScale = function() {
         return d3.scale.linear()
             .domain([minZoom(), maxZoom()])
-            .range([maxIconSize(), minIconSize()]);
+            .range([minIconSize(), maxIconSize()]);
     }
 
     var getIconSize = this.getIconSize = function(){
@@ -192,7 +192,7 @@ function Map(container){
         pointB = museum_location;
 
         map = L.map(container, {
-            minZoom: 10,
+            minZoom: 11,
             zoomControl:false,
             attributionControl : false
         }).setView([41.88,-87.615],13);

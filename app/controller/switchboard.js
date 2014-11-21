@@ -1,4 +1,4 @@
-function Switchboard(map, route, controllers, layerButtons) {
+function Switchboard(map, route, layerControllers, layerButtons) {
 
     /**** Set up event logging *****/
 
@@ -19,7 +19,7 @@ function Switchboard(map, route, controllers, layerButtons) {
     amplify.subscribe("ROUTE_BOUNDS_UPDATED", map.setQueryRect);
 
     amplify.subscribe("QUERY_RECT_UPDATED", function(bounds) {
-        controllers.forEach(function(controller) {
+        layerControllers.forEach(function(controller) {
             if (! controller.query()) {
                 console.warn("[%s] : Query undefined.", controller.name());
             } else if (controller.layerIsActive()) {
@@ -61,11 +61,36 @@ function Switchboard(map, route, controllers, layerButtons) {
     console.log("[EVENT] : WEATHER");
     amplify.publish("WEATHER");*/
 
+    function getActiveMarkers() {
+        var markers = [];
+        layerControllers
+        .filter(function(controller) {
+            return controller.layer() && controller.layerIsActive();
+        })
+        .forEach(function(controller) {
+            markers = markers.concat(controller.getMarkers());
+        });
+        return markers;
+    }
+
+    function updateMarkerSize() {
+        var markers = getActiveMarkers();
+
+        markers.forEach(function(marker) {
+            var icon = marker.options.icon;
+            var _s = map.getIconSize();
+            var _newSize = L.point(_s, _s);
+            icon.options.iconSize = _newSize;
+            marker.setIcon(icon);
+        })
+    }
+
     /***** MAP CONTROLS *****/
 
-    amplify.subscribe("MAP_ZOOM_END", map.updateMarkerSize);
+    amplify.subscribe("MAP_ZOOM_END", updateMarkerSize);
 
     map.getMap().on("zoomend", function() {
+        console.log(map.getMap().getZoom())
        amplify.publish("MAP_ZOOM_END");
     })
 
