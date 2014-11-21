@@ -40,45 +40,45 @@ function genericLayer() {
 
     /**** Public Methods *****/
 
-    this.clearData = function(){
-        collection = {};
-        markers = {};
-        layer = new L.LayerGroup();
-    };
+    // this.clearData = function(){
+    //     collection = {};
+    //     markers = {};
+    //     layer = new L.LayerGroup();
+    // };
 
-    this.addCollection = function(data) {
-        for (var i = 0; i < data.length; i++) {
-            collection[data[i][key]] = data[i];
-            addToMarkers(data[i]);
-        }
-    };
+    // this.addCollection = function(data) {
+    //     for (var i = 0; i < data.length; i++) {
+    //         collection[data[i][key]] = data[i];
+    //         addToMarkers(data[i]);
+    //     }
+    // };
 
     this.addMarker = function(marker) {
         marker.addTo(layer);
     }
 
-    this.updateMarker = function (data) {
-        markers[data[key]].setLatLng([parseFloat(data.latitude), parseFloat(data.longitude)]);
-        markers[data[key]].update();
-    };
+    // this.updateMarker = function (data) {
+    //     markers[data[key]].setLatLng([parseFloat(data.latitude), parseFloat(data.longitude)]);
+    //     markers[data[key]].update();
+    // };
 
-    this.updateCollectionElement = function (data) {
-        this.collection[data[key]] = data;
-    };
+    // this.updateCollectionElement = function (data) {
+    //     this.collection[data[key]] = data;
+    // };
 
     /* Private Methods */
     var init = function(){
         layer = new L.LayerGroup();
     }();
 
-    var addToMarkers = function (data) {
-        markers[data[key]] = L.marker([parseFloat(data.latitude), parseFloat(data.longitude)], {
-            icon : getIcon(icon)
-        }).addTo(layer);
+    // var addToMarkers = function (data) {
+    //     markers[data[key]] = L.marker([parseFloat(data.latitude), parseFloat(data.longitude)], {
+    //         icon : getIcon(icon)
+    //     }).addTo(layer);
 
-        var content = popup.generatePopupContent(data);
-        console.log("[" + name + "_LAYER] : Generating Popup");
-        markers[data[key]].bindPopup(content);
-    }
+    //     var content = popup.generatePopupContent(data);
+    //     console.log("[" + name + "_LAYER] : Generating Popup");
+    //     markers[data[key]].bindPopup(content);
+    // }
 
 }

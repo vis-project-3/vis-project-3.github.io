@@ -62,6 +62,10 @@ function Switchboard(map, route, controllers, layerButtons) {
     amplify.publish("WEATHER");*/
 
     /***** MAP CONTROLS *****/
+    
+    map.getMap().on("zoomend", function() {
+       console.log(map.getIconSize()); 
+    })
 
     d3.select("#icon-minus")
     .on("click", function () {

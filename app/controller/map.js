@@ -35,7 +35,7 @@ function Map(container){
 
     /************* EVENTS ************/
 
-    var dispatch = d3.dispatch("queryRectUpdated");
+    var dispatch = d3.dispatch("queryRectUpdated", "zoomEnd");
     d3.rebind(this, dispatch, "on");
 
     /*************** Public Methods *****************/
@@ -74,7 +74,7 @@ function Map(container){
         }).addTo(map);
     }
 
-    this.getMap = function(){
+    var getMap = this.getMap = function(){
         /* This code doesn't make sense to me. - Paul */
         // return self;
         return map;
@@ -140,6 +140,22 @@ function Map(container){
         mapLayer.setUrl(satView);
         //map.redraw();
     }
+    
+    var getSet = (new Utility).getSet;
+    var minIconSize = this.maxIconSize = getSet.bind(this)(10);
+    var maxIconSize = this.maxIconSize = getSet.bind(this)(50);
+    var minZoom = function() { return getMap().getMinZoom(); };
+    var maxZoom = function() { return getMap().getMaxZoom(); };
+    
+    var _iconSizeScale = function() {
+        return d3.scale.linear()
+            .domain([minZoom(), maxZoom()])
+            .range([minIconSize(), maxIconSize()]);
+    }
+    
+    this.getIconSize = function(){
+        return _iconSizeScale()(map.getZoom());
+    }
 
 
 
@@ -176,6 +192,10 @@ function Map(container){
             zoomControl:false,
             attributionControl : false
         }).setView([41.88,-87.615],13);
+        
+        map.on("zoomEnd", function(e) {
+            dispatch.zoomEnd.apply(this, arguments);
+        })
 
         // var mapLayer =  L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
         //                     subdomains: '1234'

@@ -13,12 +13,12 @@ function potholesDataSet(){
     this.deletedContent = [];
 
     this.getData = function(requiredColumns,filterConditions,callBack){
-        var urlForDataSet = this.generateQuery(requiredColumns,filterConditions);
+        var urlForDataSet = this.generateQuery(requiredColumns, filterConditions);
         $.ajax({
             url: urlForDataSet,
             dataType: "json",
             success: function(data){
-                var newData = self.filterData(requiredColumns,data);
+                var newData = self.filterData(requiredColumns, data);
                 self.potholesJSON = newData;
                 self.previousPotholesJSON = newData;
                 callBack(newData);
@@ -86,7 +86,7 @@ function potholesDataSet(){
         return requiredQuery;
     }
 
-    this.generateQuery = function(requiredColumns,filterConditions){
+    this.generateQuery = function(requiredColumns, filterConditions){
         var requiredQuery = this.dataSetEndPoint;
         requiredQuery += '&$select=';
         //Append the required Columns to show in the query

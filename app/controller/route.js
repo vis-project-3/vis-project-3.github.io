@@ -13,7 +13,7 @@ function Route(){
         .node().innerHTML;
 
     var myIcon = L.divIcon({
-        className: 'my-div-icon',
+        className: 'route-waypoint-icon',
         html: iconHtml,
         size: r
     });
@@ -21,13 +21,22 @@ function Route(){
     var plan = L.Routing.plan(null, {
         waypointIcon: function(i, n) { return myIcon; },
         geocoder: L.Control.Geocoder.nominatim()
-    });
+    }).on("waypointschanged", function(e) {
+        console.log(e);
+    })
 
     var route = L.Routing.control({
         plan: plan,
         geocoder: L.Control.Geocoder.nominatim(),
         fitSelectedRoutes: false,
-        show: false
+        show: false,
+        lineOptions: {
+            styles: [
+                {color: 'black', opacity: 0.15, weight: 8}, 
+                {color: 'white', opacity: 0.8, weight: 5}, 
+                {color: 'black', opacity: 0.9, weight: 2}
+            ]
+        }
     });
 
     /******** EVENTS ********/
