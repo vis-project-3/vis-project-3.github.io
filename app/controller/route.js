@@ -21,9 +21,10 @@ function Route(){
     var plan = L.Routing.plan(null, {
         waypointIcon: function(i, n) { return myIcon; },
         geocoder: L.Control.Geocoder.nominatim()
-    }).on("waypointschanged", function(e) {
-        console.log(e);
     })
+    // .on("waypointschanged", function(e) {
+    //     console.log(e);
+    // })
 
     var route = L.Routing.control({
         plan: plan,
@@ -50,12 +51,14 @@ function Route(){
         dispatch.routesFound.apply(this, arguments);
     });
 
-    var bounds;
+    var bounds, coords;
     dispatch.on("routesFound", function(e) {
-        var coords = e.routes[0].coordinates;
+        coords = e.routes[0].coordinates;
         bounds = getBounds(coords);
         dispatch.boundsUpdated(bounds, coords);
-    })
+    });
+
+    this.getCoords = function() { return coords; };
 
     /****** PRIVATE METHODS ******/
 

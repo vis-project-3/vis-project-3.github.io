@@ -25,19 +25,19 @@ function Switchboard(map, route, layerControllers, layerButtons) {
                 console.warn("[%s] : Query undefined.", controller.name());
             } else if (controller.layerIsActive()) {
                 console.info("Layer %s is active.", controller.label());
-                controller.updateData(bounds);
+                var coords = route.getCoords();
+                controller.updateData(bounds, coords);
             }
         })
     });
 
-    route
-        .on("boundsUpdated", function(bounds) {
-            amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);
+    route.on("boundsUpdated", function(bounds, coords) {
+            amplify.publish("ROUTE_BOUNDS_UPDATED", bounds, coords);
         });
 
 
-    map.on("queryRectUpdated", function(bounds, coords) {
-        amplify.publish("QUERY_RECT_UPDATED", bounds, coords);
+    map.on("queryRectUpdated", function(bounds) {
+        amplify.publish("QUERY_RECT_UPDATED", bounds);
     });
 
     /****** LAYER BUTTONS ******/
@@ -54,7 +54,8 @@ function Switchboard(map, route, layerControllers, layerButtons) {
             console.warn("[%s] : Query undefined.", controller.name());
         } else {
             controller.toggleLayer();
-            controller.updateData(bounds);
+            var coords = route.getCoords();
+            controller.updateData(bounds, coords);
         }
     });
 

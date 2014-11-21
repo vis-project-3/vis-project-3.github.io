@@ -54,7 +54,7 @@ function App(){
 
     amplify.publish("UPDATE_WAYPOINTS", [uic_west, museum]);
 
-    console.log((new Utility()).distanceToSegment(L.point(205,80), L.point(200,300), L.point(100,50)));
+    // console.log((new Utility()).distanceToSegment(L.point(205,80), L.point(200,300), L.point(100,50)));
 
 }
 

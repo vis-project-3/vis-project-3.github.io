@@ -17,12 +17,13 @@ function genericController() {
         return map().hasLayer( layer().getLayer() );
     }
 
-    this.updateData = function (bounds) {
+    this.updateData = function (bounds, coords) {
         console.info("[%s] : Updating data within bounds %o", name(), bounds);
+        console.log(coords);
         var getQuery = query();
         var fullQuery = getQuery().queryRect(bounds);
         var queryString = fullQuery();
-        d3.json(queryString, _updateData)
+        d3.json(queryString, _updateData(coords));
     };
 
     //Toggle Layer
@@ -49,17 +50,42 @@ function genericController() {
     (function initialize() {
         fragment = new DocumentFragment();
         dataList = d3.select(fragment).append("ul");
-    }())
+    }());
 
-    function _updateData(newData) {
-        console.info("[%s] : New data, length: %i", name(), newData.length);
+    var threshold = 0.005;
 
-        var key = layer().getKey();
-        var keyFunction = function(d) { return d[layer().getKey()]; };
+    var quadtree = d3.geom.quadtree()
+        .x(function(d) { return d.longitude })
+        .y(function(d) { return d.latitude })
 
-        var items = dataList.selectAll("li").data(newData, keyFunction);
+    function _updateData(coords) {
+        var distToSeg = (new Utility()).distanceToSegment;
+        return function(newData) {
+            console.info("[%s] : New data, length: %i", name(), newData.length);
 
-        items.enter().append("li")
+            // console.log(coords.length);
+
+            // TODO: Speed this up with a quadtree.
+            var filtered = newData.filter(function(d) {
+                var close = false;
+                coords.forEach(function(coord, i, array) {
+                    if (! array[i + 1]) return;
+                    var point = L.point(parseFloat(d.latitude), parseFloat(d.longitude));
+                    var lineA = L.point(coord[0], coord[1]);
+                    var next = array[i + 1];
+                    var lineB = L.point(next[0], next[1]);
+                    var distance = distToSeg(point, lineA, lineB);
+                    if (distance < threshold) close = true;
+                });
+                return close;
+            })
+
+            var key = layer().getKey();
+            var keyFunction = function(d) { return d[layer().getKey()]; };
+
+            var items = dataList.selectAll("li").data(filtered, keyFunction);
+
+            items.enter().append("li")
             .each(function(d) {
                 var latLng = [parseFloat(d.latitude), parseFloat(d.longitude)];
                 // console.log("layer().getIcon() %o", layer().getIcon());
@@ -78,11 +104,12 @@ function genericController() {
                 this._marker = marker;
             });
 
-        items.exit()
+            items.exit()
             .each(function(d) {
                 layer().getLayer().removeLayer(this._marker);
                 d3.select(this).remove();
             });
+        }
     }
 
 }
