@@ -21,9 +21,10 @@ function genericController() {
         console.info("[%s] : Updating data within bounds %o", name(), bounds);
         var getQuery = query();
         
-        
         var fullQuery = getQuery().queryRect(bounds);
+        
         var queryString = fullQuery();
+        
         d3.json(queryString, _updateData)
     };
 
@@ -46,15 +47,23 @@ function genericController() {
         var keyFunction = function(d) { return d[layer().getKey()]; };
 
         var items = dataList.selectAll("li").data(newData, keyFunction);
+        
+        console.log(map().getIconSize());
 
         items.enter().append("li")
             .each(function(d) {
                 var latLng = [parseFloat(d.latitude), parseFloat(d.longitude)];
+                // console.log("layer().getIcon() %o", layer().getIcon());
+                var icon = L.icon({
+                    iconUrl: iconPath(),
+                    iconSize: [50, 50]
+                });
+                // console.log(iconPath());
                 var marker = L.marker(latLng, { icon: layer().getIcon() });
                 var content = layer().getPopup().generatePopupContent(d);
                 console.log("[" + name() + "_LAYER] : Generating Popup");
                 marker.bindPopup(content);
-                marker.addTo(layer().getLayer());
+                layer().addMarker(marker);
                 this._marker = marker;
             });
 

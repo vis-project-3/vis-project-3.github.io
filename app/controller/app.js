@@ -5,6 +5,8 @@ function App(){
     L.Icon.Default.imagePath = "resources/images";
 
     var map = new Map("map");
+    
+    // map.baseIconSize(10);
 
     var route = new Route();
 

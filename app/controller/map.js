@@ -35,7 +35,7 @@ function Map(container){
 
     /************* EVENTS ************/
 
-    var dispatch = d3.dispatch("queryRectUpdated");
+    var dispatch = d3.dispatch("queryRectUpdated", "zoomEnd");
     d3.rebind(this, dispatch, "on");
 
     /*************** Public Methods *****************/
@@ -140,6 +140,16 @@ function Map(container){
         mapLayer.setUrl(satView);
         //map.redraw();
     }
+    
+    var getSet = (new Utility).getSet;
+    
+    var baseIconSize = this.baseIconSize = getSet.bind(this)(15);
+    
+    var zoomToIconSizeRatio = this.zoomToIconSizeRatio = getSet.bind(this)();
+    
+    this.getIconSize = function(){
+        return map.getZoom();
+    }
 
 
 
@@ -176,6 +186,10 @@ function Map(container){
             zoomControl:false,
             attributionControl : false
         }).setView([41.88,-87.615],13);
+        
+        map.on("zoomEnd", function(e) {
+            dispatch.zoomEnd.apply(this, arguments);
+        })
 
         // var mapLayer =  L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
         //                     subdomains: '1234'
