@@ -10,24 +10,24 @@ function boxWeather(container, map, customControl){
     };
 
     function callback(selection) {
-
+        selection.attr("id", "weather");
     }
 
     var height = 174;
     var width = 789;
     var id_condition = "condition";
     var id_time = "time";
-    var id_temp_c = "temp_c";
-    var id_temp_f = "temp_f";
+    // var id_temp_c = "temp_c";
+    // var id_temp_f = "temp_f";
     var id_icon = "weather_icon";
     var id_icon_c = "icon_c";
     var id_icon_f = "icon_f";
-    var id_icon_temp = "icon_thermo";
+    // var id_icon_temp = "icon_thermo";
     var icon_size = height;
 
 
-    var sunset;
-    var sunrise;
+    // var sunset;
+    // var sunrise;
     var time;
 
     var rows = 2;
@@ -39,6 +39,94 @@ function boxWeather(container, map, customControl){
     var weather = weather;
     var icons = new iconsWeather();
 
+    var init = function(){
+
+        xScale = d3 .scale
+        .linear()
+        .domain([0,5])
+        .range([icon_size,width]);
+
+        yScale = d3 .scale
+        .linear()
+        .domain([0, rows])
+        .range([0,height]);
+
+        svg = d3    .select(container)
+        .append("svg")
+        .attr("viewBox","0 0 " + width + " " + height)
+        .attr("preserveAspectRatio", "xMidYMid meet")
+        .attr("width", "100%")
+        .attr("height", "100%");
+
+        svg .append("text")
+        .attr("id",id_time)
+        .attr("text-anchor","middle")
+        .attr("x",width/2)
+        .attr("y",text_size)
+        .style("font-size",text_size)
+        .style("font-weight","bold");
+
+        svg .append("text")
+        .attr("id",id_condition)
+        .attr("text-anchor","start")
+        .attr("x",icon_size)
+        .attr("y",yScale(1))
+        .style("font-size",text_size)
+        //.text("Weather : " + weather.condition);
+
+
+        svg .append("image")
+        .attr("id",id_icon_c)
+        .attr("xlink:href", function(d){return icons.getIcon("Celsius");})
+        .attr("x", xScale(4))
+        .attr("y", yScale(1))
+        .attr("width",100)
+        .attr("height",100);
+
+
+        svg .append("text")
+        .attr("id",id_temp_c)
+        .attr("text-anchor","start")
+        .attr("x",xScale(3))
+        .attr("y",yScale(2)-text_size)
+        .style("font-size",text_size)
+        //.text(weather.temp_c);
+
+        svg .append("image")
+        .attr("id",id_icon_f)
+        .attr("xlink:href", function(d){return icons.getIcon("Fahrenheit");})
+        .attr("x", xScale(1))
+        .attr("y", yScale(1) - text_size)
+        .attr("width",100)
+        .attr("height",100);
+
+        svg .append("image")
+        .attr("id",id_icon_temp)
+        //.attr("xlink:href", function(d){return icons.getIcon("thermo50");
+        //  })
+        .attr("x", xScale(2))
+        .attr("y", yScale(1) - text_size)
+        .attr("width",100)
+        .attr("height",100);
+
+        svg .append("text")
+        .attr("id",id_temp_f)
+        .attr("text-anchor","start")
+        .attr("x",xScale(0))
+        .attr("y",yScale(2)-text_size)
+        .style("font-size",text_size)
+        //.text(weather.temp_f);
+
+        svg .append("image")
+        .attr("id",id_icon)
+        //.attr("xlink:href", function(d){return icons.getIcon(weather.iconName);})
+        .attr("x","0")
+        .attr("y", height - icon_size)
+        .attr("width",icon_size)
+        .attr("height",icon_size);
+    }();
+
+    var sunrise, sunset;
     this.setSunriseSunset = function(data) {
         var sunrise_hour = data.sunrise_hour;
         var sunrise_minute = data.sunrise_minute;
@@ -57,6 +145,9 @@ function boxWeather(container, map, customControl){
         this.updateWeather(data);
     };
 
+    var id_temp_c = "temp_c";
+    var id_temp_f = "temp_f";
+    var id_icon_temp = "icon_thermo";
     this.updateTemperature = function(data){
         d3  .select("#" + id_temp_c)
             .text(data.temp_c);
@@ -132,90 +223,5 @@ function boxWeather(container, map, customControl){
         else return false;
     };
 
-    var init = function(){
 
-        xScale = d3 .scale
-                    .linear()
-                    .domain([0,5])
-                    .range([icon_size,width]);
-
-        yScale = d3 .scale
-                    .linear()
-                    .domain([0, rows])
-                    .range([0,height]);
-
-        svg = d3    .select(container)
-                    .append("svg")
-                    .attr("viewBox","0 0 " + width + " " + height)
-                    .attr("preserveAspectRatio", "xMidYMid meet")
-                    .attr("width", "100%")
-                    .attr("height", "100%");
-
-        svg .append("text")
-            .attr("id",id_time)
-            .attr("text-anchor","middle")
-            .attr("x",width/2)
-            .attr("y",text_size)
-            .style("font-size",text_size)
-            .style("font-weight","bold");
-
-        svg .append("text")
-            .attr("id",id_condition)
-            .attr("text-anchor","start")
-            .attr("x",icon_size)
-            .attr("y",yScale(1))
-            .style("font-size",text_size)
-            //.text("Weather : " + weather.condition);
-
-
-        svg .append("image")
-            .attr("id",id_icon_c)
-            .attr("xlink:href", function(d){return icons.getIcon("Celsius");})
-            .attr("x", xScale(4))
-            .attr("y", yScale(1))
-            .attr("width",100)
-            .attr("height",100);
-
-
-        svg .append("text")
-            .attr("id",id_temp_c)
-            .attr("text-anchor","start")
-            .attr("x",xScale(3))
-            .attr("y",yScale(2)-text_size)
-            .style("font-size",text_size)
-            //.text(weather.temp_c);
-
-        svg .append("image")
-            .attr("id",id_icon_f)
-            .attr("xlink:href", function(d){return icons.getIcon("Fahrenheit");})
-            .attr("x", xScale(1))
-            .attr("y", yScale(1) - text_size)
-            .attr("width",100)
-            .attr("height",100);
-
-        svg .append("image")
-            .attr("id",id_icon_temp)
-            //.attr("xlink:href", function(d){return icons.getIcon("thermo50");
-              //  })
-            .attr("x", xScale(2))
-            .attr("y", yScale(1) - text_size)
-            .attr("width",100)
-            .attr("height",100);
-
-        svg .append("text")
-            .attr("id",id_temp_f)
-            .attr("text-anchor","start")
-            .attr("x",xScale(0))
-            .attr("y",yScale(2)-text_size)
-            .style("font-size",text_size)
-            //.text(weather.temp_f);
-
-        svg .append("image")
-            .attr("id",id_icon)
-            //.attr("xlink:href", function(d){return icons.getIcon(weather.iconName);})
-            .attr("x","0")
-            .attr("y", height - icon_size)
-            .attr("width",icon_size)
-            .attr("height",icon_size);
-    }();
 }
