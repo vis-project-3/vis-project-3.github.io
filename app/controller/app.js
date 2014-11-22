@@ -18,7 +18,7 @@ function App(){
     // var toggle = new buttonsToggle("#toggle");
     // var navigation = new navigationBar("#top-bar");
     // var graphs = new boxGraphs("#graphs");
-    // var box = new boxWeather("#weather");
+    var box = new boxWeather("#weather");
 
     /***** CONTROLLERS ******/
 
@@ -30,7 +30,7 @@ function App(){
     var lights = (new controllerLights(map)).get();
     // var lightsAll = new controllerLightsAll(map);
     var vehicles = (new controllerVehicles(map)).get();
-    // var weather = new controllerWeather(box);
+    var weather = new controllerWeather(box);
 
     var controllers = [
         ctaStation, ctaBus, divvy, crimes, lights, potholes, vehicles
@@ -41,17 +41,14 @@ function App(){
     var customControl = (new Utility).customControl;
     var layerButtons = new buttonsLayer(map, controllers, customControl);
     var mapButtons = new mapControls("#mapcontrol", map, customControl);
+    var weatherBox =
 
     map.addControl(L.control.zoom({ position: 'bottomleft' }));
 
     /****** EVENT HANDLING *******/
 
-    var switchboard = new Switchboard(map, route, controllers, layerButtons, mapButtons);
+    var switchboard = new Switchboard(map, route, controllers, layerButtons, mapButtons, weather);
 
-
-    /**** UPDATES HANDLER *****/
-
-    //new updatesHandler();
 
     /**** INITIAL APP STATE *****/
 
@@ -59,6 +56,7 @@ function App(){
     museum = L.latLng( 41.861466, -87.614935);
 
     amplify.publish("UPDATE_WAYPOINTS", [uic_west, museum]);
+    amplify.publish("WEATHER");
 
     // console.log((new Utility()).distanceToSegment(L.point(205,80), L.point(200,300), L.point(100,50)));
 

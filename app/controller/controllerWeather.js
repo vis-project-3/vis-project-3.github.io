@@ -3,11 +3,11 @@ function controllerWeather(weatherBox){
     var weather = weatherBox;
     var weatherData = new weatherDataSetMod();
 
-    var getSunriseSunset = function() {
+    var getSunriseSunset = this.getSunriseSunset = function() {
         weatherData.getSunriseSunset(callBackSunriseSunset);
     };
 
-    var getWeather = function(){
+    var getWeather = this.getWeather = function(){
         weatherData.getData(callBack);
     };
 
@@ -19,6 +19,5 @@ function controllerWeather(weatherBox){
         weather.setSunriseSunset(data);
     };
 
-    amplify.subscribe("SUNRISE_SUNSET",getSunriseSunset)
-    amplify.subscribe("WEATHER", getWeather);
+
 }

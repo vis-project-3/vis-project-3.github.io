@@ -1,4 +1,4 @@
-function Switchboard(map, route, layerControllers, layerButtons, mapButtons) {
+function Switchboard(map, route, layerControllers, layerButtons, mapButtons, weather) {
 
     /**** Set up event logging *****/
 
@@ -116,6 +116,16 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons) {
         console.log("[EVENT] : VIEW_STREET_MAP");
         amplify.publish("VIEW_STREET_MAP");
     });
+
+    /********* WEATHER **********/
+
+    amplify.subscribe("SUNRISE_SUNSET", weather.getSunriseSunset)
+    amplify.subscribe("WEATHER", weather.getWeather);
+
+    setInterval(function(){
+        console.log("[EVENT] : WEATHER");
+        console.log("[UPDATES HANDLER] : Updating Weather");
+        amplify.publish("WEATHER")}, 20000);
 
 
 }
