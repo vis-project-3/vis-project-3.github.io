@@ -49,6 +49,7 @@
 <script src="../api/streetLightsAllOutDataSet.js"></script>
 <script src="../api/foodInspectionDataSet.js"></script>
 <script src="../api/uberDataSet.js"></script>
+<script src="../api/songKickDataSet.js"></script>
 
 <script>
     var potholesData = new potholesDataSet();
@@ -60,7 +61,7 @@
     var lightsAllOut = new streetLightsAllOutDataSet();
     var foodInspection = new foodInspectionDataSet();
     var uberDetails = new uberDataSet();
-
+    var songKick = new songKickDataSet();
 </script>
 <body>
 <div class="content">
@@ -81,6 +82,7 @@
     <button class="topcoat-button--cta" onclick="getStationsInfo()">Get Divvy Stations</button>
     <button class="topcoat-button--cta" onclick="getFoodInspectionInfo()">Get Inspection Details</button>
     <button class="topcoat-button--cta" onclick="updateFoodInspectionInfo()">Update Inspection Data</button>
+    <button class="topcoat-button--cta" onclick="getEventDetails()">Get Event Details</button>
     <div class="button1">
         <p id="time">ESTIMATING TIME</p>
     </div>
@@ -116,6 +118,14 @@
         //uberDetails.getAvailableUberProducts(fromCoordinates,callBack);
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////SongKick API////////////////////////////////////////////////////////
+    function getEventDetails(){
+        var latitude = 41.8;
+        var longitude = -87.8;
+        songKick.getEvents(latitude,longitude,callBack);
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function getPotHolesInfo(){
         var requiredColumns = {
             0: 'creation_date',
