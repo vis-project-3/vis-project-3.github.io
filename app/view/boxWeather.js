@@ -1,4 +1,17 @@
-function boxWeather(container){
+function boxWeather(container, map, customControl){
+
+    var control = new customControl(callback);
+    map.addControl( control );
+
+    var selection = d3.select(control._container);
+
+    this.getSelection = function() {
+        return selection;
+    };
+
+    function callback(selection) {
+
+    }
 
     var height = 174;
     var width = 789;
