@@ -68,7 +68,10 @@ function Route(){
 
     /****** PUBLIC METHODS ******/
 
-    this.addTo = route.addTo.bind(route);
+    this.addTo = function() {
+        route.addTo.apply(route, arguments);
+        d3.select(".leaflet-routing-container").remove();
+    }
 
     this.setWaypoints = route.setWaypoints.bind(route);
 
