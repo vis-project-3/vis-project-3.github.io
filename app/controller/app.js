@@ -36,11 +36,17 @@ function App(){
         ctaStation, ctaBus, divvy, crimes, lights, potholes, vehicles
     ];
 
+    /***** UI COMPONENTS *******/
+
     var customControl = (new Utility).customControl;
-
     var layerButtons = new buttonsLayer(map, controllers, customControl);
+    var mapButtons = new mapControls("#mapcontrol", map, customControl);
 
-    var switchboard = new Switchboard(map, route, controllers, layerButtons);
+    map.addControl(L.control.zoom({ position: 'bottomleft' }));
+
+    /****** EVENT HANDLING *******/
+
+    var switchboard = new Switchboard(map, route, controllers, layerButtons, mapButtons);
 
 
     /**** UPDATES HANDLER *****/

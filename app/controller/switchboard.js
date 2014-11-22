@@ -1,4 +1,4 @@
-function Switchboard(map, route, layerControllers, layerButtons) {
+function Switchboard(map, route, layerControllers, layerButtons, mapButtons) {
 
     /**** Set up event logging *****/
 
@@ -44,8 +44,7 @@ function Switchboard(map, route, layerControllers, layerButtons) {
 
     layerButtons.getSelection().selectAll("g.button rect")
         .on("click.toggledata", function(d) {
-            var topic = "TOGGLE_LAYER";
-            amplify.publish(topic, d);
+            amplify.publish("TOGGLE_LAYER", d);
         });
 
     amplify.subscribe("TOGGLE_LAYER", function(controller) {
@@ -95,19 +94,16 @@ function Switchboard(map, route, layerControllers, layerButtons) {
 
     map.getMap().on("zoomend", function() {
        amplify.publish("MAP_ZOOM_END");
+   });
+
+    amplify.subscribe("SWITCH_MAP_LAYER", function(d) {
+       map.switchToLayer(d);
     })
 
-    d3.select("#icon-minus")
-    .on("click", function () {
-        console.log("[EVENT] : VIEW_ZOOM_MINUS");
-        amplify.publish("VIEW_ZOOM_MINUS");
-    });
-
-    d3.select("#icon-plus")
-    .on("click", function () {
-        console.log("[EVENT] : VIEW_ZOOM_PLUS");
-        amplify.publish("VIEW_ZOOM_PLUS");
-    });
+    mapButtons.getSelection().selectAll("image")
+        .on("click.switch", function(d) {
+            amplify.publish("SWITCH_MAP_LAYER", d);
+        })
 
     d3.select("#satellite")
     .on("click", function () {

@@ -141,6 +141,10 @@ function Map(container){
         //map.redraw();
     }
 
+    this.switchToLayer = function(d){
+        mapLayer.setUrl(mapLayers[d.id]);
+    }
+
     this.getZoom = function() {
         map.getZoom();
     }
@@ -182,7 +186,7 @@ function Map(container){
         rectangle.setBounds([lowerLeft,upperRight]);
     }
 
-
+    var mapLayers;
     var init = function(){
         var uic_west = [41.874255, -87.676353];
         var uic_location = [41.8719, -87.6492];
@@ -207,6 +211,13 @@ function Map(container){
 
         mapView = 'http://{s}.' + map_base + '.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/normal.day/{z}/{x}/{y}/256/png8?app_id=' + map_app_id + '&app_code=' + map_app_code;
         satView = 'http://{s}.' + sat_base +'.maps.cit.api.here.com/maptile/2.1/maptile/{mapID}/satellite.day/{z}/{x}/{y}/256/png8?app_id=' + sat_app_id + '&app_code=' + sat_app_code;
+        bwView = 'http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+
+        mapLayers = {
+            "satellite": satView,
+            "street": mapView,
+            "street-bw": bwView
+        }
 
         // mapLayer = L.tileLayer(mapView, {
         //     subdomains: '1234',
@@ -215,7 +226,7 @@ function Map(container){
 
         // ESRI WorldGrayCanvas
         mapLayer = L.tileLayer(
-            'http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+            bwView,
             {
                 mapID: 'newest',
                 subdomains: '1234',
@@ -248,10 +259,10 @@ function Map(container){
         // setRectangle();
 
 
-        amplify.subscribe("VIEW_ZOOM_PLUS", self.zoomIn);
-        amplify.subscribe("VIEW_ZOOM_MINUS", self.zoomOut);
-        amplify.subscribe("VIEW_SAT_MAP", self.switchToSat);
-        amplify.subscribe("VIEW_STREET_MAP", self.switchToMap);
+        // amplify.subscribe("VIEW_ZOOM_PLUS", self.zoomIn);
+        // amplify.subscribe("VIEW_ZOOM_MINUS", self.zoomOut);
+        // amplify.subscribe("VIEW_SAT_MAP", self.switchToSat);
+        // amplify.subscribe("VIEW_STREET_MAP", self.switchToMap);
 
     }();
 

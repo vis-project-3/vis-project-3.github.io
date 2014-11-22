@@ -19,8 +19,8 @@ body{
 
 #layer {
     position : absolute;
-    top : 15vh;
-    width : 20vw;
+    top : 30vh;
+    width : 9vw;
     height : 40vh;
     background: rgba(255,255,255,0.5);
     /* background-color: none; */
@@ -59,11 +59,10 @@ body{
 
 #mapcontrol{
     position : absolute;
-    bottom : 7%;
-    left : 1%;
-    width : 20%;
-    height : 20%;
-    /*background-color: rgba(255,255,255,0.66);*/
+    bottom : 10vh;
+    width : 9vw;
+    height : 10vh;
+    background-color: rgba(255,255,255,0.66);
 }
 
 #graphs{
