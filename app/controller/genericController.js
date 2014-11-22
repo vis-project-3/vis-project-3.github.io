@@ -52,7 +52,7 @@ function genericController() {
         dataList = d3.select(fragment).append("ul");
     }());
 
-    var threshold = 0.01;
+
 
     var quadtree = d3.geom.quadtree()
         .x(function(d) { return d.longitude })
@@ -70,9 +70,12 @@ function genericController() {
             var filtered = [];
 
             root.visit(function(node, x1, y1, x2, y2) {
-                if (node.leaf) filtered.push(node.point);
+                if (node.leaf) {
+                    filtered.push(node.point);
+                    return;
+                }
 
-                var width = Math.abs(x2 - x1), height = Math.abs(y2 - y1);
+                // var width = Math.abs(x2 - x1), height = Math.abs(y2 - y1);
                 // if (width < threshold || height < threshold) return;
 
                 var southWest = L.latLng(y1, x1),
@@ -80,7 +83,7 @@ function genericController() {
                     northWest = L.latLng(y2, x1),
                     northEast = L.latLng(y2, x2);
 
-                var nodeBounds = L.latLngBounds(southWest, northEast).pad(1.5);
+                var nodeBounds = L.latLngBounds(southWest, northEast).pad(0.60);
 
                 var anyCoordInside = coords.some(function(coord, i, array) {
                     var lineA = L.latLng(coord[0], coord[1]);
@@ -88,6 +91,7 @@ function genericController() {
 
                     var next = array[i + 1];
                     if (! next) return false;
+
                     var lineB = L.latLng(next[0], next[1]);
                     var coordBounds = L.latLngBounds(lineA, lineB);
                     if (nodeBounds.intersects(coordBounds)) return true;
@@ -99,19 +103,19 @@ function genericController() {
                 }
             })
 
+            var threshold = 0.005;
             // TODO: Speed this up with a quadtree.
             filtered = filtered.filter(function(d) {
-                var close = false;
-                coords.forEach(function(coord, i, array) {
+                // return true; // TODO
+                return coords.some(function(coord, i, array) {
                     if (! array[i + 1]) return;
                     var point = L.point(parseFloat(d.latitude), parseFloat(d.longitude));
                     var lineA = L.point(coord[0], coord[1]);
                     var next = array[i + 1];
                     var lineB = L.point(next[0], next[1]);
                     var distance = distToSeg(point, lineA, lineB);
-                    if (distance < threshold) close = true;
+                    if (distance < threshold) return true;
                 });
-                return close;
             })
 
             // var filtered = newData;
