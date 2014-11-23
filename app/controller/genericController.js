@@ -51,7 +51,6 @@ function genericController() {
         // console.log("Received new bounds.");
 
         dispatch.on("newExitSelection", function(exit) {
-            console.log("DATA PHASE: New exit selection. Length: %i. Remove data if in bounds.", exit.size());
             _removeDataIfInBounds(exit, bounds);
         })
 
@@ -62,27 +61,26 @@ function genericController() {
         console.log("[%s] : Received new coords. Datalist: %o", name(), data.size());
 
         dispatch.on("newUpdateEnterSelection", function(updateEnter) {
-            console.log("DATA PHASE: New updateEnter selection. Length: %i. Send to quadtree.", updateEnter.size());
             _filterSelectionWithCoords(updateEnter, coords);
         })
 
         dispatch.on("boundsUpdated.withCoords", function(bounds) {
-            _getSelectionFromBoundsAndCoords(bounds, coords);  // FIXME: This sets everything to marker phase
+            _getSelectionFromBoundsAndCoords(bounds, coords);
         });
 
     }
 
     // Get existing data, filter, quadtree, add markers
     function _getSelectionFromBoundsAndCoords(bounds, coords) {
-        // console.log("Have bounds and coords. %o %i", bounds, coords.length);
+
         var existingData = dataList.selectAll("li");
-        // console.log("Existing data length: %i", existingData.size());
+
         var filteredSelection = existingData.filter(function(d) {
             var latLng = L.latLng(latitudeAccessor()(d), longitudeAccessor()(d));
             if (bounds.contains(latLng)) return true;
         });
         var size = filteredSelection.size();
-        // console.log("Filtered selection length: %i", filteredSelection.size());
+
         if (size > 0)
             _filterSelectionWithCoords(filteredSelection, coords);
     }
@@ -93,10 +91,6 @@ function genericController() {
         var data = selection.data();
 
         var filtered = _filterDataWithCoords(data, coords);
-
-        // console.log("filtered length %i", filtered.length);
-
-        // console.log("Sending filtered data back to update.");
 
         var oldUpdateEnter = dispatch.on("newUpdateEnterSelection");
 
@@ -185,14 +179,6 @@ function genericController() {
         })
     }
 
-    function _processExit(selection) {
-        selection.each(function(d) {
-            layer().getLayer().removeLayer(this._marker);
-            d3.select(this).remove();
-        });
-        console.log("exit %o", selection.size());
-    }
-
     function _filterDataWithCoords(data, coords) {
         var distToSeg = (new Utility()).distanceToSegment;
 
@@ -205,9 +191,6 @@ function genericController() {
                 filtered.push(node.point);
                 return;
             }
-
-            // var width = Math.abs(x2 - x1), height = Math.abs(y2 - y1);
-            // if (width < threshold || height < threshold) return;
 
             var southWest = L.latLng(y1, x1),
             southEast = L.latLng(y1, x2),
