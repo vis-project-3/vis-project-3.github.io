@@ -25,8 +25,19 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
         amplify.publish("ROUTE_UPDATED", route);
     });
 
+    amplify.subscribe("ROUTE_COORDS_UPDATED", function(coords) {
+        layerControllers.forEach(function(controller) {
+            if (! controller.query() && ! controller.dataCallback()) {
+                console.warn("[%s] : Controller is not ready.", controller.name());
+            } else {
+                controller.updateCoords(coords);
+            }
+        })
+    });
+
     amplify.subscribe("ROUTE_UPDATED", function(route) {
         coords = route.coordinates;
+        amplify.publish("ROUTE_COORDS_UPDATED", coords);
         bounds = getBounds(coords);
         amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);
     });
