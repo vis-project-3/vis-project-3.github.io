@@ -1,0 +1,111 @@
+<html>
+    <head>
+        <link rel="import" href="../include/lib_local.html">
+        <link rel="import" href="../include/components.html">
+    </head>
+
+    <body>
+
+        <script charset="utf-8">
+            var key = "?key=EsqF2kFGe49fzJ5uM9BJDrQpm";
+            var entryPoint = "http://www.ctabustracker.com/bustime/api/v1/";
+            var apiStops = "getstops";
+            var apiRoutes = "getroutes";
+            var apiDirections = "getdirections";
+            var apiPatterns = "getpatterns";
+            var routesObject = [];
+            var stopsObject = [];
+
+            /*var getData = function(url, callback){
+                $.ajax({
+                    url: url,
+                    success: function(data){
+                        callback(data.query.results);
+                    }
+                });
+            };*/
+
+            var generateQuery = function(dataset, parameters){
+                var query = entryPoint + dataset + key + parameters;
+                return 'http://query.yahooapis.com/v1/public/yql?format=json&q=' + encodeURIComponent('select * from xml where url="' + query + '"');
+            };
+
+            var getAll = function() {
+                $.ajax({
+                    url: generateQuery(apiRoutes, ""),
+                    success: function (routes) {
+                        storeRoutes(routes.query.results);
+                    }
+                })
+            };
+
+            var getDirections = function() {
+                for(var i=0; i < routesObject.length; i++) {
+                    $.ajax({
+                        url: generateQuery(apiDirections, "&rt=" + routesObject[i].rt),
+                        success: storeDirections(i)
+                    });
+                }
+            };
+
+           var getStops = function(index) {
+                for (var i = 0; i < routesObject[index].dir.length; i++) {
+                    $.ajax({
+                        url: generateQuery(apiStops, "&rt=" + routesObject[index].rt + "&dir=" + routesObject[index].dir[i]),
+                        success: storeStops(routesObject[index])
+                    })
+                }
+            };
+
+            /*var getRoutes = function(){
+                var url = generateQuery(apiRoutes,"");
+                getData(url,storeRoutes);
+            };
+
+            var getDirections = function(){
+                for(var i=0; i<routesObject.length; i++) {
+                    var url = generateQuery(apiDirections, "&rt=" + routesObject[i].rt );
+                    getData(url, storeDirections(i));
+                }
+            };
+
+            var getStops = function(){
+                for(var i=0; i<routesObject.lenght; i++){
+                    for(var j=0;j<routesObject[i].dir.length;j++){
+                        var url =  generateQuery(apiStops,"&rt=" + routesObject[i].rt + "&dir=" + routesObject[i].dir[j]);
+                        getData(apiStops,storeStops(routesObject[i].rt));
+                    }
+                }
+            };*/
+
+            var storeRoutes = function(data){
+                routesObject = data["bustime-response"].route;
+                getDirections();
+            };
+
+            var storeDirections = function(index){
+               // getStops(index);
+                return function(data) {
+                    var results = data.query.results["bustime-response"].dir;
+                    routesObject[index]["dir"] = results;
+                    routesObject[index].stops = [];
+                    getStops(index);
+                };
+            };
+
+            var storeStops = function(route){
+                return function(data){
+                    var results = data.query.results["bustime-response"].stop;
+                    route.stops = route.stops.concat(results);
+                }
+            };
+
+            var test = function() {
+                getAll();
+            };
+
+            test();
+
+        </script>
+    </body>
+</html>
