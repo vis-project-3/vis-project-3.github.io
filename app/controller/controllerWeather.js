@@ -19,5 +19,4 @@ function controllerWeather(weatherBox){
         weather.setSunriseSunset(data);
     };
 
-
 }

@@ -49,12 +49,37 @@ body{
 }
 
 #weather{
-    /* position: absolute; */
     display: flex;
     flex-direction: column;
-    height: 15vh;
+    align-items: center;
+    height: 40vh;
     width: 10vw;
 }
+
+/* #weather div {
+    overflow: hidden;
+    border: 1px solid black;
+}
+
+#weather img {
+    height: 8vh;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+}
+
+#weather #date {
+    font-size: 3vh;
+}
+
+#weather #time {
+    font-size: 3vh;
+    line-height: 1;
+}
+
+#weather #temp {
+
+} */
 
 /* top: 1%;
 right: 1%;

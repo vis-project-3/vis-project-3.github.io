@@ -49,7 +49,7 @@ function App(){
 
     /****** EVENT HANDLING *******/
 
-    var switchboard = new Switchboard(map, route, controllers, layerButtons, mapButtons, weather);
+    var switchboard = new Switchboard(map, route, controllers, layerButtons, mapButtons, weather, box);
 
 
     /**** INITIAL APP STATE *****/
@@ -58,7 +58,6 @@ function App(){
     museum = L.latLng( 41.861466, -87.614935);
 
     amplify.publish("UPDATE_WAYPOINTS", [uic_west, museum]);
-    amplify.publish("WEATHER");
 
     // console.log((new Utility()).distanceToSegment(L.point(205,80), L.point(200,300), L.point(100,50)));
 
