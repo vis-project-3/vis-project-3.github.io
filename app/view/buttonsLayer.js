@@ -4,7 +4,7 @@ function buttonsLayer(map, controllers, customControl){
     map.addControl( control );
 
     var selection = d3.select(control._container);
-    
+
     this.getSelection = function() {
         return selection;
     };

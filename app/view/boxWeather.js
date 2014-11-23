@@ -60,8 +60,8 @@ function boxWeather(container, map, customControl){
 
     (function() {
         map.addControl(control);
-        console.log(time.node().parentNode.getBoundingClientRect());
-        console.log(time.node().clientWidth);
+        // console.log(time.node().parentNode.getBoundingClientRect());
+        // console.log(time.node().clientWidth);
     }())
 
     var height = 174;

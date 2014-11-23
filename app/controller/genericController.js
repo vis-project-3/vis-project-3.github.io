@@ -12,6 +12,7 @@ function genericController() {
     var query = this.query = getSet.bind(this)();
     var name = this.name = getSet.bind(this)();
     var getData = this.getData = getSet.bind(this)(undefined);
+    var showInChart = this.showInChart = getSet.bind(this)(false);
 
     /**** PUBLIC METHODS *****/
     this.layerIsActive = function() {
