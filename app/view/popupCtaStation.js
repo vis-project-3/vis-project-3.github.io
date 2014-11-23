@@ -1,4 +1,4 @@
-function popupPotholes(){
+function popupCtaStation(){
 
     this.generatePopupContent = function(data){
         var iconObject = new iconsApp();

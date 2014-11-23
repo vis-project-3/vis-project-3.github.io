@@ -12,7 +12,7 @@ function controllerCtaStation(mapObject) {
 
     controller.layer(layer);
 
-    var popup = new popupStations();
+    var popup = new popupCtaStation();
     layer.setPopup(popup);
 
     var getData = function(bounds) { // L.latLngBounds
@@ -32,6 +32,9 @@ function controllerCtaStation(mapObject) {
     };
 
     controller.getData(getData);
+
+    controller.latitudeAccessor(function(d){return d.lat});
+    controller.longitudeAccessor(function(d){return d.lon});
 
     this.get = function() { return controller };
 

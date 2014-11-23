@@ -26,7 +26,7 @@ function App(){
     /***** CONTROLLERS ******/
 
     var ctaStation = (new controllerCtaStation(map)).get();
-    var ctaBus = (new controllerCtaBus(map)).get();
+    //var ctaBus = (new controllerCtaBus(map)).get();
     var divvy = (new controllerDivvy(map)).get();
     var crimes = (new controllerCrimes(map)).get();
     var potholes = (new controllerPotholes(map)).get();
@@ -36,7 +36,7 @@ function App(){
 
 
     var controllers = [
-        ctaStation, ctaBus, divvy, crimes, lights, potholes, vehicles
+        ctaStation, divvy, crimes, lights, potholes, vehicles
     ];
 
     /***** UI COMPONENTS *******/

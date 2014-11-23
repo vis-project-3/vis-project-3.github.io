@@ -25,6 +25,8 @@ function controllerCrimes(mapObject) {
             .fromDate(fromDate);
     }
 
+    controller.showInChart(true);
+
     controller.query(query);
 
     this.get = function() { return controller };

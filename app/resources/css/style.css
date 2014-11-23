@@ -22,7 +22,7 @@ body{
     top : 30vh;
     width : 9vw;
     height : 40vh;
-    background: rgba(255,255,255,0.5);
+    /* background: rgba(255,255,255,0.5); */
     /* background-color: none; */
 }
 
@@ -30,9 +30,9 @@ body{
     fill: #FFFFFF;
 }
 
-#layer svg rect:hover {
+/* #layer svg rect:hover {
     fill: #76B3E5;
-}
+} */
 
 #layer svg rect.selected {
     fill: #6699CC;
@@ -52,45 +52,15 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 40vh;
-    width: 10vw;
+    /* height: 25vh; */
+    /* width: 9vw; */
 }
-
-/* #weather div {
-    overflow: hidden;
-    border: 1px solid black;
-}
-
-#weather img {
-    height: 8vh;
-    max-width: 100%;
-    width: auto;
-    height: auto;
-}
-
-#weather #date {
-    font-size: 3vh;
-}
-
-#weather #time {
-    font-size: 3vh;
-    line-height: 1;
-}
-
-#weather #temp {
-
-} */
-
-/* top: 1%;
-right: 1%;
-width : 30%;
-height: 10%; */
 
 #mapcontrol{
     position : absolute;
     bottom : 10vh;
     width : 9vw;
-    height : 10vh;
+    height : 9vh;
     background-color: rgba(255,255,255,0.66);
 }
 
