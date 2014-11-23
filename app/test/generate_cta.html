@@ -15,15 +15,8 @@
             var apiPatterns = "getpatterns";
             var routesObject = [];
             var stopsObject = [];
-
-            /*var getData = function(url, callback){
-                $.ajax({
-                    url: url,
-                    success: function(data){
-                        callback(data.query.results);
-                    }
-                });
-            };*/
+            var stopsUnfiltered = [];
+            var totStations = 0;
 
             var generateQuery = function(dataset, parameters){
                 var query = entryPoint + dataset + key + parameters;
@@ -93,11 +86,63 @@
                 };
             };
 
-            var storeStops = function(route){
-                return function(data){
+            var storeStops = function(route) {
+                return function (data) {
                     var results = data.query.results["bustime-response"].stop;
+
                     route.stops = route.stops.concat(results);
-                }
+
+                    stopsUnfiltered = stopsUnfiltered.concat(results);
+
+                    for (var i = 0; i < results.length; i++) {
+                        // Adds current route to current inspected station
+                        results[i].rt = [];
+                        results[i].rt.push(route.rt);
+
+                        if(stopsObject.length == 0 ){
+                            stopsObject.push(results[i]);
+                            totStations++;
+                            continue;
+                        }
+
+                        var exists = false;
+                        for (var j = 0; j < stopsObject.length; j++) {
+                            if(results[i].stpid == stopsObject[j].stpid){
+                                exists = true;
+                                var existsRoute = false;
+                                for(var k = 0; k < stopsObject[j].rt.length; k++){
+                                    if(stopsObject[j].rt[k] == route.rt) {
+                                        existsRoute = true;
+                                    }
+                                    if(k==stopsObject[j].rt.length-1 && !existsRoute){
+                                        stopsObject[j].rt.push(route.rt);
+                                    }
+                                }
+                            }
+                            if(j==stopsObject.length-1 && !exists){
+                                stopsObject.push(results[i]);
+                                totStations++;
+                            }
+                        }
+                    }
+
+                    /*if(stopsUnfiltered.length == 14780) {
+                        for (var i = 0; i < stopsObject.length; i++) {
+                            var exists = false;
+                            //console.log(stopsObject[i].stpid);
+                            //console.log(stopsUnfiltered[1000].stpid);
+                            for (var j = 0; j < stopsUnfiltered.length; j++) {
+                                if (stopsObject[i].stpid == stopsUnfiltered[j].stpid) {
+                                    exists = true;
+                                    continue;
+                                }
+                                if (!exists && j == stopsUnfiltered.length - 1) {
+                                    console.log("missing stpid : " + stopsObject[i].stpid);
+                                }
+                            }
+                        }
+                    }*/
+                };
             };
 
             var test = function() {
