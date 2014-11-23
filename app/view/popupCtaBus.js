@@ -6,7 +6,7 @@ function popupCtaBus(){
         var route  = "<h3><b>Route : </b>" + data.rt + "</h3>";
         var destination = "<h3><b>Destination : </b>" + data.des + "</h3>";
 
-        return icon + creationDate;
+        return icon + route + destination;
     };
 
     var getPredictions = function(){
