@@ -13,9 +13,11 @@ function genericController() {
     var layer = this.layer = getSet.bind(this)();
     var query = this.query = getSet.bind(this)();
     var name = this.name = getSet.bind(this)();
-    var getData = this.getData = getSet.bind(this)(undefined);
+    var dataCallback = this.dataCallback = getSet.bind(this)(undefined);
     var showInChart = this.showInChart = getSet.bind(this)(false);
     var preFetchData = this.preFetchData = showInChart;
+    var latitudeAccessor = this.latitudeAccessor = getSet.bind(this)(function(d) { return d.latitude; });
+    var longitudeAccessor = this.longitudeAccessor = getSet.bind(this)(function(d) { return d.longitude; });
 
     /**** PUBLIC METHODS *****/
     this.layerIsActive = function() {
@@ -24,9 +26,10 @@ function genericController() {
 
     this.updateData = function(bounds, coords) {
         console.info("[%s] : Updating data within bounds %o", name(), bounds);
-        if (getData()) {
-            var data = getData()(bounds);
-            _updateData(coords)(data);
+        if (dataCallback()) {
+            // var query = query();
+            dataCallback()(bounds, _updateData(coords));
+            // _updateData(coords)(data);
             return;
         }
         // console.log(coords);
@@ -105,7 +108,7 @@ function genericController() {
 
     function _processEnter(selection) {
         selection.each(function(d) {
-            var latLng = [parseFloat(d.latitude), parseFloat(d.longitude)];
+            var latLng = [parseFloat(latitudeAccessor()(d)), parseFloat(longitudeAccessor()(d))];
             // console.log("layer().getIcon() %o", layer().getIcon());
             var size = map().getIconSize();
             var icon = L.icon({
