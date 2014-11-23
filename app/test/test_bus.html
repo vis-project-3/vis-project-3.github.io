@@ -1,0 +1,55 @@
+<html>
+<head>
+    <link rel="import" href="../include/lib_local.html">
+    <link rel="import" href="../include/components.html">
+</head>
+
+<body>
+
+<script charset="utf-8">
+    var key = "?key=EsqF2kFGe49fzJ5uM9BJDrQpm";
+    var entryPoint = "http://www.ctabustracker.com/bustime/api/v1/";
+    var apiVehicle = "getvehicles"
+    var ctaObject = [];
+
+
+    var generateQuery = function(dataset, parameters){
+        var query = entryPoint + dataset + key + parameters;
+        return 'http://query.yahooapis.com/v1/public/yql?format=json&q=' + encodeURIComponent('select * from xml where url="' + query + '"');
+    };
+
+    var getData = function(url, callback){
+         $.ajax({
+             url: url,
+             success: function(data){
+                 callback(data.query.results);
+             }
+         });
+     };
+
+    var getBusByRoute = function(route) {
+        var query = generateQuery(apiVehicle,"&rt=" + route);
+        getData(query,printData);
+    };
+
+    var getBusById = function(vehicle_id){
+        var query = generateQuery(apiVehicle,"&vid=" + vehicle_id);
+        getData(query,printData);
+    };
+
+    var printData = function(data){
+        console.log(data["bustime-response"].vehicle);
+       d3.select("body").append("p").text(JSON.stringify(data["bustime-response"].vehicle));
+    };
+
+
+    var test = function() {
+        getBusByRoute("60");
+        getBusById("1699");
+    };
+
+    test();
+
+</script>
+</body>
+</html>
