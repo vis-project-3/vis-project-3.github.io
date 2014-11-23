@@ -7,10 +7,11 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
     [
         "UPDATE_WAYPOINTS",
         "ROUTE_BOUNDS_UPDATED",
-        "QUERY_RECT_UPDATED",
+        "QUERY_RECT_BOUNDS_UPDATED",
         "TOGGLE_LAYER",
         "ROUTE_COORDS_UPDATED",
-        "ROUTE_UPDATED"
+        "ROUTE_UPDATED",
+        "PREFETCH_DATA_WITH_BOUNDS"
     ]
     .forEach(function(name) {
         amplify.subscribe(name, (new Utility).i(name));
@@ -20,7 +21,38 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
 
     amplify.subscribe("UPDATE_WAYPOINTS", route.setWaypoints);
 
+    route.on("routeFound", function(route) {
+        amplify.publish("ROUTE_UPDATED", route);
+    });
+
+    amplify.subscribe("ROUTE_COORDS_UPDATED", function(coords) {
+        layerControllers.forEach(function(controller) {
+            if (! controller.query() && ! controller.dataCallback()) {
+                console.warn("[%s] : Controller is not ready.", controller.name());
+            } else {
+                controller.updateCoords(coords);
+            }
+        })
+    });
+
+    amplify.subscribe("ROUTE_UPDATED", function(route) {
+        coords = route.coordinates;
+        amplify.publish("ROUTE_COORDS_UPDATED", coords);
+        bounds = getBounds(coords);
+        amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);
+    });
+
     amplify.subscribe("ROUTE_BOUNDS_UPDATED", map.setQueryRect);
+
+    map.on("queryRectUpdated", function(bounds) {
+        amplify.publish("QUERY_RECT_BOUNDS_UPDATED", bounds);
+    });
+
+    amplify.subscribe("QUERY_RECT_BOUNDS_UPDATED", _updateActiveLayers);
+
+    // amplify.subscribe("QUERY_RECT_BOUNDS_UPDATED", _update)
+
+    amplify.subscribe("PREFETCH_DATA_WITH_BOUNDS", _updatePrefetchLayers);
 
     function _updateActiveLayers(bounds) {
         layerControllers.forEach(function(controller) {
@@ -34,8 +66,6 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
         })
     }
 
-    amplify.subscribe("QUERY_RECT_UPDATED", _updateActiveLayers);
-
     function _updatePrefetchLayers(bounds) {
         layerControllers.filter(function(c) {
             return c.preFetchData();
@@ -44,25 +74,14 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
         })
     }
 
-    amplify.subscribe("PREFETCH_DATA_WITH_BOUNDS", _updatePrefetchLayers);
-
-    amplify.subscribe("ROUTE_UPDATED", function(route) {
-        coords = route.coordinates;
-        bounds = getBounds(coords);
-        amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);
-    })
-
-    route.on("routeFound", function(route) {
-        amplify.publish("ROUTE_UPDATED", route);
-    });
+    function _updateControllerData(controller, bounds) {
+        var coords = route.getCoords();
+        controller.updateDataWithBounds(bounds, coords);
+    }
 
     // route.on("boundsUpdated", function(bounds) {
     //     amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);
     // });
-
-    map.on("queryRectUpdated", function(bounds) {
-        amplify.publish("QUERY_RECT_UPDATED", bounds);
-    });
 
     /****** LAYER BUTTONS ******/
 
@@ -83,10 +102,6 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
         }
     });
 
-    function _updateControllerData(controller, bounds) {
-        var coords = route.getCoords();
-        controller.updateData(bounds, coords);
-    }
 
     /*console.log("[EVENT] : SUNRISE_SUNSET");
     amplify.publish("SUNRISE_SUNSET");
