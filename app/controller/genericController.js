@@ -16,8 +16,10 @@ function genericController() {
     var dataCallback = this.dataCallback = getSet.bind(this)(undefined);
     var showInChart = this.showInChart = getSet.bind(this)(false);
     var preFetchData = this.preFetchData = showInChart;
-    var latitudeAccessor = this.latitudeAccessor = getSet.bind(this)(function(d) { return d.latitude; });
-    var longitudeAccessor = this.longitudeAccessor = getSet.bind(this)(function(d) { return d.longitude; });
+    var latitudeAccessor = this.latitudeAccessor =
+        getSet.bind(this)(function(d) { return d.latitude; });
+    var longitudeAccessor = this.longitudeAccessor =
+        getSet.bind(this)(function(d) { return d.longitude; });
 
     /**** PUBLIC METHODS *****/
     this.layerIsActive = function() {
@@ -144,6 +146,7 @@ function genericController() {
     function _processExitWithBounds(selection, bounds) {
         selection.each(function(d) {
             console.log("exit: %o", d);
+            var latLng = L.latLng(latitudeAccessor()(d), longitudeAccessor()(d));
             layer().getLayer().removeLayer(this._marker);
             d3.select(this).remove();
         });
