@@ -6,7 +6,7 @@ function popupCtaStation(){
         var stationName  = "<h3><b>Station Name : </b>" + data.stpnm + "</h3>";
 
 
-        return icon + creationDate;
+        return icon + stationName;
     }
 
     var getPredictions = function(){

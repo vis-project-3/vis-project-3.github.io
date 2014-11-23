@@ -11,7 +11,7 @@ function genericController() {
     var layer = this.layer = getSet.bind(this)();
     var query = this.query = getSet.bind(this)();
     var name = this.name = getSet.bind(this)();
-    var getData = this.getData = getSet.bind(this)(undefined);
+    var dataCallback = this.dataCallback = getSet.bind(this)(undefined);
     var showInChart = this.showInChart = getSet.bind(this)(false);
     var latitudeAccessor = this.latitudeAccessor = getSet.bind(this)(function(d) { return d.latitude; });
     var longitudeAccessor = this.longitudeAccessor = getSet.bind(this)(function(d) { return d.longitude; });
@@ -23,9 +23,10 @@ function genericController() {
 
     this.updateData = function (bounds, coords) {
         console.info("[%s] : Updating data within bounds %o", name(), bounds);
-        if (getData()) {
-            var data = getData()(bounds);
-            _updateData(coords)(data);
+        if (dataCallback()) {
+            // var query = query();
+            dataCallback()(bounds, _updateData(coords));
+            // _updateData(coords)(data);
             return;
         }
         // console.log(coords);
@@ -62,8 +63,8 @@ function genericController() {
     }());
 
     var quadtree = d3.geom.quadtree()
-        .x(function(d) { return d.longitude })
-        .y(function(d) { return d.latitude })
+        .x(function(d) { return longitudeAccessor()(d) })
+        .y(function(d) { return latitudeAccessor()(d) })
 
     function _updateData(coords) {
         var distToSeg = (new Utility()).distanceToSegment;
@@ -110,13 +111,16 @@ function genericController() {
                 }
             })
 
+            console.log("new", newData)
+            console.log("filtered", filtered)
+
             var threshold = 0.005;
             // TODO: Speed this up with a quadtree.
             filtered = filtered.filter(function(d) {
                 // return true; // TODO
                 return coords.some(function(coord, i, array) {
                     if (! array[i + 1]) return;
-                    var point = L.point(parseFloat(d.latitude), parseFloat(d.longitude));
+                    var point = L.point(parseFloat(latitudeAccessor()(d)), parseFloat(longitudeAccessor()(d)));
                     var lineA = L.point(coord[0], coord[1]);
                     var next = array[i + 1];
                     var lineB = L.point(next[0], next[1]);
@@ -126,6 +130,8 @@ function genericController() {
             })
 
             // var filtered = newData;
+
+            console.log("again", filtered)
 
             var key = layer().getKey();
             var keyFunction = function(d) { return d[layer().getKey()]; };

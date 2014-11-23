@@ -21,7 +21,7 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
 
     amplify.subscribe("QUERY_RECT_UPDATED", function(bounds, coords) {
         layerControllers.forEach(function(controller) {
-            if (! controller.query()) {
+            if (! controller.query() && !controller.dataCallback()) {
                 console.warn("[%s] : Query undefined.", controller.name());
             } else if (controller.layerIsActive()) {
                 console.info("Layer %s is active.", controller.label());
@@ -49,7 +49,7 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
 
     amplify.subscribe("TOGGLE_LAYER", function(controller) {
         var bounds = map.getQueryRect();
-        if (! controller.query()) {
+        if (! controller.query() && !controller.dataCallback()) {
             console.warn("[%s] : Query undefined.", controller.name());
         } else {
             controller.toggleLayer();
