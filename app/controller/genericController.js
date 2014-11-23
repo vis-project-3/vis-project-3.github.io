@@ -81,9 +81,9 @@ function genericController() {
         return function(newData) {
             console.info("[%s] : New data, length: %i", name(), newData.length);
 
-            // filtered = _filterDataWithCoords(newData, coords);
+            filtered = _filterDataWithCoords(newData, coords);
 
-            filtered = newData;
+            // filtered = newData;
 
             // var filtered = newData;
 
@@ -96,7 +96,13 @@ function genericController() {
 
             var itemsExit = itemsUpdate.exit();
 
-            dispatch.dataUpdated(itemsUpdate, itemsEnter, itemsExit);
+            _processUpdate(itemsUpdate);
+
+            _processEnter(itemsEnter);
+
+            _processExit(itemsExit);
+
+            // dispatch.dataUpdated(itemsUpdate, itemsEnter, itemsExit);
 
             console.log(itemsUpdate.size());
         }
