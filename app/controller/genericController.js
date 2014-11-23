@@ -13,10 +13,11 @@ function genericController() {
     var layer = this.layer = getSet.bind(this)();
     var query = this.query = getSet.bind(this)();
     var name = this.name = getSet.bind(this)();
-    var getData = this.getData = getSet.bind(this)(undefined);
+    var dataCallback = this.dataCallback = getSet.bind(this)(undefined);
     var showInChart = this.showInChart = getSet.bind(this)(false);
     var preFetchData = this.preFetchData = showInChart;
-    var latitudeAccessor = this.latitudeAccessor = getSet.bind(this)(function(d) { return d.latitude });
+    var latitudeAccessor = this.latitudeAccessor = getSet.bind(this)(function(d) { return d.latitude; });
+    var longitudeAccessor = this.longitudeAccessor = getSet.bind(this)(function(d) { return d.longitude; });
 
     /**** PUBLIC METHODS *****/
     this.layerIsActive = function() {
@@ -26,9 +27,8 @@ function genericController() {
     this.updateDataWithBounds = function(bounds) {
         console.info("[%s] : Updating data within bounds %o", name(), bounds);
         updateBounds(bounds);
-        if (getData()) {
-            var data = getData()(bounds);
-            _updateData()(data);
+        if (dataCallback()) {
+            dataCallback()(bounds, _updateData(coords));
             return;
         }
         var getQuery = query();
@@ -72,18 +72,20 @@ function genericController() {
     }());
 
     var quadtree = d3.geom.quadtree()
-        .x(function(d) { return d.longitude })
-        .y(function(d) { return d.latitude });
+        .x(function(d) { return longitudeAccessor()(d) })
+        .y(function(d) { return latitudeAccessor()(d) })
 
     function _updateData() {
         return function(newData) {
             console.info("[%s] : New data, length: %i", name(), newData.length);
 
-            // filtered = _filterDataWithCoords(newData, coords);
+            filtered = _filterDataWithCoords(newData, coords);
 
-            filtered = newData;
+            // filtered = newData;
 
             // var filtered = newData;
+
+            console.log("again", filtered)
 
             var key = layer().getKey();
             var keyFunction = function(d) { return d[layer().getKey()]; };
@@ -94,7 +96,13 @@ function genericController() {
 
             var itemsExit = itemsUpdate.exit();
 
-            dispatch.dataUpdated(itemsUpdate, itemsEnter, itemsExit);
+            _processUpdate(itemsUpdate);
+
+            _processEnter(itemsEnter);
+
+            _processExit(itemsExit);
+
+            // dispatch.dataUpdated(itemsUpdate, itemsEnter, itemsExit);
 
             console.log(itemsUpdate.size());
         }
@@ -106,7 +114,7 @@ function genericController() {
 
     function _processEnter(selection) {
         selection.each(function(d) {
-            var latLng = [parseFloat(d.latitude), parseFloat(d.longitude)];
+            var latLng = [parseFloat(latitudeAccessor()(d)), parseFloat(longitudeAccessor()(d))];
             // console.log("layer().getIcon() %o", layer().getIcon());
             var size = map().getIconSize();
             var icon = L.icon({
@@ -183,12 +191,11 @@ function genericController() {
         })
 
         var threshold = 0.005;
-        // TODO: Speed this up with a quadtree.
         filtered = filtered.filter(function(d) {
             // return true; // TODO
             return coords.some(function(coord, i, array) {
                 if (! array[i + 1]) return;
-                var point = L.point(parseFloat(d.latitude), parseFloat(d.longitude));
+                var point = L.point(parseFloat(latitudeAccessor()(d)), parseFloat(longitudeAccessor()(d)));
                 var lineA = L.point(coord[0], coord[1]);
                 var next = array[i + 1];
                 var lineB = L.point(next[0], next[1]);
