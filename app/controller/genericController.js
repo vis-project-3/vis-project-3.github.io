@@ -13,6 +13,8 @@ function genericController() {
     var name = this.name = getSet.bind(this)();
     var getData = this.getData = getSet.bind(this)(undefined);
     var showInChart = this.showInChart = getSet.bind(this)(false);
+    var latitudeAccessor = this.latitudeAccessor = getSet.bind(this)(function(d) { return d.latitude; });
+    var longitudeAccessor = this.longitudeAccessor = getSet.bind(this)(function(d) { return d.longitude; });
 
     /**** PUBLIC METHODS *****/
     this.layerIsActive = function() {
@@ -58,8 +60,6 @@ function genericController() {
         fragment = new DocumentFragment();
         dataList = d3.select(fragment).append("ul");
     }());
-
-
 
     var quadtree = d3.geom.quadtree()
         .x(function(d) { return d.longitude })
@@ -134,7 +134,7 @@ function genericController() {
 
             items.enter().append("li")
             .each(function(d) {
-                var latLng = [parseFloat(d.latitude), parseFloat(d.longitude)];
+                var latLng = [parseFloat(latitudeAccessor()(d)), parseFloat(longitudeAccessor()(d))];
                 // console.log("layer().getIcon() %o", layer().getIcon());
                 var size = map().getIconSize();
                 var icon = L.icon({
