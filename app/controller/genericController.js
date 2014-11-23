@@ -182,7 +182,15 @@ function genericController() {
     function _filterDataWithCoords(data, coords) {
         var distToSeg = (new Utility()).distanceToSegment;
 
-        var root = quadtree(data);
+        var fix = [];
+
+        for (var i = 0; i < data.length; i++) {
+            if (data[i] !== undefined && data[i] != null) {
+                fix.push(data[i]);
+            }
+        }
+
+        var root = quadtree(fix);
 
         var filtered = [];
 
