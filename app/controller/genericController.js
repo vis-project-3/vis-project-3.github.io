@@ -23,26 +23,26 @@ function genericController() {
         return map().hasLayer( layer().getLayer() );
     }
 
-    this.updateData = function(bounds, coords) {
+    this.updateDataWithBounds = function(bounds) {
         console.info("[%s] : Updating data within bounds %o", name(), bounds);
+        updateBounds(bounds);
         if (getData()) {
             var data = getData()(bounds);
-            _updateData(coords)(data);
+            _updateData()(data);
             return;
         }
-        // console.log(coords);
         var getQuery = query();
         var fullQuery = getQuery().queryRect(bounds);
         var queryString = fullQuery();
-        d3.json(queryString, _updateData(coords));
+        d3.json(queryString, _updateData());
     };
 
-    this.updateBounds = function(bounds) {
+    var updateBounds = this.updateBounds = function(bounds) {
         dispatch.on("dataUpdated.withBounds", function(update, enter, exit) {
             _processUpdate(update);
             _processEnter(enter);
-            _processExitWithBounds(exit);
-        })
+            _processExitWithBounds(exit, bounds);
+        });
     }
 
     //Toggle Layer
@@ -75,7 +75,7 @@ function genericController() {
         .x(function(d) { return d.longitude })
         .y(function(d) { return d.latitude });
 
-    function _updateData(coords) {
+    function _updateData() {
         return function(newData) {
             console.info("[%s] : New data, length: %i", name(), newData.length);
 
@@ -133,11 +133,14 @@ function genericController() {
         console.log("exit %o", selection.size());
     }
 
-    // function _processExitWithBounds(selection, bounds) {
-    //     selection.each(function(d) {
-    //
-    //     })
-    // }
+    function _processExitWithBounds(selection, bounds) {
+        selection.each(function(d) {
+            console.log("exit: %o", d);
+            layer().getLayer().removeLayer(this._marker);
+            d3.select(this).remove();
+        });
+        console.log("exit %o", selection.size());
+    }
 
     function _filterDataWithCoords(data, coords) {
         var distToSeg = (new Utility()).distanceToSegment;
@@ -164,7 +167,6 @@ function genericController() {
 
             var anyCoordInside = coords.some(function(coord, i, array) {
                 var lineA = L.latLng(coord[0], coord[1]);
-                // if (nodeBounds.contains(lineA)) return true;
 
                 var next = array[i + 1];
                 if (! next) return false;

@@ -7,7 +7,7 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
     [
         "UPDATE_WAYPOINTS",
         "ROUTE_BOUNDS_UPDATED",
-        "QUERY_RECT_UPDATED",
+        "QUERY_RECT_BOUNDS_UPDATED",
         "TOGGLE_LAYER",
         "ROUTE_COORDS_UPDATED",
         "ROUTE_UPDATED",
@@ -34,12 +34,12 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
     amplify.subscribe("ROUTE_BOUNDS_UPDATED", map.setQueryRect);
 
     map.on("queryRectUpdated", function(bounds) {
-        amplify.publish("QUERY_RECT_UPDATED", bounds);
+        amplify.publish("QUERY_RECT_BOUNDS_UPDATED", bounds);
     });
 
-    amplify.subscribe("QUERY_RECT_UPDATED", _updateActiveLayers);
+    amplify.subscribe("QUERY_RECT_BOUNDS_UPDATED", _updateActiveLayers);
 
-    // amplify.subscribe("QUERY_RECT_UPDATED", _update)
+    // amplify.subscribe("QUERY_RECT_BOUNDS_UPDATED", _update)
 
     amplify.subscribe("PREFETCH_DATA_WITH_BOUNDS", _updatePrefetchLayers);
 
@@ -65,7 +65,7 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
 
     function _updateControllerData(controller, bounds) {
         var coords = route.getCoords();
-        controller.updateData(bounds, coords);
+        controller.updateDataWithBounds(bounds, coords);
     }
 
     // route.on("boundsUpdated", function(bounds) {
