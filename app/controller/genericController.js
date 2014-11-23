@@ -11,6 +11,7 @@ function genericController() {
     var layer = this.layer = getSet.bind(this)();
     var query = this.query = getSet.bind(this)();
     var name = this.name = getSet.bind(this)();
+    var getData = this.getData = getSet.bind(this)(undefined);
 
     /**** PUBLIC METHODS *****/
     this.layerIsActive = function() {
@@ -19,6 +20,11 @@ function genericController() {
 
     this.updateData = function (bounds, coords) {
         console.info("[%s] : Updating data within bounds %o", name(), bounds);
+        if (getData()) {
+            var data = getData()(bounds);
+            _updateData(coords)(data);
+            return;
+        }
         // console.log(coords);
         var getQuery = query();
         var fullQuery = getQuery().queryRect(bounds);
