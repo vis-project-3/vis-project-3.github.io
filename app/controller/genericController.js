@@ -65,64 +65,10 @@ function genericController() {
         .y(function(d) { return d.latitude })
 
     function _updateData(coords) {
-        var distToSeg = (new Utility()).distanceToSegment;
         return function(newData) {
             console.info("[%s] : New data, length: %i", name(), newData.length);
 
-            // console.log(coords.length);
-
-            var root = quadtree(newData);
-
-            var filtered = [];
-
-            root.visit(function(node, x1, y1, x2, y2) {
-                if (node.leaf) {
-                    filtered.push(node.point);
-                    return;
-                }
-
-                // var width = Math.abs(x2 - x1), height = Math.abs(y2 - y1);
-                // if (width < threshold || height < threshold) return;
-
-                var southWest = L.latLng(y1, x1),
-                    southEast = L.latLng(y1, x2),
-                    northWest = L.latLng(y2, x1),
-                    northEast = L.latLng(y2, x2);
-
-                var nodeBounds = L.latLngBounds(southWest, northEast).pad(0.60);
-
-                var anyCoordInside = coords.some(function(coord, i, array) {
-                    var lineA = L.latLng(coord[0], coord[1]);
-                    // if (nodeBounds.contains(lineA)) return true;
-
-                    var next = array[i + 1];
-                    if (! next) return false;
-
-                    var lineB = L.latLng(next[0], next[1]);
-                    var coordBounds = L.latLngBounds(lineA, lineB);
-                    if (nodeBounds.intersects(coordBounds)) return true;
-                });
-                if (anyCoordInside) {
-                    if (node.point) filtered.push(node.point);
-                } else {
-                    return true;
-                }
-            })
-
-            var threshold = 0.005;
-            // TODO: Speed this up with a quadtree.
-            filtered = filtered.filter(function(d) {
-                // return true; // TODO
-                return coords.some(function(coord, i, array) {
-                    if (! array[i + 1]) return;
-                    var point = L.point(parseFloat(d.latitude), parseFloat(d.longitude));
-                    var lineA = L.point(coord[0], coord[1]);
-                    var next = array[i + 1];
-                    var lineB = L.point(next[0], next[1]);
-                    var distance = distToSeg(point, lineA, lineB);
-                    if (distance < threshold) return true;
-                });
-            })
+            filtered = _filterDataWithCoords(newData, coords);
 
             // var filtered = newData;
 
@@ -132,23 +78,23 @@ function genericController() {
             var items = dataList.selectAll("li").data(filtered, keyFunction);
 
             items.enter().append("li")
-            .each(function(d) {
-                var latLng = [parseFloat(d.latitude), parseFloat(d.longitude)];
-                // console.log("layer().getIcon() %o", layer().getIcon());
-                var size = map().getIconSize();
-                var icon = L.icon({
-                    iconUrl: iconPath(),
-                    iconSize: [size, size],
-                    className: map().dataMarkerClassName()
+                .each(function(d) {
+                    var latLng = [parseFloat(d.latitude), parseFloat(d.longitude)];
+                    // console.log("layer().getIcon() %o", layer().getIcon());
+                    var size = map().getIconSize();
+                    var icon = L.icon({
+                        iconUrl: iconPath(),
+                        iconSize: [size, size],
+                        className: map().dataMarkerClassName()
+                    });
+                    // console.log(iconPath());
+                    var marker = L.marker(latLng, { icon: icon });
+                    var content = layer().getPopup().generatePopupContent(d);
+                    console.log("[" + name() + "_LAYER] : Generating Popup");
+                    marker.bindPopup(content);
+                    layer().addMarker(marker);
+                    this._marker = marker;
                 });
-                // console.log(iconPath());
-                var marker = L.marker(latLng, { icon: icon });
-                var content = layer().getPopup().generatePopupContent(d);
-                console.log("[" + name() + "_LAYER] : Generating Popup");
-                marker.bindPopup(content);
-                layer().addMarker(marker);
-                this._marker = marker;
-            });
 
             items.exit()
             .each(function(d) {
@@ -156,6 +102,65 @@ function genericController() {
                 d3.select(this).remove();
             });
         }
+    }
+
+    function _filterDataWithCoords(data, coords) {
+        var distToSeg = (new Utility()).distanceToSegment;
+        
+        var root = quadtree(data);
+
+        var filtered = [];
+
+        root.visit(function(node, x1, y1, x2, y2) {
+            if (node.leaf) {
+                filtered.push(node.point);
+                return;
+            }
+
+            // var width = Math.abs(x2 - x1), height = Math.abs(y2 - y1);
+            // if (width < threshold || height < threshold) return;
+
+            var southWest = L.latLng(y1, x1),
+            southEast = L.latLng(y1, x2),
+            northWest = L.latLng(y2, x1),
+            northEast = L.latLng(y2, x2);
+
+            var nodeBounds = L.latLngBounds(southWest, northEast).pad(0.60);
+
+            var anyCoordInside = coords.some(function(coord, i, array) {
+                var lineA = L.latLng(coord[0], coord[1]);
+                // if (nodeBounds.contains(lineA)) return true;
+
+                var next = array[i + 1];
+                if (! next) return false;
+
+                var lineB = L.latLng(next[0], next[1]);
+                var coordBounds = L.latLngBounds(lineA, lineB);
+                if (nodeBounds.intersects(coordBounds)) return true;
+            });
+            if (anyCoordInside) {
+                if (node.point) filtered.push(node.point);
+            } else {
+                return true;
+            }
+        })
+
+        var threshold = 0.005;
+        // TODO: Speed this up with a quadtree.
+        filtered = filtered.filter(function(d) {
+            // return true; // TODO
+            return coords.some(function(coord, i, array) {
+                if (! array[i + 1]) return;
+                var point = L.point(parseFloat(d.latitude), parseFloat(d.longitude));
+                var lineA = L.point(coord[0], coord[1]);
+                var next = array[i + 1];
+                var lineB = L.point(next[0], next[1]);
+                var distance = distToSeg(point, lineA, lineB);
+                if (distance < threshold) return true;
+            });
+        });
+
+        return filtered;
     }
 
 }

@@ -19,7 +19,7 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
 
     amplify.subscribe("ROUTE_BOUNDS_UPDATED", map.setQueryRect);
 
-    amplify.subscribe("QUERY_RECT_UPDATED", function(bounds) {
+    function _updateActiveLayers(bounds) {
         layerControllers.forEach(function(controller) {
             if (! controller.query()) {
                 console.warn("[%s] : Query undefined.", controller.name());
@@ -29,7 +29,19 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
                 _updateControllerData(controller, bounds);
             }
         })
-    });
+    }
+
+    amplify.subscribe("QUERY_RECT_UPDATED", _updateActiveLayers);
+
+    function _updatePrefetchLayers(bounds) {
+        layerControllers.filter(function(c) {
+            return c.preFetchData();
+        }).forEach(function(d) {
+            console.log("prefetch: ", d.name());
+        })
+    }
+
+    amplify.subscribe("PREFETCH_DATA_WITH_BOUNDS", _updatePrefetchLayers);
 
     route.on("boundsUpdated", function(bounds) {
             amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);
@@ -99,7 +111,7 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
 
     map.getMap().on("zoomend", function() {
        amplify.publish("MAP_ZOOM_END");
-   });
+    });
 
     amplify.subscribe("SWITCH_MAP_LAYER", function(d) {
        map.switchToLayer(d);

@@ -13,7 +13,7 @@ function App(){
     route.addTo(map.getMap());
 
     /***** UI COMPONENTS *****/
-    
+
     // var layer = new buttonsLayer("#layer");
     // var controls = new mapControls("#mapcontrol")
     // var toggle = new buttonsToggle("#toggle");
@@ -57,10 +57,14 @@ function App(){
 
     /**** INITIAL APP STATE *****/
 
-    var uic_west = L.latLng( 41.874255, -87.676353),
-    museum = L.latLng( 41.861466, -87.614935);
+    (function() {
+        var uic_west = L.latLng( 41.874255, -87.676353),
+        museum = L.latLng( 41.861466, -87.614935);
 
-    amplify.publish("UPDATE_WAYPOINTS", [uic_west, museum]);
+        amplify.publish("PREFETCH_DATA_WITH_BOUNDS", L.latLngBounds(uic_west, museum));
+        amplify.publish("UPDATE_WAYPOINTS", [uic_west, museum]);
+    }())
+
 
     // console.log((new Utility()).distanceToSegment(L.point(205,80), L.point(200,300), L.point(100,50)));
 
