@@ -1,6 +1,6 @@
 function boxWeather(container, map, customControl){
 
-    var control = new customControl(callback, { position: 'topright' });
+    var control = new customControl(callback, { position: 'topleft' });
 
     var selection = d3.select(control._container);
 
@@ -17,20 +17,21 @@ function boxWeather(container, map, customControl){
 
     function callback(selection) {
 
-        selection.attr("id", "weather");
+        selection
+            .attr("id", "weather");
 
-        var flex;
+        var flex, scale;
 
         id_date = "date";
         flex = 2;
         date = selection.append("div")
-            .style({ flex: flex, "font-size": flex * 1.5 + "vh" })
+            .style({ "font-size": flex + "vh" })
             .attr({ id: id_date });
 
         id_time = "time";
         flex = 3;
         time = selection.append("div")
-            .style({ flex: flex, "font-size": flex * 2 + "vh", "line-height": 1 })
+            .style({ "font-size": flex + "vh", "line-height": 1 })
             .attr({ id: id_time });
 
         id_icon = "weather_icon";
@@ -39,18 +40,18 @@ function boxWeather(container, map, customControl){
             .style({ flex: flex })
             .append("img")
             .attr({ id: id_icon })
-            .style({ height: flex * 2 + "vh" })
+            .style({ height: flex + "vh" })
 
         id_condition = "conditions";
         flex = 2;
         selection.append("div")
-            .style({ flex: flex, "font-size": flex * 1.5 + "vh" })
+            .style({ "font-size": flex + "vh" })
             .attr({ id: id_condition });
 
         id_temp = "temp";
         flex = 3;
         selection.append("div")
-            .style({ flex: flex, "font-size": flex * 1.5 + "vh" })
+            .style({ "font-size": flex + "vh" })
             .attr({ id: id_temp });
 
         // window.foo = time.node().parentNode;
