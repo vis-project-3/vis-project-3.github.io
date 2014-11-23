@@ -1,5 +1,7 @@
 function genericController() {
 
+    var dispatch = d3.dispatch("dataUpdated");
+
     /*** SETTERS AND GETTERS ***/
 
     var getSet = (new Utility()).getSet;
@@ -20,7 +22,7 @@ function genericController() {
         return map().hasLayer( layer().getLayer() );
     }
 
-    this.updateData = function (bounds, coords) {
+    this.updateData = function(bounds, coords) {
         console.info("[%s] : Updating data within bounds %o", name(), bounds);
         if (getData()) {
             var data = getData()(bounds);
@@ -33,6 +35,14 @@ function genericController() {
         var queryString = fullQuery();
         d3.json(queryString, _updateData(coords));
     };
+
+    this.updateBounds = function(bounds) {
+        dispatch.on("dataUpdated.withBounds", function(update, enter, exit) {
+            _processUpdate(update);
+            _processEnter(enter);
+            _processExitWithBounds(exit);
+        })
+    }
 
     //Toggle Layer
     this.toggleLayer = function(){
@@ -62,51 +72,75 @@ function genericController() {
 
     var quadtree = d3.geom.quadtree()
         .x(function(d) { return d.longitude })
-        .y(function(d) { return d.latitude })
+        .y(function(d) { return d.latitude });
 
     function _updateData(coords) {
         return function(newData) {
             console.info("[%s] : New data, length: %i", name(), newData.length);
 
-            filtered = _filterDataWithCoords(newData, coords);
+            // filtered = _filterDataWithCoords(newData, coords);
+
+            filtered = newData;
 
             // var filtered = newData;
 
             var key = layer().getKey();
             var keyFunction = function(d) { return d[layer().getKey()]; };
 
-            var items = dataList.selectAll("li").data(filtered, keyFunction);
+            var itemsUpdate = dataList.selectAll("li").data(filtered, keyFunction);
 
-            items.enter().append("li")
-                .each(function(d) {
-                    var latLng = [parseFloat(d.latitude), parseFloat(d.longitude)];
-                    // console.log("layer().getIcon() %o", layer().getIcon());
-                    var size = map().getIconSize();
-                    var icon = L.icon({
-                        iconUrl: iconPath(),
-                        iconSize: [size, size],
-                        className: map().dataMarkerClassName()
-                    });
-                    // console.log(iconPath());
-                    var marker = L.marker(latLng, { icon: icon });
-                    var content = layer().getPopup().generatePopupContent(d);
-                    console.log("[" + name() + "_LAYER] : Generating Popup");
-                    marker.bindPopup(content);
-                    layer().addMarker(marker);
-                    this._marker = marker;
-                });
+            var itemsEnter = itemsUpdate.enter().append("li");
 
-            items.exit()
-            .each(function(d) {
-                layer().getLayer().removeLayer(this._marker);
-                d3.select(this).remove();
-            });
+            var itemsExit = itemsUpdate.exit();
+
+            dispatch.dataUpdated(itemsUpdate, itemsEnter, itemsExit);
+
+            console.log(itemsUpdate.size());
         }
     }
 
+    function _processUpdate(selection) {
+        console.log("update %o", selection.size());
+    }
+
+    function _processEnter(selection) {
+        selection.each(function(d) {
+            var latLng = [parseFloat(d.latitude), parseFloat(d.longitude)];
+            // console.log("layer().getIcon() %o", layer().getIcon());
+            var size = map().getIconSize();
+            var icon = L.icon({
+                iconUrl: iconPath(),
+                iconSize: [size, size],
+                className: map().dataMarkerClassName()
+            });
+            // console.log(iconPath());
+            var marker = L.marker(latLng, { icon: icon });
+            var content = layer().getPopup().generatePopupContent(d);
+            console.log("[" + name() + "_LAYER] : Generating Popup");
+            marker.bindPopup(content);
+            layer().addMarker(marker);
+            this._marker = marker;
+        });
+        console.log("enter %o", selection.size());
+    }
+
+    function _processExit(selection) {
+        selection.each(function(d) {
+            layer().getLayer().removeLayer(this._marker);
+            d3.select(this).remove();
+        });
+        console.log("exit %o", selection.size());
+    }
+
+    // function _processExitWithBounds(selection, bounds) {
+    //     selection.each(function(d) {
+    //
+    //     })
+    // }
+
     function _filterDataWithCoords(data, coords) {
         var distToSeg = (new Utility()).distanceToSegment;
-        
+
         var root = quadtree(data);
 
         var filtered = [];

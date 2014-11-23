@@ -146,6 +146,10 @@ function Utility() {
 
     }
 
+    this.getBounds = function(array) {
+        return L.polyline(array).getBounds();
+    }
+
     this.zoomFix = function() {
         var lastScroll = new Date().getTime();
         L.Map.ScrollWheelZoom.prototype._onWheelScroll = function (e) {

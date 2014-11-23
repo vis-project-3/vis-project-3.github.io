@@ -43,17 +43,18 @@ function Route(){
     /******** EVENTS ********/
 
     var dispatch = d3.dispatch(
-        "routesFound", "boundsUpdated", "routeCoordinatesUpdated"
+        "routeFound", "boundsUpdated", "routeCoordinatesUpdated"
     );
     d3.rebind(this, dispatch, "on");
 
     route.on("routesfound", function(e) {
-        dispatch.routesFound.apply(this, arguments);
+        var route = e.routes[0];
+        dispatch.routeFound(route);
     });
 
     var bounds, coords;
-    dispatch.on("routesFound", function(e) {
-        coords = e.routes[0].coordinates;
+    dispatch.on("routeFound.dispatchBounds", function(route) {
+        coords = route.coordinates;
         bounds = getBounds(coords);
         dispatch.boundsUpdated(bounds, coords);
     });

@@ -1,5 +1,7 @@
 function Switchboard(map, route, layerControllers, layerButtons, mapButtons, weather, box) {
 
+    var getBounds = (new Utility()).getBounds;
+
     /**** Set up event logging *****/
 
     [
@@ -7,7 +9,8 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
         "ROUTE_BOUNDS_UPDATED",
         "QUERY_RECT_UPDATED",
         "TOGGLE_LAYER",
-        "ROUTE_COORDS_UPDATED"
+        "ROUTE_COORDS_UPDATED",
+        "ROUTE_UPDATED"
     ]
     .forEach(function(name) {
         amplify.subscribe(name, (new Utility).i(name));
@@ -43,10 +46,19 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
 
     amplify.subscribe("PREFETCH_DATA_WITH_BOUNDS", _updatePrefetchLayers);
 
-    route.on("boundsUpdated", function(bounds) {
-            amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);
-        });
+    amplify.subscribe("ROUTE_UPDATED", function(route) {
+        coords = route.coordinates;
+        bounds = getBounds(coords);
+        amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);
+    })
 
+    route.on("routeFound", function(route) {
+        amplify.publish("ROUTE_UPDATED", route);
+    });
+
+    // route.on("boundsUpdated", function(bounds) {
+    //     amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);
+    // });
 
     map.on("queryRectUpdated", function(bounds) {
         amplify.publish("QUERY_RECT_UPDATED", bounds);
@@ -97,6 +109,7 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
         var markers = getActiveMarkers();
 
         markers.forEach(function(marker) {
+            if (! marker) return;
             var icon = marker.options.icon;
             var _s = map.getIconSize();
             var _newSize = L.point(_s, _s);
