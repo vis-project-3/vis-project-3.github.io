@@ -13,6 +13,7 @@ function genericController() {
     var name = this.name = getSet.bind(this)();
     var getData = this.getData = getSet.bind(this)(undefined);
     var showInChart = this.showInChart = getSet.bind(this)(false);
+    var preFetchData = this.preFetchData = showInChart;
 
     /**** PUBLIC METHODS *****/
     this.layerIsActive = function() {
@@ -58,8 +59,6 @@ function genericController() {
         fragment = new DocumentFragment();
         dataList = d3.select(fragment).append("ul");
     }());
-
-
 
     var quadtree = d3.geom.quadtree()
         .x(function(d) { return d.longitude })

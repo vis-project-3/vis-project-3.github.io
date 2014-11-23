@@ -19,20 +19,20 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
 
     amplify.subscribe("ROUTE_BOUNDS_UPDATED", map.setQueryRect);
 
-    amplify.subscribe("QUERY_RECT_UPDATED", function(bounds, coords) {
+    amplify.subscribe("QUERY_RECT_UPDATED", function(bounds) {
         layerControllers.forEach(function(controller) {
             if (! controller.query()) {
                 console.warn("[%s] : Query undefined.", controller.name());
             } else if (controller.layerIsActive()) {
                 console.info("Layer %s is active.", controller.label());
-                var coords = route.getCoords();
-                controller.updateData(bounds, coords);
+
+                _updateControllerData(controller, bounds);
             }
         })
     });
 
-    route.on("boundsUpdated", function(bounds, coords) {
-            amplify.publish("ROUTE_BOUNDS_UPDATED", bounds, coords);
+    route.on("boundsUpdated", function(bounds) {
+            amplify.publish("ROUTE_BOUNDS_UPDATED", bounds);
         });
 
 
@@ -48,15 +48,20 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
         });
 
     amplify.subscribe("TOGGLE_LAYER", function(controller) {
-        var bounds = map.getQueryRect();
         if (! controller.query()) {
             console.warn("[%s] : Query undefined.", controller.name());
         } else {
             controller.toggleLayer();
-            var coords = route.getCoords();
-            controller.updateData(bounds, coords);
+
+            var bounds = map.getQueryRect();
+            _updateControllerData(controller, bounds);
         }
     });
+
+    function _updateControllerData(controller, bounds) {
+        var coords = route.getCoords();
+        controller.updateData(bounds, coords);
+    }
 
     /*console.log("[EVENT] : SUNRISE_SUNSET");
     amplify.publish("SUNRISE_SUNSET");
