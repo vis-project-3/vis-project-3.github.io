@@ -1,0 +1,55 @@
+<html>
+<head>
+    <link rel="import" href="../include/lib_local.html">
+    <link rel="import" href="../include/components.html">
+</head>
+
+<body>
+
+<script charset="utf-8">
+    var key = "?key=EsqF2kFGe49fzJ5uM9BJDrQpm";
+    var entryPoint = "http://www.ctabustracker.com/bustime/api/v1/";
+    var apiPredictions = "getpredictions"
+    var ctaObject = [];
+
+
+    var generateQuery = function(dataset, parameters){
+        var query = entryPoint + dataset + key + parameters;
+        return 'http://query.yahooapis.com/v1/public/yql?format=json&q=' + encodeURIComponent('select * from xml where url="' + query + '"');
+    };
+
+    var getData = function(url, callback){
+        $.ajax({
+            url: url,
+            success: function(data){
+                callback(data.query.results);
+            }
+        });
+    };
+
+    var getBusPrediction = function(vid) {
+        var query = generateQuery(apiPredictions,"&vid=" + vid);
+        getData(query,printData);
+    };
+
+    var getStopPrediction = function(stpid){
+        var query = generateQuery(apiPredictions, "&stpid=" + stpid);
+        getData(query,printData);
+    };
+
+    var printData = function(data){
+        console.log(data["bustime-response"].prd);
+        d3.select("body").append("p").text(JSON.stringify(data["bustime-response"].prd));
+    };
+
+
+    var test = function() {
+        getStopPrediction("6371");
+        getBusPrediction("1616");
+    };
+
+    test();
+
+</script>
+</body>
+</html>
