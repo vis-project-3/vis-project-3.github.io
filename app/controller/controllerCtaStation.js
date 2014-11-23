@@ -15,29 +15,48 @@ function controllerCtaStation(mapObject) {
     var popup = new popupCtaStation();
     layer.setPopup(popup);
 
+    var activeRoutes = [];
+
     var getData = function(bounds,callback) { // L.latLngBounds
-        d3.json("data/cta.json", function(error, json) {
+        d3.json("data/stops.json", function(error, json) {
+            activeRoutes = [];
             if (error) return console.warn(error);
             var filtered_data = [];
             var data = json;
-            for(var route = 0; route < data.length; route++){
-                for(var stop = 0; stop < data[route].stops.length; stop++){
-                    //console.log(route , stop);
-                    var flag = data[route].stops[stop];
-                    if(flag) {
-                        var lat = parseFloat(data[route].stops[stop].lat);
-                        var lon = parseFloat(data[route].stops[stop].lon);
-                        //console.log(lat,lon);
+            for(var stop = 0; stop < data.length; stop++){
+                //console.log(route , stop);
+                var flag = data[stop];
+                if(flag) {
+                    var lat = parseFloat(data[stop].lat);
+                    var lon = parseFloat(data[stop].lon);
+                    //console.log(lat,lon);
 
-                        if(bounds.contains([lat , lon])){
-                            filtered_data.push(data[route].stops[stop]);
-                        }
+                    if(bounds.contains([lat , lon])){
+                        filtered_data.push(data[stop]);
+                        activeRoutes = arrayUnique(activeRoutes.concat(data[stop].rt));
                     }
                 }
             }
             callback(filtered_data); // array of objects [{ foo: 34 }, ... ]
         });
     };
+
+   var arrayUnique = function(array) {
+        var a = array.concat();
+        for(var i=0; i<a.length; ++i) {
+            for(var j=i+1; j<a.length; ++j) {
+                if(a[i] === a[j])
+                    a.splice(j--, 1);
+            }
+        }
+
+        return a;
+    };
+
+    this.getActiveRoutes = function(){
+        if(activeRoutes.length > 0 )
+            return activeRoutes;
+    }
 
     controller.dataCallback(getData);
 
