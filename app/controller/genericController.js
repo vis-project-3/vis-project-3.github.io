@@ -16,6 +16,7 @@ function genericController() {
     var getData = this.getData = getSet.bind(this)(undefined);
     var showInChart = this.showInChart = getSet.bind(this)(false);
     var preFetchData = this.preFetchData = showInChart;
+    var latitudeAccessor = this.latitudeAccessor = getSet.bind(this)(function(d) { return d.latitude });
 
     /**** PUBLIC METHODS *****/
     this.layerIsActive = function() {
