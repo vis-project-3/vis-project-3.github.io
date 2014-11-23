@@ -42,7 +42,7 @@ function navigationBar(container){
         svg = d3.select(container)
                 .append("svg")
                 .attr("viewBox", "0 0 " + width + " " + height)
-                .attr("preserveAspectRatio", "xMidYMid meet")
+                // .attr("preserveAspectRatio", "xMidYMid meet")
                 .attr("width", "100%")
                 .attr("height", "100%")
 

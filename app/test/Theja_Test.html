@@ -49,7 +49,11 @@
 <script src="../api/streetLightsAllOutDataSet.js"></script>
 <script src="../api/foodInspectionDataSet.js"></script>
 <script src="../api/uberDataSet.js"></script>
+<<<<<<< HEAD
 <script src="../api/fourSquareDataSet.js"></script>
+=======
+<script src="../api/songKickDataSet.js"></script>
+>>>>>>> 504cbfbd233048eeb9f22a0013b0bab5233ee2cd
 
 <script>
     var potholesData = new potholesDataSet();
@@ -61,7 +65,11 @@
     var lightsAllOut = new streetLightsAllOutDataSet();
     var foodInspection = new foodInspectionDataSet();
     var uberDetails = new uberDataSet();
-    var foursquare = new fourSquareDataSet();
+
+    // var foursquare = new fourSquareDataSet();
+
+
+    var songKick = new songKickDataSet();
 
 </script>
 <body>
@@ -83,7 +91,11 @@
     <button class="topcoat-button--cta" onclick="getStationsInfo()">Get Divvy Stations</button>
     <button class="topcoat-button--cta" onclick="getFoodInspectionInfo()">Get Inspection Details</button>
     <button class="topcoat-button--cta" onclick="updateFoodInspectionInfo()">Update Inspection Data</button>
-    <button class="topcoat-button--cta" onclick="getFoursquareDetails()">Foursquare</button>
+
+    <!-- <button class="topcoat-button--cta" onclick="getFoursquareDetails()">Foursquare</button> -->
+
+    <button class="topcoat-button--cta" onclick="getEventDetails()">Get Event Details</button>
+
     <div class="button1">
         <p id="time">ESTIMATING TIME</p>
     </div>
@@ -119,6 +131,14 @@
         //uberDetails.getAvailableUberProducts(fromCoordinates,callBack);
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////SongKick API////////////////////////////////////////////////////////
+    function getEventDetails(){
+        var latitude = 41.8;
+        var longitude = -87.8;
+        songKick.getEvents(latitude,longitude,callBack);
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function getPotHolesInfo(){
         var requiredColumns = {
             0: 'creation_date',
