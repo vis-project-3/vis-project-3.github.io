@@ -50,13 +50,18 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
 
     amplify.subscribe("QUERY_RECT_BOUNDS_UPDATED", _updateActiveLayers);
 
+    var _bounds;
+    amplify.subscribe("QUERY_RECT_BOUNDS_UPDATED", function(bounds) {
+        _bounds = bounds;
+    })
+
     amplify.subscribe("PREFETCH_DATA_WITH_BOUNDS", _updatePrefetchLayers);
 
     function _updateActiveLayers(bounds) {
         layerControllers.forEach(function(controller) {
             if (! controller.query() && !controller.dataCallback()) {
                 console.warn("[%s] : Query undefined.", controller.name());
-            } else if (controller.layerIsActive()) {
+            } else if (true) { //controller.layerIsActive()) {
                 console.info("Layer %s is active.", controller.label());
 
                 _updateControllerData(controller, bounds);
@@ -160,6 +165,16 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
         console.log("[EVENT] : VIEW_STREET_MAP");
         amplify.publish("VIEW_STREET_MAP");
     });
+
+    /********** ACTIVE ETTORE **********/
+
+    window.setInterval(function() {
+        layerControllers.forEach(function(controller) {
+            if (controller.activeUpdate() && controller.layerIsActive()) {
+                _updateControllerData(controller, _bounds);
+            }
+        })
+    }, 20000)
 
     /********* WEATHER **********/
 

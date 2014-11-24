@@ -88,7 +88,7 @@ function controllerCtaBus(mapObject) {
 
     }
 
-
+    controller.activeUpdate(true);
 
     controller.updateDataHook(updateDataHook);
 

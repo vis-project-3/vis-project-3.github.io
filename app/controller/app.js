@@ -57,7 +57,9 @@ function App(){
 
     /****** EVENT HANDLING *******/
 
-    var switchboard = new Switchboard(map, route, controllers, layerButtons, mapButtons, weather, box);
+    var switchboard = new Switchboard(
+        map, route, controllers, layerButtons, mapButtons, weather, box
+    );
 
 
     /**** INITIAL APP STATE *****/

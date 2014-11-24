@@ -3,7 +3,7 @@ function genericController() {
     var dispatch = d3.dispatch(
         "dataUpdated", "coordsUpdated", "boundsUpdated",
         "newUpdateSelection", "newEnterSelection", "newUpdateEnterSelection",
-        "newExitSelection"
+        "newExitSelection", "markersUpdated"
     );
 
     /*** SETTERS AND GETTERS ***/
@@ -24,12 +24,13 @@ function genericController() {
         getSet.bind(this)(function(d) { return d.latitude; });
     var longitudeAccessor = this.longitudeAccessor =
         getSet.bind(this)(function(d) { return d.longitude; });
-
     var updateDataHook = this.updateDataHook = getSet.bind(this)(undefined);
-
     var removeData = this.removeData = getSet.bind(this)(true);
-
     var removalCondition = this.removalCondition = getSet.bind(this)();
+
+    var activeUpdate = this.activeUpdate = getSet.bind(this)(false);
+
+    var activeMarkers = this.activeMarkers = getSet.bind(this)([]);
 
     var quadtree = d3.geom.quadtree()
         .x(function(d) { return longitudeAccessor()(d) })
@@ -191,12 +192,16 @@ function genericController() {
     function _addMarkers(selection) {
         selection.each(function(d) {
             layer().addMarker(this._marker);
+            this._active = true;
+            dispatch.markersUpdated();
         })
     }
 
     function _removeMarkers(selection) {
         selection.each(function(d) {
             layer().getLayer().removeLayer(this._marker);
+            this._active = false;
+            dispatch.markersUpdated();
         })
     }
 
@@ -293,6 +298,13 @@ function genericController() {
         }
         else map().addLayer(temp);
     };
+
+    this.getActiveMarkers = function() {
+        var filtered = d3.select(fragment).selectAll("li").filter(function(d) {
+            return this._active;
+        })
+        return filtered;
+    }
 
     this.getMarkers = function() {
         var markers = [];
