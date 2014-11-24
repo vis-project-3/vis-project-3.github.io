@@ -22,7 +22,6 @@ function controllerFourSquare(mapObject) {
         var getData = function(bounds, callback) { // L.latLngBounds
 
             var coords = bounds.getCenter();
-            console.log(coords);
             api.getTrendingVenues([parseFloat(coords.lat),parseFloat(coords.lng)], callback);
         };
 
