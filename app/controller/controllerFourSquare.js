@@ -20,13 +20,16 @@ function controllerFourSquare(mapObject) {
         var api = new fourSquareDataSet();
 
         var getData = function(bounds, callback) { // L.latLngBounds
-            api.getTrendingVenues(bounds.getCenter(), callback);
+
+            var coords = bounds.getCenter();
+            console.log(coords);
+            api.getTrendingVenues([parseFloat(coords.lat),parseFloat(coords.lng)], callback);
         };
 
         controller.dataCallback(getData);
 
-        controller.latitudeAccessor(function(d){return d.lat});
-        controller.longitudeAccessor(function(d){return d.lon});
+        controller.latitudeAccessor(function(d){return d.latitude});
+        controller.longitudeAccessor(function(d){return d.longitude});
 
         this.get = function() { return controller };
 

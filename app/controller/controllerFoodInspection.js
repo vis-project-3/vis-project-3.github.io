@@ -20,7 +20,8 @@ function controllerFoodInspection(mapObject) {
 
         return chicagoQuery()
             .setEndPoint("4ijn-s7e5.json?")
-            .where("result = 'fail'")
+            .where("results = 'fail'")
+            .dateColumn("inspection_date")
             .fromDate(fromDate);
     }
 
@@ -29,3 +30,6 @@ function controllerFoodInspection(mapObject) {
     this.get = function() { return controller };
 
 }
+
+
+inspection_date;
