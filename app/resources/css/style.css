@@ -140,7 +140,7 @@ body{
 /*     Graph styles     */
 
 #graphs svg text.local-text,  #graphs svg text.chicago-text {
-    font-family: Helvetica, 'Open Sans', Sans-serif;
+    font-family: 'Open Sans', Sans-serif;
 }
 
 #graphs svg text.graph-header {
