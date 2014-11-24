@@ -29,10 +29,9 @@ function genericController() {
     var updateDataHook = this.updateDataHook = getSet.bind(this)(undefined);
     var removeData = this.removeData = getSet.bind(this)(true);
     var removalCondition = this.removalCondition = getSet.bind(this)();
-
     var activeUpdate = this.activeUpdate = getSet.bind(this)(false);
-
     var activeMarkers = this.activeMarkers = getSet.bind(this)([]);
+    var dateAccessor = this.dateAccessor = getSet.bind(this)();
 
     d3.rebind(this, dispatch, "on");
 
