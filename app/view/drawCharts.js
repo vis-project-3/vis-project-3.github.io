@@ -22,7 +22,7 @@ function drawCharts(container, map, graphControllers, customControl){
             top: "20vh"
         })
         var graphTitles = [
-            { text: "Along Your Route", imagePath: "", id: "local" },
+            // { text: "Along Your Route", imagePath: "", id: "local" },
             { text: "Chicago", imagePath: "resources/icons/icon-chicago-flag.svg", id: "chicago" }
         ]
         // var width = 450, height = 300, padding = 15,
@@ -34,7 +34,7 @@ function drawCharts(container, map, graphControllers, customControl){
                 id: function(d) { return d.id },
                 viewBox: "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom),
                 preserveAspectRatio: "xMidYMid meet",
-                width: "100%", height: "50%"
+                width: "100%", height: "100%"
             })
             .style({ border: "1px solid black"});
 
