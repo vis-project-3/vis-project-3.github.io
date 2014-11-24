@@ -1,0 +1,29 @@
+<html>
+<head>
+    <link rel="import" href="../include/lib_local.html">
+    <link rel="import" href="../include/components.html">
+    <script src="../api/yelpDataSet.js"></script>
+</head>
+
+<body>
+
+<script charset="utf-8">
+    var api = new yelpDataSet();
+
+    var southWest = L.latLng(40.712, -74.227),
+        northEast = L.latLng(40.774, -74.125),
+        bounds = L.latLngBounds(southWest, northEast);
+
+
+    var test = function() {
+       api.getData(bounds,callback);
+    };
+
+    var callback = function(){};
+
+
+    test();
+
+</script>
+</body>
+</html>
