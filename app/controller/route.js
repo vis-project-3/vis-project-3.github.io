@@ -2,7 +2,7 @@
 function Route(){
 
     /******* SETUP *********/
-    var r = 15;
+    var r = 20;
 
     var iconHtml = d3.select(new DocumentFragment())
         .append("div")
