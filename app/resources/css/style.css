@@ -5,6 +5,11 @@ g.bar line {
     stroke: black;
 }
 
+g.axis path, g.axis g.tick line {
+    fill: none;
+    stroke: #444;
+}
+
 body{
     margin:0;
 }

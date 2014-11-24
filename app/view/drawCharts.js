@@ -117,8 +117,14 @@ function drawCharts(container, map, graphControllers, customControl){
             .domain(d3.range(data.length))
             .rangeBands([0, height]);
 
+        var axis = d3.svg.axis().scale(x).orient("top")
+            .ticks(10, ",.1s");
+
         // console.log("UPDATED", data)
         var barchart = graphs.selectAll("svg").select("g.barchart");
+        var axisG = barchart.selectAll("g.axis").data([1]);
+        axisG.enter().append("g").attr("class", "axis");
+        axisG.call(axis);
         var bar = barchart.selectAll("g.bar").data(data);
         bar.enter().append("g").attr("class", "bar")
             .attr("transform", function(d, i) { return translate(0, y(i)) })
@@ -129,16 +135,20 @@ function drawCharts(container, map, graphControllers, customControl){
 
                 var routeG = barG.append("g").attr("class", "route");
                 routeG.append("rect").attr({ height: y.rangeBand() })
+                    .style({ fill: "#E74C3C", "fill-opacity": 0.8 });
+                routeG.append("image")
+                    .attr("xlink:href", function(d) { return d.controller.iconPath(); })
+                    .attr("width", y.rangeBand() - 20)
+                    .attr("height", y.rangeBand() - 20)
+                    .attr("y", 10);
             })
         bar.select("g.city").attr("transform", function(d) { return translate(x(d.city), 0); });
         bar.select("g.city text").text(function(d) { return d.city });
         bar.select("g.route rect").attr({
-            x: function(d) {
-                console.log("f")
-                return x(d.route)
-            },
+            x: function(d) { return x(d.route) },
             width: function(d) { return Math.abs(x(d.route) - x(0)) }
         })
+        bar.select("g.route image").attr({ x: function(d) { return x(d.route) - y.rangeBand() + 10 }})
     })
 
     dispatch.on("dataUpdated", function(data) {
