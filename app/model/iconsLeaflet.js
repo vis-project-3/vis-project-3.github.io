@@ -10,6 +10,26 @@ var getIcon = function (kind) {
                     iconUrl: 'resources/icons/icon-bus.svg',
                     iconSize: [50, 50]
                 });
+            case "cta_bus_north" :
+                return L.icon({
+                    iconUrl: 'resources/icons/icon-bus-north.svg',
+                    iconSize: [50, 50]
+                });
+            case "cta_bus_south" :
+                return L.icon({
+                    iconUrl: 'resources/icons/icon-bus-south.svg',
+                    iconSize: [50, 50]
+                });
+            case "cta_bus_west" :
+                return L.icon({
+                    iconUrl: 'resources/icons/icon-bus-west.svg',
+                    iconSize: [50, 50]
+                });
+            case "cta_bus_east" :
+                return L.icon({
+                    iconUrl: 'resources/icons/icon-bus-east.svg',
+                    iconSize: [50, 50]
+                });
             case "cta_station" :
                 return L.icon({
                     iconUrl: 'resources/icons/icon-bus-station.svg',

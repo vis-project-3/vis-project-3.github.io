@@ -17,8 +17,10 @@ function controllerCtaBus(mapObject) {
         var popup = new popupCtaBus();
         layer.setPopup(popup);
 
+        var api = new ctaDataSet();
+
         var getData = function(bounds, route, callback) { // L.latLngBounds
-            getBusByRoute(route, storeBusResults(bounds,callback))
+            api.getBusByRoute(route, storeBusResults(bounds,callback))
         };
 
         /*var storeBusResults = function(bounds,data,callback) {
