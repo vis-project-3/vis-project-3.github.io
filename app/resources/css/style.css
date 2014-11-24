@@ -1,5 +1,15 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
 
+g.bar line {
+    fill: none;
+    stroke: black;
+}
+
+g.axis path, g.axis g.tick line {
+    fill: none;
+    stroke: #444;
+}
+
 body{
     margin:0;
 }
@@ -130,7 +140,7 @@ body{
 /*     Graph styles     */
 
 #graphs svg text.local-text,  #graphs svg text.chicago-text {
-    font-family: Helvetica, 'Open Sans', Sans-serif;
+    font-family: 'Open Sans', Sans-serif;
 }
 
 #graphs svg text.graph-header {

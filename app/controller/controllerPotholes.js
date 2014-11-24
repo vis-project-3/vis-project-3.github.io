@@ -15,6 +15,8 @@ function controllerPotholes(mapObject) {
 
     controller.layer(layer);
 
+    controller.endPoint("7as2-ds3y.json?");
+
     var query = function() {
         var fromDate = d3.time.day.offset(new Date(), -30);
 

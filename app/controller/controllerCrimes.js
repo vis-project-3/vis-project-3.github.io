@@ -15,6 +15,8 @@ function controllerCrimes(mapObject) {
 
     controller.layer(layer);
 
+    controller.endPoint("ijzp-q8t2.json?");
+
     var query = function() {
         var fromDate = d3.time.day.offset(new Date(), -30);
 

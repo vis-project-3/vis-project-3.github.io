@@ -1,280 +1,152 @@
-function drawCharts(container){
-        var svg;
-        var width = 450;
-        var height = 600;
-        var opacity = "0.65";
-        var localChartX, localChartY;
-        var chicagoChartX, chicagoChartY;
-        var padding = 15;
-        var headerHeight = 35;
-        var barHeight;
-        var iconSize;
-        var maxRange;
+function drawCharts(container, map, graphControllers, customControl){
 
+    var width = 600, height = 300, margin = {top: 120, bottom: 15, left: 15, right: 15 };
+
+    var routeFill = "#E74C3C";
+
+    var control = new customControl(addGraphs, { position: 'topright' });
+
+    map.addControl( control );
+
+    var selection = d3.select(control._container);
+    var graphs;
+
+    this.getSelection = function() {
+        return selection;
+    };
+
+    function addGraphs(selection) {
+        selection.style({
+            width: "30vw",
+            height: "40vh",
+            top: "20vh"
+        })
         var graphTitles = [
-            {
-                text: "Along Your Route",
-                imagePath: ""
-            },
-            {
-                text: "Chicago",
-                imagePath: "resources/icons/icon-chicago-flag.svg"
-            }
+            // { text: "Along Your Route", imagePath: "", id: "local" },
+            { text: "Chicago Total", imagePath: "resources/icons/icon-chicago-flag.svg", id: "chicago" }
         ]
 
-        var localData = [
-            {
-                value: "13",
-                imagePath: "resources/icons/icon-light.svg",
-                class: "lights-out",
-                id: "selected-lights-out"
-            },
-            {
-                value: "15",
-                imagePath: "resources/icons/icon-pot-hole.svg",
-                class: "pot-hole",
-                id: "selected-pot-hole"
-            },
-                        {
-                value: "7",
-                imagePath: "resources/icons/icon-crime.svg",
-                class: "crime",
-                id: "selected-crime"
-            },
-            {
-                value: "4",
-                imagePath: "resources/icons/icon-abandoned-car.svg",
-                class: "abandoned-car",
-                id: "selected-abandoned-car"
-            }
-        ];
+        var svg = selection.selectAll("svg").data(graphTitles);
+        svg.enter().append("svg")
+            .attr({
+                id: function(d) { return d.id },
+                viewBox: "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom),
+                preserveAspectRatio: "xMidYMid meet",
+                width: "100%", height: "100%"
+            });
 
-        var chicagoData = [
-            {
-                value: "54",
-                imagePath: "resources/icons/icon-light.svg",
-                class: "lights-out",
-                id: "chicago-lights-out"
-            },
-            {
-                value: "42",
-                imagePath: "resources/icons/icon-pot-hole.svg",
-                class: "pot-hole",
-                id: "chicago-pot-hole"
-            },
-                        {
-                value: "46",
-                imagePath: "resources/icons/icon-crime.svg",
-                class: "crime",
-                id: "chicago-crime"
-            },
-            {
-                value: "35",
-                imagePath: "resources/icons/icon-abandoned-car.svg",
-                class: "abandoned-car",
-                id: "chicago-abandoned-car"
-            }
-        ];
+        svg.append("g").attr("class", "title")
+            .attr({ transform: translate(0, margin.top - 50) })
+            .append("text").text(function(d) { return d.text })
+            .style({ "font-size": "1.5vh" })
 
+        svg.append("g")
+            .attr({ transform: translate(width, margin.top - 50) })
+            .append("text").text("Along This Route")
+            .attr({ "text-anchor": "end" })
+            .style({ fill: routeFill, "font-size": "1.5vh" })
 
-        /******** Initializer  ******/
+        svg.append("g").attr("class", "barchart")
+            .attr({ transform: translate(margin.left, margin.top)});
 
-        var init = function(){
+        var localSvg = svg.select("#local"),
+            chicagoSvg = svg.select("#chicago");
 
-            // Max value of the DV
-            maxRange = computeMaxRange();
-            barHeight = ((( height / 2 - ( 2 * padding + headerHeight)) / localData.length) - padding );
-
-            iconSize = Math.floor( 0.8 * barHeight );
-
-            // Set the vertical scale
-            localChartY = d3.   scale
-                                .linear()
-                                .domain([0, localData.length])
-                                .range([ 2 * padding + headerHeight, ( height / 2 ) - padding]);
-
-            chicagoChartY = d3    .scale
-                                .linear()
-                                .domain([0, chicagoData.length])
-                                .range([ 2 * padding + headerHeight, ( height / 2 ) - padding]);
-                                // .domain([height/2 + headerHeight + 2 * padding, height - padding]);
-
-            // yScaleZoom =  d3 	.scale
-            //                     .linear()
-            //                     .domain([0,2])
-            //                     .range([0.1 * height, 0.9 * height]);
-
-            svg = d3    .select(container)
-                        .append("svg")
-                        .attr("viewBox","0 0 " + width + " " + height)
-                        .attr("preserveAspectRatio", "xMidYMid meet")
-                        .attr("width", "100%")
-                        .attr("height", "100%");
-
-            svg     .append("polygon")
-                    .attr("points", "0," + (height/2) + " " + width + "," + (height/2) + " " + width + "," + height + " 0," + height)
-                    .attr("opacity", opacity)
-                    .attr("pointer-events", "none");
-
-            svg .selectAll(".local-rect")
-                .data(localData)
-                .enter()
-                .append("rect")
-                .attr("class", function(d) {
-                    return "local-rect " + d.class;
-                })
-                .attr("id",function(d){return d.id;})
-                .attr("x", function(d,i){
-                    return padding;})
-                .attr("y", function(d, i){
-                    return localChartY(i);
-                })
-                .attr("width", function(d) {
-                    return barWidth(d.value);
-                })
-                .attr("height",  (( height / 2 - ( 2 * padding + headerHeight)) / localData.length) - padding )
-                .attr("fill", "#E74C3C");
-
-            svg .selectAll(".chicago-rect")
-                .data(chicagoData)
-                .enter()
-                .append("rect")
-                .attr("class", function(d) {
-                    return "local-rect " + d.class;
-                })
-                .attr("id",function(d){return d.id;})
-                .attr("x", function(d,i){
-                    return padding;})
-                .attr("y", function(d, i) {
-                    return ( height / 2 ) + chicagoChartY(i);
-                })
-                .attr("width", function(d) {
-                    return barWidth(d.value)})
-                .attr("height", (( height / 2 - ( 2 * padding + headerHeight)) / localData.length) - padding)
-                .attr("fill", "#E74C3C");
-
-            // Draws Images
-            svg .selectAll("image.local")
-                .data(localData)
-                .enter()
-                .append("image")
-                .attr("class", function(d) { return "local-icon " + d.class})
-                .attr("xlink:href", function(d){return d.imagePath;})
-                .attr("x", function(d) {
-                    return 2 * padding + barWidth(d.value);
-                })
-                .attr("y", function(d, i) {
-                    return localChartY(i);
-                })
-                .attr("width", iconSize)
-                .attr("height", iconSize);
-
-            svg .selectAll("image.chicago")
-                .data(chicagoData)
-                .enter()
-                .append("image")
-                .attr("class", function(d) { return "local-icon " + d.class})
-                .attr("xlink:href", function(d){return d.imagePath;})
-                .attr("x", function(d) {
-                    return 2 * padding + barWidth(d.value);
-                })
-                .attr("y", function(d, i) {
-                    return ( height / 2 ) + chicagoChartY(i);
-                })
-                .attr("width", iconSize)
-                .attr("height", iconSize);
-
-            svg .selectAll("text.local-text")
-                .data(localData)
-                .enter()
-                .append("text")
-                .attr("class", function(d) { return "local-text " + d.class})
-                .text( function(d) { return d.value })
-                .attr("text-anchor", "end")
-                .attr("x", function(d) {
-                    return barWidth(d.value) + 0.5 * padding;
-                })
-                .attr("y", function(d, i) {
-                    return localChartY(i) + 0.6 * barHeight;
-                })
-                .attr("fill", "#ECF0F1")
-                .attr("pointer-events", "none");
-
-            svg .selectAll("text.chicago-text")
-                .data(chicagoData)
-                .enter()
-                .append("text")
-                .attr("class", function(d) { return "chicago-text " + d.class})
-                .text( function(d) { return d.value })
-                .attr("text-anchor", "end")
-                .attr("x", function(d) {
-                    return barWidth(d.value) + 0.5 * padding;
-                })
-                .attr("y", function(d, i) {
-                    return ( height / 2 ) + localChartY(i) + 0.6 * barHeight;
-                })
-                .attr("fill", "#ECF0F1")
-                .attr("pointer-events", "none");
-
-            svg .selectAll("text.graph-header")
-                .data(graphTitles)
-                .enter()
-                .append("text")
-                .attr("class", "graph-header")
-                .text( function(d) { return d.text; })
-                .attr("text-anchor", "left")
-                .attr("x", 2 * padding)
-                .attr("y", function(d,i) {
-                    return padding + 0.6 * headerHeight + i * ( height / (graphTitles.length));
-                });
-
-            svg .append("image")
-                .attr("xlink:href", "resources/icons/icon-chicago-flag.svg")
-                .attr("x", function(d) {
-                    return 0.85 * width;
-                })
-                .attr("y", function(d, i) {
-                    return ( height / 2 ) + 0.25 * headerHeight;
-                })
-                .attr("width", iconSize)
-                .attr("height", iconSize);
-
-
-        }();
-
-    function computeMaxRange() {
-        var tempMax = 0;
-        for (var i=0; i<localData.length; i++)
-        {
-            if (localData[i].value > tempMax){
-                tempMax = +localData[i].value;
-            }
-            else {
-                continue;
-            }
-        }
-
-        for (var i=0; i<chicagoData.length; i++)
-        {
-            if (chicagoData[i].value > tempMax)
-            {
-                tempMax = +chicagoData[i].value;
-            }
-            else {
-                continue;
-            }
-        }
-
-        return tempMax;
+        graphs = selection;
     }
 
-    function barWidth(value) {
-        var ratio = ( +value / +maxRange);
+    var dispatch = d3.dispatch("dataUpdated", "requestComplete", "newData");
 
-        return Math.floor( ratio * ( width - 3 * padding - iconSize ) );
-    }
+    var data = graphControllers.map(function(controller) {
+        return { name: controller.name(), city: 0, route: 0, controller: controller };
+    });
 
-    /**** jQuery *****/
+    // dispatch
+
+    var requests = data.map(function(obj) {
+        var getQuery = obj.controller.query()();
+        var key = obj.controller.layer().getKey();
+
+        getQuery.addParam("$select=count(" + key + ")");
+
+        return d3.json(getQuery())
+            .on("load", function(d) {
+                obj.city = parseInt(d3.values(d[0])[0], 10);
+                dispatch.requestComplete();
+            })
+            .get();
+    })
+
+    dispatch.on("requestComplete", function() {
+        requests.pop();
+        if (requests.length === 0) dispatch.dataUpdated(data);
+    })
+
+    data.forEach(function(obj) {
+        obj.controller.on("markersUpdated", function() {
+            obj.route = obj.controller.getActiveMarkersCount();
+            dispatch.newData(data);
+        })
+    })
+
+    dispatch.on("newData", function(data) {
+        var max = d3.max(data, function(d) { return d.city });
+        var x = d3.scale.log()
+            .domain([1, max])
+            .range([width, 0])
+            .clamp(true);
+
+        var y = d3.scale.ordinal()
+            .domain(d3.range(data.length))
+            .rangeBands([0, height]);
+
+        var axis = d3.svg.axis().scale(x).orient("top")
+            .ticks(5, ",.1s");
+
+        // console.log("UPDATED", data)
+        var barchart = graphs.selectAll("svg").select("g.barchart");
+        var axisG = barchart.selectAll("g.axis").data([1]);
+        axisG.enter().append("g").attr("class", "axis");
+        axisG.call(axis);
+        var bar = barchart.selectAll("g.bar").data(data);
+        bar.enter().append("g").attr("class", "bar")
+            .attr("transform", function(d, i) { return translate(0, y(i)) })
+            .call(function(barG) {
+                var cityG = barG.append("g").attr("class", "city");
+                cityG.append("line").attr({ y2: y.rangeBand() });
+                cityG.append("text").attr({ y: y.rangeBand() / 2, x: 10 })
+                    .style({ "font-size": "1.5vh"})
+
+                var routeG = barG.append("g").attr("class", "route");
+                routeG.append("rect").attr({ height: y.rangeBand() })
+                    .style({ fill: "#E74C3C", "fill-opacity": 0.8 });
+                routeG.append("image")
+                    .attr("xlink:href", function(d) { return d.controller.iconPath(); })
+                    .attr("width", y.rangeBand() - 20)
+                    .attr("height", y.rangeBand() - 20)
+                    .attr("y", 10);
+                routeG.append("text")
+                    .attr({ y: y.rangeBand() / 2, "text-anchor": "left" })
+                    .style({
+                        fill: "#ECF0F1",
+                        "font-family": "'Open Sans', Sans-serif",
+                        "font-size": "1.5vh"
+                    })
+            })
+        bar.select("g.city").attr("transform", function(d) { return translate(x(d.city), 0); });
+        bar.select("g.city text").text(function(d) { return d.city });
+        bar.select("g.route rect").attr({
+            x: function(d) { return x(d.route) - 10 },
+            width: function(d) { return Math.abs(x(d.route) - x(0)) + 10 }
+        })
+        bar.select("g.route image")
+            .attr({ x: function(d) { return x(d.route) - y.rangeBand() }});
+        bar.select("g.route text")
+            .text(function(d) { return d.route })
+            .attr({ x: function(d) { return x(d.route); }})
+    })
+
 
 }
 
+function translate(x, y) { return "translate(" + x + "," + y + ")" }

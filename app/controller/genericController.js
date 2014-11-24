@@ -10,6 +10,8 @@ function genericController() {
 
     var getSet = (new Utility()).getSet;
 
+    var endPoint = this.endPoint = getSet.bind(this)();
+
     var label = this.label = getSet.bind(this)();
     var id = this.id = getSet.bind(this)();
     var iconPath = this.iconPath = getSet.bind(this)();
@@ -31,6 +33,8 @@ function genericController() {
     var activeUpdate = this.activeUpdate = getSet.bind(this)(false);
 
     var activeMarkers = this.activeMarkers = getSet.bind(this)([]);
+
+    d3.rebind(this, dispatch, "on");
 
     var quadtree = d3.geom.quadtree()
         .x(function(d) { return longitudeAccessor()(d) })
@@ -117,6 +121,7 @@ function genericController() {
         dispatch.on("newUpdateEnterSelection", function(updateEnter) {
             // console.log("MARKER PHASE: New updateEnter selection. Length %i. Add markers.", updateEnter.size());
             _addMarkers(updateEnter);
+            _setRouteDataCount(updateEnter.size());
             dispatch.on("newUpdateEnterSelection", oldUpdateEnter);
         });
 
@@ -132,6 +137,12 @@ function genericController() {
 
     }
 
+    function _setRouteDataCount(count) {
+        this.getRouteDataCount = function() {
+            return count;
+        }
+    }
+
     var fragment, dataList;
     (function initialize() {
         fragment = new DocumentFragment();
@@ -140,10 +151,10 @@ function genericController() {
 
     function _updateData(newData) {
 
-            console.info("[%s] : New data, length: %i", name(), newData.length);
+            // console.info("[%s] : New data, length: %i", name(), newData.length);
 
             if (newData.length == 0) {
-                console.info("[%s] : Data length zero.", name());
+                // console.info("[%s] : Data length zero.", name());
                 return;
             }
 
@@ -162,7 +173,7 @@ function genericController() {
     }
 
     function _updateMarkers(selection) {
-        console.log("New update selection. Length: %i. Update markers.", selection.size());
+        // console.log("New update selection. Length: %i. Update markers.", selection.size());
         selection.each(function(d) {
             var latLng = [parseFloat(latitudeAccessor()(d)), parseFloat(longitudeAccessor()(d))];
             this._marker.setLatLng(latLng);
@@ -183,7 +194,7 @@ function genericController() {
             // console.log(iconPath());
             var marker = L.marker(latLng, { icon: icon });
             var content = layer().getPopup().generatePopupContent(d);
-            console.log("[" + name() + "_LAYER] : Generating Popup");
+            // console.log("[" + name() + "_LAYER] : Generating Popup");
             marker.bindPopup(content);
             this._marker = marker;
         });
@@ -193,16 +204,16 @@ function genericController() {
         selection.each(function(d) {
             layer().addMarker(this._marker);
             this._active = true;
-            dispatch.markersUpdated();
         })
+        dispatch.markersUpdated();
     }
 
     function _removeMarkers(selection) {
         selection.each(function(d) {
             layer().getLayer().removeLayer(this._marker);
             this._active = false;
-            dispatch.markersUpdated();
         })
+        dispatch.markersUpdated();
     }
 
     function _removeDataIfInBounds(selection, bounds) {
@@ -299,11 +310,11 @@ function genericController() {
         else map().addLayer(temp);
     };
 
-    this.getActiveMarkers = function() {
+    this.getActiveMarkersCount = function() {
         var filtered = d3.select(fragment).selectAll("li").filter(function(d) {
             return this._active;
         })
-        return filtered;
+        return filtered.size();
     }
 
     this.getMarkers = function() {
