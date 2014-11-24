@@ -57,7 +57,7 @@ function buttonsLayer(map, controllers, customControl){
             .attr({
                 "xlink:href": function(d) { return d.iconPath(); },
                 x: 2 * padding,
-                y: 0.25 * buttonHeight,
+                y: 0.15 * buttonHeight,
                 width: iconSize, height: iconSize,
                 "pointer-events": "none"
             });

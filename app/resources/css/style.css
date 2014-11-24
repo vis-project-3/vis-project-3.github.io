@@ -45,7 +45,8 @@ body{
 } */
 
 #layer svg rect.selected {
-    fill: #6699CC;
+    fill: #69c;
+    fill-opacity: 0.6;
 }
 
 #layer g.button text {
