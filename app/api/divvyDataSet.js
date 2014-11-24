@@ -19,11 +19,9 @@ function divvyDataSet() {
     };
 
     var getData = function (url, callback) {
-        console.log(url);
         $.ajax({
             url: url,
             success: function (data) {
-                console.log(data);
                 callback(data.query.results.json.stationBeanList);
             }
         });
