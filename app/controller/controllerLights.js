@@ -17,6 +17,8 @@ function controllerLights(mapObject) {
 
     controller.endPoint("3aav-uy2v.json?");
 
+    controller.preFetchData(true);
+
     var query = function() {
         var fromDate = d3.time.day.offset(new Date(), -30);
 

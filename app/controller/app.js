@@ -39,11 +39,8 @@ function App(){
     var foursquare = (new controllerFourSquare(map)).get();
     var uber = (new controllerUber(map)).get();
 
-
     ctaBus.getRoutesData(ctaStationObj.getData);
     ctaBus.getActiveRoutes(ctaStationObj.getActiveRoutes);
-
-
 
     var layerControllers = [
          ctaStation, ctaBus, divvy, crimes, lights, potholes, vehicles,food, foursquare, uber
@@ -52,6 +49,8 @@ function App(){
     var graphControllers = [
         crimes, lights, potholes, vehicles
     ]
+
+    window.controllers = layerControllers;
 
     /***** UI COMPONENTS *******/
 

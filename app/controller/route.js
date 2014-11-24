@@ -2,19 +2,21 @@
 function Route(){
 
     /******* SETUP *********/
-    var r = 20;
+    var r = 30;
 
     var iconHtml = d3.select(new DocumentFragment())
         .append("div")
         .call(function(div) {
             div.append("svg").attr({ width: r, height: r})
-            .append("circle").attr({ r: r / 2, cy: r / 2, cx: r / 2 });
+            .append("circle").attr({ r: r / 2, cy: r / 2, cx: r / 2 })
+                .style({ "fill-opacity": 0.4 })
         })
         .node().innerHTML;
 
     var myIcon = L.divIcon({
         className: 'route-waypoint-icon',
         html: iconHtml,
+        iconAnchor: L.point(r/2, r/2),
         size: r
     });
 
@@ -22,9 +24,6 @@ function Route(){
         waypointIcon: function(i, n) { return myIcon; },
         geocoder: L.Control.Geocoder.nominatim()
     })
-    // .on("waypointschanged", function(e) {
-    //     console.log(e);
-    // })
 
     var route = L.Routing.control({
         plan: plan,

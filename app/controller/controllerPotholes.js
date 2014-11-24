@@ -17,6 +17,10 @@ function controllerPotholes(mapObject) {
 
     controller.endPoint("7as2-ds3y.json?");
 
+    controller.preFetchData(true);
+
+    controller.dateAccessor(function(d) { return new Date(d.creation_date); })
+
     var query = function() {
         var fromDate = d3.time.day.offset(new Date(), -30);
 

@@ -192,6 +192,11 @@ function genericController() {
             });
             // console.log(iconPath());
             var marker = L.marker(latLng, { icon: icon });
+            if (dateAccessor()) {
+                var today = d3.time.day(new Date());
+                var created = d3.time.day(dateAccessor()(d));
+                var difference = today - created;
+            }
             var content = layer().getPopup().generatePopupContent(d);
             // console.log("[" + name() + "_LAYER] : Generating Popup");
             marker.bindPopup(content);
@@ -315,6 +320,8 @@ function genericController() {
         })
         return filtered.size();
     }
+
+    this.getFragment = function() { return fragment; }
 
     this.getMarkers = function() {
         var markers = [];

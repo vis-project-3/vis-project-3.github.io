@@ -50,6 +50,8 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
 
     amplify.subscribe("QUERY_RECT_BOUNDS_UPDATED", _updateActiveLayers);
 
+    amplify.subscribe("QUERY_RECT_BOUNDS_UPDATED", _updatePrefetchLayers);
+
     var _bounds;
     amplify.subscribe("QUERY_RECT_BOUNDS_UPDATED", function(bounds) {
         _bounds = bounds;
@@ -61,7 +63,7 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
         layerControllers.forEach(function(controller) {
             if (! controller.query() && !controller.dataCallback()) {
                 console.warn("[%s] : Query undefined.", controller.name());
-            } else if (true) { //controller.layerIsActive()) {
+            } else if (controller.layerIsActive()) {
                 console.info("Layer %s is active.", controller.label());
 
                 _updateControllerData(controller, bounds);
@@ -72,8 +74,8 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
     function _updatePrefetchLayers(bounds) {
         layerControllers.filter(function(c) {
             return c.preFetchData();
-        }).forEach(function(d) {
-            console.log("prefetch: ", d.name());
+        }).forEach(function(controller) {
+            _updateControllerData(controller, bounds);
         })
     }
 
