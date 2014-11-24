@@ -21,11 +21,14 @@ function songKickDataSet(){
     this.getModifiedData = function(unformattedData) {
         var formattedContent = [];
         for(var index = 0; index < unformattedData.length; index++){
+
             var formattedData = {
+                id : unformattedData[index].id,
                 eventType: unformattedData[index].type,
                 name: unformattedData[index].displayName,
                 latitude: unformattedData[index].location.lat,
-                longitude: unformattedData[index].location.lng
+                longitude: unformattedData[index].location.lng,
+                start : unformattedData[index].start.datetime
             }
             formattedContent.push(formattedData);
         }

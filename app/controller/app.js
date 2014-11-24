@@ -35,8 +35,11 @@ function App(){
     var lights = (new controllerLights(map)).get();
     // var lightsAll = new controllerLightsAll(map);
     var vehicles = (new controllerVehicles(map)).get();
+
+
     var food = (new controllerFoodInspection(map)).get();
     var foursquare = (new controllerFourSquare(map)).get();
+    var songkick = (new controllerSongKick(map)).get();
     var uber = (new controllerUber(map)).get();
 
 
@@ -45,7 +48,7 @@ function App(){
 
 
     var controllers = [
-         ctaStation, ctaBus, divvy, crimes, lights, potholes, vehicles,food, foursquare, uber
+         ctaStation, ctaBus, divvy, crimes, lights, potholes, vehicles,food, foursquare, songkick, uber
     ];
 
     /***** UI COMPONENTS *******/

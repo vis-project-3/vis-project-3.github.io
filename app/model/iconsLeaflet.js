@@ -65,6 +65,11 @@ var getIcon = function (kind) {
                     iconUrl: 'resources/icons/icon-crime.svg',
                     iconSize: [50, 50]
                 });
+            case "songkick" :
+                return L.icon({
+                    iconUrl: 'resources/icons/icon-songkick.svg',
+                    iconSize: [50, 50]
+                });
             case "vehicle" :
                 return L.icon({
                     iconUrl: 'resources/icons/icon-abandoned-car.svg',

@@ -44,6 +44,9 @@ function iconsApp() {
             case "crime" :
                 return path + "icon-crime.svg";
 
+            case "songkick" :
+                return path + "icon-songkick.svg";
+
             case "vehicle" :
                 return path + "icon-abandoned-car.svg";
 
