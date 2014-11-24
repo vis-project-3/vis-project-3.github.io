@@ -56,6 +56,7 @@ function controllerCtaBus(mapObject) {
 
     var getRoutesData = controller.getRoutesData = getSet.bind(controller)();
     var getActiveRoutes = controller.getActiveRoutes = getSet.bind(controller)();
+    controller.updateWithBounds(false);
 
     function updateDataHook(bounds, updateDataFunc) {
         console.log("eye of the murray");

@@ -35,15 +35,18 @@ function App(){
     var lights = (new controllerLights(map)).get();
     // var lightsAll = new controllerLightsAll(map);
     var vehicles = (new controllerVehicles(map)).get();
+
+
     var food = (new controllerFoodInspection(map)).get();
     var foursquare = (new controllerFourSquare(map)).get();
+    var songkick = (new controllerSongKick(map)).get();
     var uber = (new controllerUber(map)).get();
 
     ctaBus.getRoutesData(ctaStationObj.getData);
     ctaBus.getActiveRoutes(ctaStationObj.getActiveRoutes);
 
     var layerControllers = [
-         ctaStation, ctaBus, divvy, crimes, lights, potholes, vehicles,food, foursquare, uber
+         ctaStation, ctaBus, divvy, crimes, lights, potholes, vehicles,food, foursquare, songkick, uber
     ];
 
     var graphControllers = [
@@ -189,5 +192,17 @@ function Utility() {
 
             L.DomEvent.stop(e);
         }
+    }
+
+    // From: http://stackoverflow.com/a/15289883/502331
+
+    var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    // a and b are javascript Date objects
+    this.dateDiffInDays = function(a, b) {
+        // Discard the time and time-zone information.
+        var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+        var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+        return Math.floor((utc2 - utc1) / _MS_PER_DAY);
     }
 }

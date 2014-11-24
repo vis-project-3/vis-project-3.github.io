@@ -32,6 +32,7 @@ function genericController() {
     var activeUpdate = this.activeUpdate = getSet.bind(this)(false);
     var activeMarkers = this.activeMarkers = getSet.bind(this)([]);
     var dateAccessor = this.dateAccessor = getSet.bind(this)();
+    var updateWithBounds = this.updateWithBounds = getSet.bind(this)(true);
 
     d3.rebind(this, dispatch, "on");
 
@@ -48,7 +49,7 @@ function genericController() {
     }
 
     function _updateDataWithBounds(bounds) {
-        console.info("[%s] : Updating data within bounds %o", name(), bounds);
+        // console.info("[%s] : Updating data within bounds %o", name(), bounds);
 
         dispatch.on("newUpdateSelection", _updateMarkers);
         dispatch.on("newEnterSelection", _createMarkers);
@@ -81,12 +82,12 @@ function genericController() {
 
         dispatch.on("newUpdateEnterSelection", function(updateEnter) {
             _filterSelectionWithCoords(updateEnter, coords);
-            dispatch.on("newUpdateEnterSelection", null);
+            if (! updateWithBounds()) dispatch.on("newUpdateEnterSelection", null);
         })
 
         dispatch.on("boundsUpdated.withCoords", function(bounds) {
             _getSelectionFromBoundsAndCoords(bounds, coords);
-            // dispatch.on("boundsUpdated", null);
+            if (! updateWithBounds()) dispatch.on("boundsUpdated", null);
         });
 
     }
@@ -179,6 +180,8 @@ function genericController() {
         })
     }
 
+    var dateDiff = (new Utility).dateDiffInDays;
+
     function _createMarkers(selection) {
         // console.log("DATA PHASE: New enter selection. Length: %i. Create markers.", selection.size());
         selection.each(function(d) {
@@ -192,11 +195,14 @@ function genericController() {
             });
             // console.log(iconPath());
             var marker = L.marker(latLng, { icon: icon });
+            var opacity = 0.8;
             if (dateAccessor()) {
                 var today = d3.time.day(new Date());
                 var created = d3.time.day(dateAccessor()(d));
-                var difference = today - created;
+                var difference = Math.abs(dateDiff(created, today));
+                if (difference > 14) opacity = 0.3;
             }
+            marker.setOpacity(opacity);
             var content = layer().getPopup().generatePopupContent(d);
             // console.log("[" + name() + "_LAYER] : Generating Popup");
             marker.bindPopup(content);
@@ -286,7 +292,7 @@ function genericController() {
         filtered = filtered.filter(function(d) {
             // return true; // TODO
             return coords.some(function(coord, i, array) {
-                if (! array[i + 1]) return;
+                if (! array[i + 1]) return false;
                 var point = L.point(parseFloat(latitudeAccessor()(d)), parseFloat(longitudeAccessor()(d)));
                 var lineA = L.point(coord[0], coord[1]);
                 var next = array[i + 1];

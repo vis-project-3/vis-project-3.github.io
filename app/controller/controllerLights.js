@@ -19,6 +19,8 @@ function controllerLights(mapObject) {
 
     controller.preFetchData(true);
 
+    controller.dateAccessor(function(d) { return new Date(d.creation_date); })
+
     var query = function() {
         var fromDate = d3.time.day.offset(new Date(), -30);
 
