@@ -1,5 +1,10 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
 
+g.bar line {
+    fill: none;
+    stroke: black;
+}
+
 body{
     margin:0;
 }

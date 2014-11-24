@@ -151,10 +151,10 @@ function genericController() {
 
     function _updateData(newData) {
 
-            console.info("[%s] : New data, length: %i", name(), newData.length);
+            // console.info("[%s] : New data, length: %i", name(), newData.length);
 
             if (newData.length == 0) {
-                console.info("[%s] : Data length zero.", name());
+                // console.info("[%s] : Data length zero.", name());
                 return;
             }
 
@@ -173,7 +173,7 @@ function genericController() {
     }
 
     function _updateMarkers(selection) {
-        console.log("New update selection. Length: %i. Update markers.", selection.size());
+        // console.log("New update selection. Length: %i. Update markers.", selection.size());
         selection.each(function(d) {
             var latLng = [parseFloat(latitudeAccessor()(d)), parseFloat(longitudeAccessor()(d))];
             this._marker.setLatLng(latLng);
@@ -194,7 +194,7 @@ function genericController() {
             // console.log(iconPath());
             var marker = L.marker(latLng, { icon: icon });
             var content = layer().getPopup().generatePopupContent(d);
-            console.log("[" + name() + "_LAYER] : Generating Popup");
+            // console.log("[" + name() + "_LAYER] : Generating Popup");
             marker.bindPopup(content);
             this._marker = marker;
         });
