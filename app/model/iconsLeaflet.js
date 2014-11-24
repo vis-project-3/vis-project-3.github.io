@@ -40,6 +40,16 @@ var getIcon = function (kind) {
                     iconUrl: 'resources/icons/icon-divvy.svg',
                     iconSize: [50, 50]
                 });
+            case "food" :
+                return L.icon({
+                    iconUrl: 'resources/icons/icon-food.svg',
+                    iconSize: [50, 50]
+                });
+            case "foursquare" :
+                return L.icon({
+                    iconUrl: 'resources/icons/icon-foursquare.svg',
+                    iconSize: [50, 50]
+                });
             case "light" :
                 return L.icon({
                     iconUrl: 'resources/icons/icon-light.svg',

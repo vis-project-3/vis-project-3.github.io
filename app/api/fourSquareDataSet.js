@@ -28,7 +28,7 @@ function fourSquareDataSet(){
 
     this.getTrendingVenues = function(coordinates,callBack) {
         var urlAddress = "https://api.foursquare.com/v2/venues/trending?";
-        urlAddress += "ll="+coordinates[0]+","+coordinates[1]+"&client_id="+self.client_id+"&v=20141120&client_secret="+self.client_secret;
+        urlAddress += "ll="+coordinates[0]+","+coordinates[1]+"&radius=2000&client_id="+self.client_id+"&v=20141120&client_secret="+self.client_secret;
         $.ajax({
             url: urlAddress,
             dataType: "json",
@@ -43,6 +43,7 @@ function fourSquareDataSet(){
         var formattedData = [];
         for(var index = 0; index < unformattedData.response.venues.length; index++){
             var formattedObject = {
+                id: unformattedData.response.venues[index].id,
                 name: unformattedData.response.venues[index].name,
                 latitude: unformattedData.response.venues[index].location.lat,
                 longitude: unformattedData.response.venues[index].location.lng,
