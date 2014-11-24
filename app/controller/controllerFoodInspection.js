@@ -30,6 +30,3 @@ function controllerFoodInspection(mapObject) {
     this.get = function() { return controller };
 
 }
-
-
-inspection_date;
