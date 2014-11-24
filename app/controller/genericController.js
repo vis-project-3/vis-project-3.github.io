@@ -10,6 +10,8 @@ function genericController() {
 
     var getSet = (new Utility()).getSet;
 
+    var endPoint = this.endPoint = getSet.bind(this)();
+
     var label = this.label = getSet.bind(this)();
     var id = this.id = getSet.bind(this)();
     var iconPath = this.iconPath = getSet.bind(this)();
@@ -119,6 +121,7 @@ function genericController() {
         dispatch.on("newUpdateEnterSelection", function(updateEnter) {
             // console.log("MARKER PHASE: New updateEnter selection. Length %i. Add markers.", updateEnter.size());
             _addMarkers(updateEnter);
+            _setRouteDataCount(updateEnter.size());
             dispatch.on("newUpdateEnterSelection", oldUpdateEnter);
         });
 
@@ -132,6 +135,12 @@ function genericController() {
 
         _updateData(filtered);
 
+    }
+
+    function _setRouteDataCount(count) {
+        this.getRouteDataCount = function() {
+            return count;
+        }
     }
 
     var fragment, dataList;
@@ -195,16 +204,16 @@ function genericController() {
         selection.each(function(d) {
             layer().addMarker(this._marker);
             this._active = true;
-            dispatch.markersUpdated();
         })
+        dispatch.markersUpdated();
     }
 
     function _removeMarkers(selection) {
         selection.each(function(d) {
             layer().getLayer().removeLayer(this._marker);
             this._active = false;
-            dispatch.markersUpdated();
         })
+        dispatch.markersUpdated();
     }
 
     function _removeDataIfInBounds(selection, bounds) {
@@ -301,11 +310,11 @@ function genericController() {
         else map().addLayer(temp);
     };
 
-    this.getActiveMarkers = function() {
+    this.getActiveMarkersCount = function() {
         var filtered = d3.select(fragment).selectAll("li").filter(function(d) {
             return this._active;
         })
-        return filtered;
+        return filtered.size();
     }
 
     this.getMarkers = function() {

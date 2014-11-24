@@ -15,6 +15,8 @@ function controllerVehicles(mapObject) {
 
     controller.layer(layer);
 
+    controller.endPoint("3c9v-pnva.json?");
+
     var query = function() {
         var fromDate = d3.time.day.offset(new Date(), -30);
 

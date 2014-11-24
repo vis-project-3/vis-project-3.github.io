@@ -5,6 +5,7 @@ function drawCharts(container, map, graphControllers, customControl){
     map.addControl( control );
 
     var selection = d3.select(control._container);
+    var graphs;
 
     this.getSelection = function() {
         return selection;
@@ -20,7 +21,8 @@ function drawCharts(container, map, graphControllers, customControl){
             { text: "Along Your Route", imagePath: "", id: "local" },
             { text: "Chicago", imagePath: "resources/icons/icon-chicago-flag.svg", id: "chicago" }
         ]
-        var width = 450, height = 300;
+        var width = 450, height = 300, padding = 15,
+            chartHeight = 200, chartWidth = 400;
 
         var svg = selection.selectAll("svg").data(graphTitles);
         svg.enter().append("svg")
@@ -32,12 +34,30 @@ function drawCharts(container, map, graphControllers, customControl){
             })
             .style({ border: "1px solid black"});
 
+        svg.append("g").attr("class", "title")
+            .attr({ transform: translate(padding, padding) })
+            .append("text").text(function(d) { return d.text });
+
+        svg.append("g").attr("class", "barchart")
+            .attr({ transform: translate(padding, padding + 50)});
+
         var localSvg = svg.select("#local"),
             chicagoSvg = svg.select("#chicago");
 
-        graphControllers[0].on("markersUpdated", function() {
-            console.log("brap", graphControllers[0].getActiveMarkers())
-        })
+        graphs = selection;
+
+
+        //
+        // var titleG = svg.selectAll("g.title").data(function(d) { return [d]; });
+        // titleG.enter().append("g").attr("class", "title")
+        //     .attr({ transform: translate(padding, padding) })
+        //     .append("text").text(function(d) { return d.text });
+
+        // var barChart = svg.selectAll("g.barchart").data(function(d) { return [d] })
+
+        // graphControllers[0].on("markersUpdated", function() {
+        //     console.log("brap", graphControllers[0].getActiveMarkers())
+        // })
 
 
         //         svg = d3    .select(container)
@@ -47,6 +67,61 @@ function drawCharts(container, map, graphControllers, customControl){
         //                     .attr("width", "100%")
         //                     .attr("height", "100%");
     }
+
+    var dispatch = d3.dispatch("dataUpdated", "requestComplete", "newData");
+
+    var data = graphControllers.map(function(controller) {
+        return { name: controller.name(), max: 0, route: 0, controller: controller };
+    });
+
+    // dispatch
+
+    var requests = data.map(function(obj) {
+        var getQuery = obj.controller.query()();
+        var key = obj.controller.layer().getKey();
+
+        getQuery.addParam("$select=count(" + key + ")");
+
+        return d3.json(getQuery())
+            .on("load", function(d) {
+                obj.max = parseInt(d3.values(d[0])[0], 10);
+                dispatch.requestComplete();
+            })
+            .get();
+    })
+
+    dispatch.on("requestComplete", function() {
+        requests.pop();
+        if (requests.length === 0) dispatch.dataUpdated(data);
+    })
+
+    data.forEach(function(obj) {
+        obj.controller.on("markersUpdated", function() {
+            obj.route = obj.controller.getActiveMarkersCount();
+            dispatch.newData(data);
+        })
+    })
+
+    dispatch.on("newData", function(data) {
+        // console.log("UPDATED", data)
+        var barchart = graphs.selectAll("svg").select("g.barchart");
+    })
+
+    dispatch.on("dataUpdated", function(data) {
+        // console.log("UPDATED", data)
+    })
+
+    // graphControllers.forEach(function(controller) {
+    //     console.log("faaaa", controller.endPoint())
+    //     console.log("baaaa", controller.query()()());
+    //     var getQuery = controller.query()();
+    //     var key = controller.layer().getKey();
+    //     console.log(key);
+    //     getQuery.addParam("$select=count(" + key + ")");
+    //     d3.json(getQuery(), function(data) {
+    //         console.log("foooooo", data);
+    //     })
+    // })
 
     //     var svg;
     //     var width = 450;
@@ -326,3 +401,5 @@ function drawCharts(container, map, graphControllers, customControl){
     /**** jQuery *****/
 
 }
+
+function translate(x, y) { return "translate(" + x + "," + y + ")" }
