@@ -76,6 +76,7 @@ function controllerCtaBus(mapObject) {
 
             activeRoutes.forEach(function(route) {
                 getData(bounds, route, function(buses) {
+                    controller.removalCondition(function(d) { return d.rt == route; })
                     controller.dataCallback(function(bounds, callback) {
                         callback(buses);
                     });
@@ -86,6 +87,8 @@ function controllerCtaBus(mapObject) {
         })
 
     }
+
+
 
     controller.updateDataHook(updateDataHook);
 

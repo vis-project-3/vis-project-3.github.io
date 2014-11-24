@@ -77,10 +77,12 @@ function genericController() {
 
         dispatch.on("newUpdateEnterSelection", function(updateEnter) {
             _filterSelectionWithCoords(updateEnter, coords);
+            dispatch.on("newUpdateEnterSelection", null);
         })
 
         dispatch.on("boundsUpdated.withCoords", function(bounds) {
             _getSelectionFromBoundsAndCoords(bounds, coords);
+            // dispatch.on("boundsUpdated", null);
         });
 
     }
@@ -140,7 +142,7 @@ function genericController() {
             console.info("[%s] : New data, length: %i", name(), newData.length);
 
             if (newData.length == 0) {
-                console.info("[ %s ] : Data length zero.", name());
+                console.info("[%s] : Data length zero.", name());
                 return;
             }
 
@@ -156,16 +158,18 @@ function genericController() {
             var exit = update.exit();
             dispatch.newExitSelection(exit);
 
-            console.log( "fragment size", d3.select(fragment).selectAll("li").size());
-
     }
 
     function _updateMarkers(selection) {
         console.log("New update selection. Length: %i. Update markers.", selection.size());
+        selection.each(function(d) {
+            var latLng = [parseFloat(latitudeAccessor()(d)), parseFloat(longitudeAccessor()(d))];
+            this._marker.setLatLng(latLng);
+        })
     }
 
     function _createMarkers(selection) {
-        console.log("DATA PHASE: New enter selection. Length: %i. Create markers.", selection.size());
+        // console.log("DATA PHASE: New enter selection. Length: %i. Create markers.", selection.size());
         selection.each(function(d) {
             var latLng = [parseFloat(latitudeAccessor()(d)), parseFloat(longitudeAccessor()(d))];
             // console.log("layer().getIcon() %o", layer().getIcon());
@@ -200,8 +204,15 @@ function genericController() {
         selection.each(function(d) {
             var latLng = L.latLng(latitudeAccessor()(d), longitudeAccessor()(d));
             if (bounds.contains(latLng)) {
-                console.info("[ %s ] : Removing data: %o", name(), d);
-                d3.select(this).remove();
+                if (removalCondition()) {
+                    if (removalCondition()(d)) {
+                        console.info("[ %s ] : Removing data: %o", name(), d);
+                        d3.select(this).remove();
+                    }
+                } else {
+                    console.info("[ %s ] : Removing data: %o", name(), d);
+                    d3.select(this).remove();
+                }
             }
         })
     }
