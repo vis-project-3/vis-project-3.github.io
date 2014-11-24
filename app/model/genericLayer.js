@@ -54,8 +54,13 @@ function genericLayer() {
     // };
 
     this.addMarker = function(marker) {
-        marker.addTo(layer);
+        if (! layer.hasLayer(marker))
+            marker.addTo(layer);
     }
+
+    // this.removeMarker = function(marker) {
+    //
+    // }
 
     // this.updateMarker = function (data) {
     //     markers[data[key]].setLatLng([parseFloat(data.latitude), parseFloat(data.longitude)]);

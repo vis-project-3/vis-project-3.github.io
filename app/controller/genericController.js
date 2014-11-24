@@ -49,7 +49,7 @@ function genericController() {
     }
 
     function _updateDataWithBounds(bounds) {
-        // console.info("[%s] : Updating data within bounds %o", name(), bounds);
+        console.info("[%s] : Updating data within bounds %o", name(), bounds);
 
         dispatch.on("newUpdateSelection", _updateMarkers);
         dispatch.on("newEnterSelection", _createMarkers);
@@ -207,11 +207,42 @@ function genericController() {
             // console.log("[" + name() + "_LAYER] : Generating Popup");
             marker.bindPopup(content);
             this._marker = marker;
+
+            var r = 20;
+
+            var iconHtml = d3.select(new DocumentFragment())
+            .append("div")
+            .call(function(div) {
+                div.append("svg").attr({ width: r, height: r})
+                .append("circle").attr({ r: r / 2, cy: r / 2, cx: r / 2 })
+                .style({ fill: "red", "fill-opacity": 0.4 })
+            })
+            .node().innerHTML;
+
+            var newDataIcon = L.divIcon({
+                className: 'route-waypoint-icon',
+                html: iconHtml,
+                iconAnchor: L.point(r/2, r/2),
+                size: r
+            });
+
+            var newMarker = L.marker(latLng, { icon: newDataIcon });
+
+            this._newMarker = newMarker;
         });
     }
 
     function _addMarkers(selection) {
         selection.each(function(d) {
+            var newDataMarker = this._newMarker;
+            if (newDataMarker) {
+                layer().addMarker(newDataMarker);
+                window.setTimeout(
+                    function() { layer().getLayer().removeLayer(newDataMarker); },
+                    1000
+                )
+                this._newMarker = undefined;
+            }
             layer().addMarker(this._marker);
             this._active = true;
         })
@@ -245,7 +276,7 @@ function genericController() {
 
     function _filterDataWithCoords(data, coords) {
         if (window.filterBy === "area") return data;
-        
+
         var distToSeg = (new Utility()).distanceToSegment;
 
         var fix = [];

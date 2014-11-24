@@ -23,6 +23,8 @@ function controllerDivvy(mapObject) {
 
     controller.dataCallback(getData);
 
+    controller.activeUpdate(true);
+
     controller.latitudeAccessor(function(d){return d.latitude});
     controller.longitudeAccessor(function(d){return d.longitude});
 
