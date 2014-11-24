@@ -32,6 +32,8 @@ function genericController() {
 
     var activeMarkers = this.activeMarkers = getSet.bind(this)([]);
 
+    d3.rebind(this, dispatch, "on");
+
     var quadtree = d3.geom.quadtree()
         .x(function(d) { return longitudeAccessor()(d) })
         .y(function(d) { return latitudeAccessor()(d) });

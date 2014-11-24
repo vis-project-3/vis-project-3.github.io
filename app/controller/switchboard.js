@@ -1,4 +1,4 @@
-function Switchboard(map, route, layerControllers, layerButtons, mapButtons, weather, box) {
+function Switchboard(map, route, layerControllers, layerButtons, mapButtons, weather, box, graphControllers) {
 
     var getBounds = (new Utility()).getBounds;
 

@@ -19,7 +19,7 @@ function App(){
     // var toggle = new buttonsToggle("#toggle");
     // var navigation = new navigationBar("#top-bar");
     // var graphs = new boxGraphs("#graphs");
-    var graphs = new drawCharts("#graphs");
+    // var graphs = new drawCharts("#graphs", graphControllers, customControl);
     // var box = new boxWeather("#weather");
 
 
@@ -40,14 +40,19 @@ function App(){
     ctaBus.getActiveRoutes(ctaStationObj.getActiveRoutes);
 
 
-    var controllers = [
+    var layerControllers = [
         ctaStation, ctaBus, divvy, crimes, lights, potholes, vehicles
     ];
+
+    var graphControllers = [
+        crimes, lights, potholes, vehicles
+    ]
 
     /***** UI COMPONENTS *******/
 
     var customControl = (new Utility).customControl;
-    var layerButtons = new buttonsLayer(map, controllers, customControl);
+    var layerButtons = new buttonsLayer(map, layerControllers, customControl);
+    var graphs = new drawCharts("#graphs", map, graphControllers, customControl);
     var mapButtons = new mapControls("#mapcontrol", map, customControl);
     var box = new boxWeather("#weather", map, customControl);
 
@@ -58,7 +63,8 @@ function App(){
     /****** EVENT HANDLING *******/
 
     var switchboard = new Switchboard(
-        map, route, controllers, layerButtons, mapButtons, weather, box
+        map, route, layerControllers, layerButtons, mapButtons, weather, box,
+        graphControllers
     );
 
 
