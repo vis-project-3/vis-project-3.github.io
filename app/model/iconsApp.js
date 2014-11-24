@@ -11,6 +11,18 @@ function iconsApp() {
             case "cta_bus" :
                 return path + "icon-bus.svg";
 
+            case "cta_bus_north" :
+                return path + "icon-bus-north.svg";
+
+            case "cta_bus_south" :
+                return path + "icon-bus-south.svg";
+
+            case "cta_bus_east" :
+                return path + "icon-bus-east.svg";
+
+            case "cta_bus_west" :
+                return path + "icon-bus-west.svg";
+
             case "cta_station" :
                 return path + "icon-bus-station.svg";
 
