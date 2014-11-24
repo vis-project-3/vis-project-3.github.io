@@ -48,7 +48,7 @@ function iconsApp() {
                 return path + "icon-abandoned-car.svg";
 
             case "uber" :
-                return path + "uber.svg";
+                return path + "icon-uber.svg";
 
             default:
                 return 'resources/icons/icon-error.svg';

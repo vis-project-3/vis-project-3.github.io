@@ -37,13 +37,15 @@ function App(){
     var vehicles = (new controllerVehicles(map)).get();
     var food = (new controllerFoodInspection(map)).get();
     var foursquare = (new controllerFourSquare(map)).get();
+    var uber = (new controllerUber(map)).get();
+
 
     ctaBus.getRoutesData(ctaStationObj.getData);
     ctaBus.getActiveRoutes(ctaStationObj.getActiveRoutes);
 
 
     var controllers = [
-        ctaStation, ctaBus, divvy, crimes, lights, potholes, vehicles,food, foursquare
+         ctaStation, ctaBus, divvy, crimes, lights, potholes, vehicles,food, foursquare, uber
     ];
 
     /***** UI COMPONENTS *******/

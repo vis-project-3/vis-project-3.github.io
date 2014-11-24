@@ -29,10 +29,10 @@ function uberDataSet(){
                 Authorization: "Token " + self.serverToken
             },
             data: {
-                start_latitude: fromCoordinates.latitude,
-                start_longitude: fromCoordinates.longitude,
-                end_latitude: toCoordinates.latitude,
-                end_longitude: toCoordinates.longitude
+                start_latitude: fromCoordinates[0],
+                start_longitude: fromCoordinates[1],
+                end_latitude: toCoordinates[0],
+                end_longitude: toCoordinates[1]
             },
             success: function(result) {
                 var data = result["prices"];
@@ -44,10 +44,10 @@ function uberDataSet(){
 
                     // Update the Uber button with the shortest time
                     var shortest = data[0];
-                    if (typeof shortest != typeof undefined) {
+                    /*if (typeof shortest != typeof undefined) {
                         console.log("Updating price estimate...");
                         $("#price").html("Low Estimate : $ " + shortest.low_estimate);
-                    }
+                    }*/
                 }
                 callBack(result);
             }
@@ -69,8 +69,8 @@ function uberDataSet(){
                 Authorization: "Token " + self.serverToken
             },
             data: {
-                start_latitude: fromCoordinates.latitude,
-                start_longitude: fromCoordinates.longitude
+                start_latitude: fromCoordinates[0],
+                start_longitude: fromCoordinates[1]
             },
             success: function(result) {
                 var data = result["times"];
@@ -81,10 +81,10 @@ function uberDataSet(){
                     });
                     // Update the Uber button with the shortest time
                     var shortest = data[0];
-                    if (typeof shortest != typeof undefined) {
+                    /*if (typeof shortest != typeof undefined) {
                         console.log("Updating time estimate...");
                         $("#time").html("IN " + Math.ceil(shortest.estimate / 60.0) + " MIN");
-                    }
+                    }*/
                 }
                 callBack(result);
             }
@@ -98,8 +98,8 @@ function uberDataSet(){
                 Authorization: "Token " + self.serverToken
             },
             data: {
-                start_latitude: fromCoordinates.latitude,
-                start_longitude: fromCoordinates.longitude,
+                start_latitude: fromCoordinates[0],
+                start_longitude: fromCoordinates[1],
             },
             success: function(result) {
                 callBack(result);
