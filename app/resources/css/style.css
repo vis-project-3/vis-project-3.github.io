@@ -3,6 +3,8 @@
 g.bar line {
     fill: none;
     stroke: black;
+    stroke-width: 5;
+    stroke-opacity: 0.4;
 }
 
 g.axis path, g.axis g.tick line {
@@ -32,7 +34,7 @@ body{
     top : 30vh;
     width : 9vw;
     height : 40vh;
-    /* background: rgba(255,255,255,0.5); */
+    background: rgba(255,255,255,0.5);
     /* background-color: none; */
 }
 
@@ -65,6 +67,7 @@ body{
     align-items: center;
     /* height: 25vh; */
     /* width: 9vw; */
+    background: rgba(255,255,255,0.5);
 }
 
 #mapcontrol{
@@ -75,13 +78,17 @@ body{
     background-color: rgba(255,255,255,0.66);
 }
 
+#charts {
+    background: rgba(255,255,255,0.7);
+}
+
 #graphs{
     position : absolute;
     top : 12%;
     right : 1%;
     width : 30%;
     height : 60%;
-    /*background-color: rgba(255,255,255,0.66);*/
+    /* background: rgba(255,255,255,0.5); */
 
 }
 

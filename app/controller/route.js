@@ -59,6 +59,7 @@ function Route(){
     });
 
     this.getCoords = function() { return coords; };
+    this.getBounds = function() { return bounds; };
 
     /****** PRIVATE METHODS ******/
 

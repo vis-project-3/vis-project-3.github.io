@@ -21,6 +21,8 @@ function drawCharts(container, map, graphControllers, customControl){
             height: "40vh",
             top: "20vh"
         })
+        .attr("id", "charts")
+        
         var graphTitles = [
             // { text: "Along Your Route", imagePath: "", id: "local" },
             { text: "Chicago Total", imagePath: "resources/icons/icon-chicago-flag.svg", id: "chicago" }

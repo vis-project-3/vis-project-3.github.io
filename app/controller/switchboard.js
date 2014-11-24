@@ -1,4 +1,4 @@
-function Switchboard(map, route, layerControllers, layerButtons, mapButtons, weather, box, graphControllers) {
+function Switchboard(map, route, layerControllers, layerButtons, mapButtons, weather, box, graphControllers, rect) {
 
     var getBounds = (new Utility()).getBounds;
 
@@ -33,6 +33,10 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
                 controller.updateCoords(coords);
             }
         })
+    });
+
+    rect.on("filterToggle", function() {
+        _updateActiveLayers(map.getQueryRect())
     });
 
     amplify.subscribe("ROUTE_UPDATED", function(route) {

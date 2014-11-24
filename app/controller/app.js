@@ -61,6 +61,7 @@ function App(){
     var layerButtons = new buttonsLayer(map, layerControllers, customControl);
     var graphs = new drawCharts("#graphs", map, graphControllers, customControl);
     var mapButtons = new mapControls("#mapcontrol", map, customControl);
+    var rect = new rectToggle(map, customControl);
     var box = new boxWeather("#weather", map, customControl);
 
     var weather = new controllerWeather(box);
@@ -71,7 +72,7 @@ function App(){
 
     var switchboard = new Switchboard(
         map, route, layerControllers, layerButtons, mapButtons, weather, box,
-        graphControllers
+        graphControllers, rect
     );
 
 

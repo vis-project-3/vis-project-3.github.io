@@ -244,6 +244,8 @@ function genericController() {
     }
 
     function _filterDataWithCoords(data, coords) {
+        if (window.filterBy === "area") return data;
+        
         var distToSeg = (new Utility()).distanceToSegment;
 
         var fix = [];
