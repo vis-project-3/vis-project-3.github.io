@@ -17,10 +17,11 @@ function rectToggle(map, customControl){
     };
 
     function callback(selection) {
-        selection.style({ position: "absolute", left: "10vw", width: "30vw" })
-        var button = selection.selectAll("button")
+        selection.style({ position: "absolute", left: "5vw" })
+        var button = selection.append("div").style({ "text-align": "center", width: "15vw" }).selectAll("button")
             .data([{ label: "Filter Path", id: "path" }, { label: "Filter Area", id: "area" }]);
         button.enter().append("button")
+            .attr({ width: "7vw", margin: "auto" })
             .text(function(d) { return d.label })
             .on("click", function(d) {
                 window.filterBy = d.id;

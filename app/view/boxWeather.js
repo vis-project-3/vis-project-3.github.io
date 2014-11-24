@@ -115,7 +115,7 @@ function boxWeather(container, map, customControl){
     this.updateTemperature = function(data){
         var deg = encodeURIComponent("º");
         d3.select("#" + id_temp)
-            .text(data.temp_f + "\260F " + data.temp_c + "\260C" );
+            .text(d3.round(data.temp_f) + "\260F " + d3.round(data.temp_c) + "\260C" );
     };
 
     var now;

@@ -184,33 +184,33 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
 
     /********* WEATHER **********/
 
-    // amplify.subscribe("SUNRISE_SUNSET", weather.getSunriseSunset)
-    // amplify.subscribe("WEATHER", weather.getWeather);
+    amplify.subscribe("SUNRISE_SUNSET", weather.getSunriseSunset)
+    amplify.subscribe("WEATHER", weather.getWeather);
 
-    // FIXME
-    amplify.subscribe("WEATHER", function(data) {
-        box.setSunriseSunset(data);
-        box.updateAll(data);
-    })
-
-    // FIXME
-    var fakeData = {
-        temp_c: 12,
-        temp_f: 45,
-        iconName: "chancetstorms",
-        sunrise_hour: 6,
-        sunrise_minute: 15,
-        sunset_hour: 19,
-        sunset_minute: 15,
-        condition: "Stormy"
-    }
-
-    amplify.publish("WEATHER", fakeData); // FIXME
+    // // FIXME
+    // amplify.subscribe("WEATHER", function(data) {
+    //     box.setSunriseSunset(data);
+    //     box.updateAll(data);
+    // })
+    //
+    // // FIXME
+    // var fakeData = {
+    //     temp_c: 12,
+    //     temp_f: 45,
+    //     iconName: "chancetstorms",
+    //     sunrise_hour: 6,
+    //     sunrise_minute: 15,
+    //     sunset_hour: 19,
+    //     sunset_minute: 15,
+    //     condition: "Stormy"
+    // }
+    //
+    amplify.publish("WEATHER");
 
     setInterval(function(){
         console.log("[EVENT] : WEATHER");
         console.log("[UPDATES HANDLER] : Updating Weather");
-        amplify.publish("WEATHER", fakeData); // FIXME
+        amplify.publish("WEATHER"); // FIXME
     }, 20000);
 
 
