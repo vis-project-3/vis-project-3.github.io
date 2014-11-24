@@ -43,6 +43,7 @@ function fourSquareDataSet(){
         var formattedData = [];
         for(var index = 0; index < unformattedData.response.venues.length; index++){
             var formattedObject = {
+                id: unformattedData.response.venues[index].id,
                 name: unformattedData.response.venues[index].name,
                 latitude: unformattedData.response.venues[index].location.lat,
                 longitude: unformattedData.response.venues[index].location.lng,

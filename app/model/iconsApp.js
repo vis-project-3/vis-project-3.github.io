@@ -29,6 +29,9 @@ function iconsApp() {
             case "divvy" :
                 return path + "icon-divvy.svg";
 
+            case "foursquare":
+                return path + "icon-foursquare.svg";
+
             case "light" :
                 return path + "icon-light.svg";
 
