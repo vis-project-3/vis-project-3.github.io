@@ -50,8 +50,6 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
 
     amplify.subscribe("QUERY_RECT_BOUNDS_UPDATED", _updateActiveLayers);
 
-    // amplify.subscribe("QUERY_RECT_BOUNDS_UPDATED", _update)
-
     amplify.subscribe("PREFETCH_DATA_WITH_BOUNDS", _updatePrefetchLayers);
 
     function _updateActiveLayers(bounds) {

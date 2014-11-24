@@ -25,11 +25,25 @@ function genericController() {
     var longitudeAccessor = this.longitudeAccessor =
         getSet.bind(this)(function(d) { return d.longitude; });
 
+    var updateDataHook = this.updateDataHook = getSet.bind(this)(undefined);
+
+    var removeData = this.removeData = getSet.bind(this)(true);
+
+    var removalCondition = this.removalCondition = getSet.bind(this)();
+
     var quadtree = d3.geom.quadtree()
         .x(function(d) { return longitudeAccessor()(d) })
-        .y(function(d) { return latitudeAccessor()(d) })
+        .y(function(d) { return latitudeAccessor()(d) });
 
     this.updateDataWithBounds = function(bounds) {
+        if (updateDataHook()) {
+            updateDataHook()(bounds, _updateDataWithBounds.bind(this));
+        } else {
+            _updateDataWithBounds(bounds);
+        }
+    }
+
+    function _updateDataWithBounds(bounds) {
         console.info("[%s] : Updating data within bounds %o", name(), bounds);
 
         dispatch.on("newUpdateSelection", _updateMarkers);
@@ -38,6 +52,7 @@ function genericController() {
         dispatch.boundsUpdated(bounds);
 
         if (dataCallback()) {
+            // console.log("there is a data callback: ", dataCallback());
             dataCallback()(bounds, _updateData);
             return;
         }
@@ -74,6 +89,8 @@ function genericController() {
     function _getSelectionFromBoundsAndCoords(bounds, coords) {
 
         var existingData = dataList.selectAll("li");
+
+        if (existingData.size() == 0) return;
 
         var filteredSelection = existingData.filter(function(d) {
             var latLng = L.latLng(latitudeAccessor()(d), longitudeAccessor()(d));
@@ -122,6 +139,11 @@ function genericController() {
 
             console.info("[%s] : New data, length: %i", name(), newData.length);
 
+            if (newData.length == 0) {
+                console.info("[ %s ] : Data length zero.", name());
+                return;
+            }
+
             var key = layer().getKey();
             var keyFunction = function(d) { return d[layer().getKey()]; };
 
@@ -133,6 +155,8 @@ function genericController() {
             dispatch.newUpdateEnterSelection(update);
             var exit = update.exit();
             dispatch.newExitSelection(exit);
+
+            console.log( "fragment size", d3.select(fragment).selectAll("li").size());
 
     }
 
@@ -175,7 +199,10 @@ function genericController() {
     function _removeDataIfInBounds(selection, bounds) {
         selection.each(function(d) {
             var latLng = L.latLng(latitudeAccessor()(d), longitudeAccessor()(d));
-            if (bounds.contains(latLng)) d3.select(this).remove();
+            if (bounds.contains(latLng)) {
+                console.info("[ %s ] : Removing data: %o", name(), d);
+                d3.select(this).remove();
+            }
         })
     }
 

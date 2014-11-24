@@ -25,8 +25,10 @@ function App(){
 
     /***** CONTROLLERS ******/
 
-    var ctaStation = (new controllerCtaStation(map)).get();
-    //var ctaBus = (new controllerCtaBus(map)).get();
+    var ctaStationObj = new controllerCtaStation(map);
+
+    var ctaStation = ctaStationObj.get();
+    var ctaBus = (new controllerCtaBus(map)).get();
     var divvy = (new controllerDivvy(map)).get();
     var crimes = (new controllerCrimes(map)).get();
     var potholes = (new controllerPotholes(map)).get();
@@ -34,9 +36,12 @@ function App(){
     // var lightsAll = new controllerLightsAll(map);
     var vehicles = (new controllerVehicles(map)).get();
 
+    ctaBus.getRoutesData(ctaStationObj.getData);
+    ctaBus.getActiveRoutes(ctaStationObj.getActiveRoutes);
+
 
     var controllers = [
-        ctaStation, divvy, crimes, lights, potholes, vehicles
+        ctaStation, ctaBus, divvy, crimes, lights, potholes, vehicles
     ];
 
     /***** UI COMPONENTS *******/

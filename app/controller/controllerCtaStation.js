@@ -17,7 +17,7 @@ function controllerCtaStation(mapObject) {
 
     var activeRoutes = [];
 
-    var getData = function(bounds,callback) { // L.latLngBounds
+    var getData = this.getData = function(bounds, callback) { // L.latLngBounds
         d3.json("data/stops.json", function(error, json) {
             activeRoutes = [];
             if (error) return console.warn(error);
@@ -57,6 +57,14 @@ function controllerCtaStation(mapObject) {
         if(activeRoutes.length > 0 )
             return activeRoutes;
     }
+
+    function updateDataHook(bounds, updateDataFunc) {
+        console.log("eye of the paulo");
+
+        updateDataFunc(bounds);
+    }
+
+    controller.updateDataHook(updateDataHook);
 
     controller.dataCallback(getData);
 
