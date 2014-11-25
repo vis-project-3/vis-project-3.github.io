@@ -15,7 +15,7 @@ function divvyDataSet() {
         //parameters += " and latitude<=" + northEast.lat;
         //parameters += " and longitude>=" + northEast.lng;
 
-        return 'http://query.yahooapis.com/v1/public/yql?format=json&q=' + encodeURIComponent('select * from json where url="' + entryPoint + '"');
+        return 'https://query.yahooapis.com/v1/public/yql?format=json&q=' + encodeURIComponent('select * from json where url="' + entryPoint + '"');
     };
 
     var getData = function (url, callback) {

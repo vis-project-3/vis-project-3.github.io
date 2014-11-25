@@ -6,7 +6,7 @@ function ctaDataSet(){
 
     var generateQuery = function(dataset, parameters){
         var query = entryPoint + dataset + key + parameters;
-        return 'http://query.yahooapis.com/v1/public/yql?format=json&q=' + encodeURIComponent('select * from xml where url="' + query + '"');
+        return 'https://query.yahooapis.com/v1/public/yql?format=json&q=' + encodeURIComponent('select * from xml where url="' + query + '"');
     };
 
     var getData = function(url, callback){
