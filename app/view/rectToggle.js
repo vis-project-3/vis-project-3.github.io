@@ -17,8 +17,8 @@ function rectToggle(map, customControl){
     };
 
     function callback(selection) {
-        selection.style({ position: "absolute", left: "5vw" })
-        var button = selection.append("div").style({ "text-align": "center", width: "15vw" }).selectAll("button")
+        selection.style({ position: "absolute", left: "2vw" })
+        var button = selection.append("div").style({ "text-align": "center", width: "20vw" }).selectAll("button")
             .data([{ label: "Filter Path", id: "path" }, { label: "Filter Area", id: "area" }]);
         button.enter().append("button")
             .attr({ width: "7vw", margin: "auto" })
@@ -42,6 +42,8 @@ function rectToggle(map, customControl){
             .on("click", function() {
                 dispatch.deleteWaypoint();
             });
+
+        selection.selectAll("button").style({ "font-size": "3vh" })
     }
 
 

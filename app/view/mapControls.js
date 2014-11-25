@@ -13,7 +13,7 @@ function mapControls(container, map, customControl){
     function callback(selection) {
         selection.attr("id", "mapcontrol");
 
-        var width = 450, height = 155,
+        var width = 450, height = 100,
             selectionWidth = width * 0.8;
 
         var svg = selection.append("svg")
