@@ -1,6 +1,6 @@
 function boxWeather(container, map, customControl){
 
-    var control = new customControl(callback, { position: 'topright' });
+    var control = new customControl(callback, { position: 'topleft' });
 
     var selection = d3.select(control._container);
 
