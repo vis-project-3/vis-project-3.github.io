@@ -4,7 +4,7 @@
 function streetLightsAllOutDataSet(){
     //constructor code goes here
     var self = this;
-    this.dataSetEndPoint = 'https://data.cityofchicago.org/resource/zuxi-7xem.json?$$app_token=pJ4wo2exY0EaCEJ758bK7Q5E3';
+    this.dataSetEndPoint = 'http://data.cityofchicago.org/resource/zuxi-7xem.json?$$app_token=pJ4wo2exY0EaCEJ758bK7Q5E3';
     this.streetLightsAllJSON;
     this.previouStreetLightsAllJSON;
     this.addedContent = [];

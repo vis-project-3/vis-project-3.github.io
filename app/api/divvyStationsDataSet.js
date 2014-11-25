@@ -3,7 +3,7 @@
  */
 function divvyStationsDataSet(){
     //constructor code goes here
-    this.dataSetEndPoint = 'https://query.yahooapis.com/v1/public/yql?q=';
+    this.dataSetEndPoint = 'http://query.yahooapis.com/v1/public/yql?q=';
 
     this.getData = function(requiredColumns,filterConditions,callBack){
         var urlForDataSet = this.generateQuery(requiredColumns,filterConditions);

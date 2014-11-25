@@ -4,7 +4,7 @@
 function potholesDataSet(){
     //constructor code goes here
     var self = this;
-    this.dataSetEndPoint = 'https://data.cityofchicago.org/resource/7as2-ds3y.json?$$app_token=pJ4wo2exY0EaCEJ758bK7Q5E3';
+    this.dataSetEndPoint = 'http://data.cityofchicago.org/resource/7as2-ds3y.json?$$app_token=pJ4wo2exY0EaCEJ758bK7Q5E3';
     this.potholesJSON;
     this.previousPotholesJSON;
 

@@ -4,7 +4,7 @@
 function crimesDataSet(){
     //constructor code goes here
     var self = this;
-    this.dataSetEndPoint = 'https://data.cityofchicago.org/resource/ijzp-q8t2.json?$$app_token=pJ4wo2exY0EaCEJ758bK7Q5E3';
+    this.dataSetEndPoint = 'http://data.cityofchicago.org/resource/ijzp-q8t2.json?$$app_token=pJ4wo2exY0EaCEJ758bK7Q5E3';
     this.crimesJSON;
     this.previouCrimesJSON;
     this.addedContent = [];
