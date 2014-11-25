@@ -1,38 +1,739 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Right Here, Right Now</title>
-		<link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="style.css">
-		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-	</head>
-	<body>
-	    <nav>
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#home">Right Here, Right Now</a>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Right Here Right Now</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/agency.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">Right Here Right Now</a>
             </div>
-	        <ul>
-	            <li><a href="#usage">Usage</a></li>
-	            <li><a href="#data">Data</a></li>
-	            <li><a href="#source">Source</a></li>
-	            <li><a href="#findings">Findings</a></li>
-	            <li><a href="#team">Team</a></li>
-				<li><a href="#video">Video</a></li>
 
-			</ul>
-	        <ul class="navbar-right">
-	            <li><a href="../app/index.html">Go To The Application</a></li>
-            </ul>
-	    </nav>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#howto">How To</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#data">Data</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#source">Source</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#findings">Findings</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#team">Team</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#video">Video</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#app">The App</a>
+                    </li>
 
-	    <main>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
 
-	    </main>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">Welcome To Our Project!</div>
+                <div class="intro-heading">It's Nice To Meet You</div>
+                <a href="#howto" class="page-scroll btn btn-xl">How to Use the App</a>
+            </div>
+        </div>
+    </header>
 
-		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script src="script.js"></script>
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <section id="howto" class="bg-light-gray">
+        <div class="container">
+            
+            <div class="row">
+                <div class="page-header">
+                    <h1>How to <small>use the app?</small></h1>
+                </div>
+                <div class="col-md-12">
+                    <p>The application, that is reachable from <a href='http://vis-project-3.github.io/app/'> here </a>, shows real time data around selected path</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">The App</h3>
+                        </div>
+                        <div class="panel-body">
+                           <img class="img-responsive center-block" style="max-height: 30%" src="resources/app/app.png"/> 
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p>At the beginning, the application shows a map of Chicago with layer controls, a weather box and the currently selected path</p>
+                    <p>On the bottom left part of the screen, we have a small controller to select three different map views and the path controls</p>
+                </div>
+                <div class="col-md-4">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Weather</h3>
+                        </div>
+                        <div class="panel-body">
+                           <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/weather.png"/> 
+                        </div>
+                      </div>
+                </div>
+                <div class="col-md-4">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Map Controls</h3>
+                        </div>
+                        <div class="panel-body">
+                           <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/map_controls.png"/> 
+                        </div>
+                      </div>
+                </div>
+                <div class="col-md-4">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Path Controls</h3>
+                        </div>
+                        <div class="panel-body">
+                           <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/path_controls.png"/> 
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <p>All the data is shown either in a bounding box or  around given path extended up to 2 block radius.</p>
+                    <p> The data shown as different layers on map are : </p>
+                    <ul>
+                        <li>CTA Bus stops</li>
+                        <li>Divvy Stations</li>
+                        <li>Crimes reported</li>
+                        <li>Street lights One out and All out - Currently Open</li>
+                        <li>Pot holes - Currently Open</li>
+                        <li>Abandoned Cars</li>
+                        <li>Failed Food Inspection</li>
+                        <li>Foursquare</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Layer Toggle</h3>
+                        </div>
+                        <div class="panel-body">
+                           <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/layers.png"/> 
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">  
+                    <p>All the shown data is temporally classified into last week and last month data.</p>
+                    <p>This distinction is graphically represented with opacity of the icons on the map. The less visible an icon is the less temporally recent it is</p>
+                    <p>To show particular data layer user has to click on the category he is interested on the layer controller present on left.</p>
+                    <p>This turns on the selected layer and data is plotted on the graph. The user has to click again on the layer controller to turn off that specific layer. </p>
+                    <p> Additional details regarding a particular incident can be obtained by simply clicking on the corresponding icon on the map. This will give us a popup box showing all the other details available for that particular incident</p>
+
+                    <p>For example on clicking on one of the icons of divvy stations you can get information on number of bikes available, no. of docks available at that station etc.<br></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Selected Layer</h3>
+                        </div>
+                        <div class="panel-body">
+                           <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/layer_selected.png"/> 
+                        </div>
+                      </div>
+                </div>
+                <div class="col-md-6">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Divvy Popup</h3>
+                        </div>
+                        <div class="panel-body">
+                           <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/divvy_popup.png"/> 
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+            <div class="row">
+                    <div class="col-md-12">  
+                        <p>By default the route from UIC to Museum Campus is shown on the map. User has the freedom to change the source and destination.</p>
+                        <p>He can do this by moving the end points of the route that is drawn. He can also change the route by clicking anywhere on the route and draging it to his desired location on the map.</p>
+                        <p> All the above mentioned data points will be shown around this path extending up to 2 blocks in radius.</p>
+                    </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">UIC To Museum Campus</h3>
+                        </div>
+                        <div class="panel-body">
+                           <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/base_route.png"/> 
+                        </div>
+                      </div>
+                </div>
+                <div class="col-md-6">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Dragged Pin</h3>
+                        </div>
+                        <div class="panel-body">
+                           <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/dragged_pin.png"/> 
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-9">
+                    <p>On the right of application we see the graphs. 'Along Your Route' graph shows the number of potholes, abandoned vehicles, crimes reported, street lights out around the selected path. This graph refreshes as you keep on updating the path on the map by dragging the pins.</p>
+                    <p>The same graph shows the data described before but for the entire Chicago City. This gives a nicer way for the user to compare data along his route to the whole city's data.</p>
+                </div>
+                <div class="col-md-3">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Graphs</h3>
+                        </div>
+                        <div class="panel-body">
+                           <img class="img-responsive center-block" style="max-height: 50%" src="resources/app/graphs.png"/> 
+                        </div>
+                      </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p>The weather box on the top left of the screen gives current date and time, weather and temperature in Celsius and Fahrenheit scales. It also gives you information of the weather condition. </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-offset-3 col-md-3">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Weather</h3>
+                    </div>
+                    <div class="panel-body">
+                       <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/weather.png"/> 
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Sample animated Weather Icon</h3>
+                    </div>
+                    <div class="panel-body">
+                       <img class="img-responsive center-block" style="max-height: 10%" src="resources/app/snow.svg"/> 
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p><b>CTA BUS Stations</b></p>
+                    <p>Clicking on this component will plot the CTA bus stations around the given path.</p>
+                    <P>On clicking on particular station we get Station Name on the popup box.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p><b>CTA Buses</b></p>
+                        <p>This layer when activated plots all the CTA bus services that are currently running around the given path.</p>
+                        <p>The position of buses is updated for every minute as per the information proided by the CTA API.</p>
+                        <p>Clicking on particular bus will give you the route of the bus you selected and its destination.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p><b>Divvy Stations</b></p>
+                    <p>Activating this layer will plot all the available divvy stations around the selected path.</p>
+                    <p>Clicking on particular station will give you additional details like number of bikes available and number of docks available in those stations.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p><b>Crime Reports</b></p>
+                    <p>This layer will plot the locations where crimes are reported. Clicking on particular crime marker will give you details on when the crime has been reported.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p><b>Street Light Out</b></p>
+                    <p>This layer when activated plots location where a streetlight is not working. It also plots a marker if none of the street lights are working in given location.</p>
+
+                
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p><b>Potholes</b></p>
+                    <p>Activating this layer will plot all the potholes that are currently open around given route. Selecting on a particular pothole marker will give you when is that pothole reported.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p><b>Abandoned Cars</b></p>
+                    <p>This layer when activated plots the location of abandoned cars that are reported. As in the previous case it gives you when the car has been reported.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p><b>Failed Food Inspection</b></p>
+                    <p>This layers plots the markers on locations where restaurants have failed in their food inspection reports.</p>
+                    <p>Selecting on particular marker will give you the name of restaurant and when the inspection happened.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p><b>Foursquare</b></p>
+                    <p>Foursquare layer plots the most popular/checked-in places around the center of the given.</p>
+                    <p> Selecting on particular marker will give you the name of the place that most people have checked-in and what type of venue is that like Art Museum, Restaurant etc.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p><b>Uber Estimates</b></p>
+                    <p>For activating this layer we need to give the source and destination points. After providing them we will get the cheapest Uber product available and the estimated price for that Uber product.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <p><b>Song Kick</b></p>
+                    <p>This data layer gives us the list locations where some recreational activity like concerts are happening around the city.</p>
+                    <p>On clicking particular marker we can get additional details like name of the event, date of the event and what type of event it is.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+        <!-- Services Section -->
+    <section id="data">
+            <div class="container">
+            <div class="row">
+                <div class="page-header">
+                    <h1>Data <small>Where does it come from?</small></h1>
+                </div>
+                <div class="col-md-8">
+                    <p>The data sets that we used here are coming from few well known API end points</p>
+                    <p>Each API end point has its own API key using which we are legally allowed to retrieve required information from them</p>
+                    <p> The following are the API end points: </p>
+                    <ul>
+                        <li><b> City of Chicago Data Portal</b> : The Socrata Open Data API allows users to programatically access a wealth of open data resources from governments, non-profits, and NGOs around the world. City of Chicago has made is datasets open and available to developers using SODA API. For our project we are using this API to get Potholes, Abandoned Vehicles, Crimes, Streetlights one out, Streetlights all out and Food Inspection datasets </li>
+                        <li><b> Weather Underground </b> : This API endpoint is used for showing weather related information on the map along with sunrise and sunset  times of the day </li>
+                        <li><b> Uber </b> : A well known ride-share service, Uber's API is accessed to get time estimates of nearest available Uber product and the minimum possible price estimate </li>
+                        <li><b> Foursquare </b> : This API endpoint is used to retrive available famous venues in a given bounding rectangle and list of trending venues near a given location </li>
+                        <li><b> CTA </b> : Chicago Transit Authority provides stations, routes, busses and preditictions data to developers</li>
+                        <li><b> Divvy Stations </b> This API end point returns a JSON object which has data of all the divvy stations. Data include number of active bikes in any divvy station and dock information</li>
+                        <li><b> Song Kick </b> This API gives information on events such as concerts, music festivals etc happening around a given location</li>
+                        <li><b> YQL </b> : The Yahoo Query Language platform enables users to query, filter, and combine data across the web through a single interface. It exposes a SQL-like syntax. We used this service in combination with the API endpoints listed above to perform some SQL like operations </li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-group">
+                        <li class="list-group-item disabled">Data Sources</li>
+                        <li class="list-group-item"><a href="https://data.cityofchicago.org/">City Of Chicago</a></li>
+                        <li class="list-group-item"><a href="http://www.wunderground.com/history/airport/KMDW/2013/5/19/DailyHistory.html?req_city=Chicago&req_state=IL&req_statename=Illinois">Weather</a></li>
+                        <li class="list-group-item"><a href="http://www.transitchicago.com/developers/bustracker.aspx">Chicago Transit Authority (CTA)</a></li>
+                        <li class="list-group-item"><a href="https://developer.foursquare.com/docs/venues/search">FourSquare</a></li>
+                        <li class="list-group-item"><a href="http://www.divvybikes.com/stations/json">Divvy Bikes</a></li>
+                        <li class="list-group-item"><a href="http://www.songkick.com/developer/upcoming-events-for-user">SongKick</a></li>
+                        <li class="list-group-item"><a href="https://developer.uber.com/v1/endpoints/#price-estimates">Uber</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="page-header">
+                    <h1>Data <small>What have we done to it?</small></h1>
+                </div>
+                <div class="col-md-12">
+                    <p>As all the endpoints returned JSON objects and in majority of the cases the data retrieved is clean.</p>
+                    <p>Few Challenges we faced with these API endpoints are documented below </p>
+
+                    <h2>CTA</h2>
+                    <p>CTA API has been the hardest one to deal with. It is, in fact, not possible to directly query for the busses or the stations cointaned in a given bounding box</p>
+                    <p>To get the busses location on the map we first created a static list of all the CTA Bus station around the city.</p>
+                    <p>We then dinamically filtered the stations not contained in the selected area. By doing so we can dinamically generate a list of routes going through our box.</p>
+                    <p>By having those routes we can finally query the CTA Database and get the location of each bus currently active on the queried routes</p>
+                    <p>The retrieved busses are then filtered again by the application</p>
+
+                    <h2>City of Chicago</h2>
+                    <p>City Of Chicago end points did not return all the required fieds in certain data sets especially crime dataset.</p>
+                    <p>Few important parameters like latitude and longitude are sometimes missing from the data. </p>
+                    <p>We have ignored those records for which we didn't have location data </p>
+
+                    <h2>Locations</h2>
+                    <p>Not all API endpoints returned the results in a given bounding rectangle.</p>
+                    <p>We used and hybrid approach to deal with this.</p>
+                    <p>Whenever possible we used YQL's SQL like syntax to filter data before storing it (Preprocessing)</p>
+                    <p>We then filtered again based on the current path and the returned data (Postprocessing)</p>
+
+                    <h2>Asynchronicity</h2>
+                    <p>We have used AJAX calls to deal with asynchronous issues in Javascript</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="source">
+        <div class="container">
+            <div class="row">
+                <div class="page-header">
+                    <h1>Source <small>How to run the app?</small></h1>
+                </div>
+                <div class="col-md-8">
+                    <p>The app was meant to run on the last version of Chrome and has not been tested on any other browser.</p>
+                    <p>To run the application a local web server is needed. Simple python HTTP Server will serve the purpose.</p>
+                    <p>Once you have your web server up and running please download the source code as pointed in Resources section.</p>
+                    <p>Now extract the downloaded folder and copy the extracted folders to the web server's root folder.</p>
+                    <p>Open up your browser and type in "localhost" in the address bar then browse to the folder of the app.</p>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-group">
+                        <li class="list-group-item disabled">Resources</li>
+                        <li class="list-group-item"><a href="https://github.com/vis-project-3/vis-project-3.github.io/archive/master.zip">Source</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="page-header">
+                    <h1>Source <small>Libraries</small></h1>
+                </div>
+                <div class="col-md-8">
+                    <p>For the project we have used the following libraries<p>
+                    <ul>
+                        <li>D3 for showing graphs and combining new data with refreshed data while updates happen</li>
+                        <li>Leaflet.js for interactive map</li>
+                        <li>jQuery for DOM manipulation and Ajax Calls</li>
+                        <li>Amplify.js for the Publisher Subscriber backbone</li>
+                        <li>The Open Source Routing Machine for Leaflet</li>
+                        <li>Yahoo Query Language</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-group">
+                        <li class="list-group-item disabled">Libraries</li>
+                        <li class="list-group-item"><a href="http://d3js.org/">D3</a></li>
+                        <li class="list-group-item"><a href="http://leafletjs.com/">Leaflet</a></li>
+                        <li class="list-group-item"><a href="http://jquery.com/">jQuery</a></li>
+                        <li class="list-group-item"><a href="http://amplifyjs.com/api/pubsub/">Amplify Pub/Sub</a></li>
+                        <li class="list-group-item"><a href="http://www.liedman.net/leaflet-routing-machine/">Routing Machine</a></li>
+                        <li class="list-group-item"><a href="https://developer.yahoo.com/yql/">Yahoo Query Language</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!--<div class="row">
+                <div class="page-header">
+                    <h1>Source <small>Credits</small></h1>
+                </div>
+                <div class="col-md-8">
+                    <p>For the project we have used the resources<p>
+                    <ul>
+                        <li></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-group">
+                        <li class="list-group-item disabled">Credited Resources</li>
+                        <li class="list-group-item"><a href=""></a></li>
+                    </ul>
+                </div>
+            </div>-->
+        </div>
+    </section>
+
+    <section id="findings">
+            <div class="container">
+            
+            <div class="row">
+                <div class="page-header">
+                    <h1>Findings <small>Crimes around the city</small></h1>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <p>Most people suggest UIC students to stay near to the university and also to stay away from southern part of Chicago.</p>
+                    <p>We expected that there are more crimes reported on southern part of Chicago. But this is mot the case.</p>
+                    <p>Number of crimes are spread evenly around the city thus making Chicago one of the dangerous places to live.</p>
+                </div>
+                <div class="col-md-4">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Crimes in Chicago</h3>
+                    </div>
+                    <div class="panel-body">
+                       <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/findings_crime.png"/> 
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="page-header">
+                    <h1>Findings <small>Abandoned Vehicles</small></h1>
+                </div>
+                <div class="col-md-8">
+                    <p>More number of abandoned vehicles are reported around Nearwest side and Southloop as shown in the given picture.<p>
+                    <p>The possible reason for this would be that those vehicles are probably towed vehicles which are placed by Department of Transportation</p>
+                </div>
+                <div class="col-md-4">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Abandoned Vehicles</h3>
+                    </div>
+                    <div class="panel-body">
+                       <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/findings_vehicle.png"/> 
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="page-header">
+                    <h1>Findings <small>Failed Food Inspection</small></h1>
+                </div>
+                <div class="col-md-8">
+                    <p>We checked how many restaurants around UIC failed food inspection.<p>
+                    <p>In total there are around 15 restaurants that failed around UIC. Taylor street has many restaurants.</p>
+                    <p>Taylor street has many restaurants. But to our surprise only 2 of them failed food inspection, Jimmy John's and Papa John's.</p>
+                </div>
+                <div class="col-md-4">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Failed Food Inspection</h3>
+                    </div>
+                    <div class="panel-body">
+                       <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/findings_food.png"/> 
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="team">
+        
+        <div class="container">
+        <h1>Team</h1>
+            <div class="row">
+                <div class="page-header">
+                    <h1>Dane De Sutter <small></small></h1>
+                </div>
+                <div class="col-md-4">
+                    <a class="thumbnail">
+                        <img class="img-rounded" data-src="holder.js/250%x250" src="resources/dane_250.jpg">
+                    </a>
+                </div>
+                <div class="col-md-8">
+                    <h3>Role : Icons and UI</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item disabled">Contributions</li>
+                        <li class="list-group-item">MockUps</li>
+                        <li class="list-group-item">Icons</li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="page-header">
+                    <h1>Ettore Trainiti <small></small></h1>
+                </div>
+                <div class="col-md-8">
+                    <h3>Role : Front-End, Back-End, Integration</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item disabled">Contributions</li>
+                        <li class="list-group-item">Leaflet</li>
+                        <li class="list-group-item">Generic Layer</li>
+                        <li class="list-group-item">Divvy API</li>
+                        <li class="list-group-item">Multiple API Integrations</li>
+                        <li class="list-group-item">Website</li>
+
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <a class="thumbnail">
+                        <img class="img-rounded" data-src="holder.js/250%x250" src="resources/ettore_250.jpg">
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="page-header">
+                    <h1>Paul Murray<small></small></h1>
+                </div>
+                <div class="col-md-4">
+                    <a class="thumbnail">
+                        <img class="img-rounded" data-src="holder.js/200%x250" src="resources/paul_250.jpg">
+                    </a>
+                </div>
+                <div class="col-md-8">
+                    <h3>Role : Front-End, Back-End, Integration</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item disabled">Contributions</li>
+                        <li class="list-group-item">BackEnd Logic</li>
+                        <li class="list-group-item">Routing Machine Integration</li>
+                        <li class="list-group-item">Controller to Leaflet Integration</li>
+                        <li class="list-group-item">Graphs</li>
+                        <li class="list-group-item">Video</li>
+
+                    </ul>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="page-header">
+                    <h1>Phani Theja Swarup<small></small></h1>
+                </div>
+                <div class="col-md-8">
+                    <h3>Role : API</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item disabled">Contributions</li>
+                        <li class="list-group-item">SODA API</li>
+                        <li class="list-group-item">Uber API</li>
+                        <li class="list-group-item">SongKick API</li>
+                        <li class="list-group-item">FourSquare API</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <a class="thumbnail">
+                        <img class="img-rounded" data-src="holder.js/250%x250" src="resources/theja_250.jpg">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="video">
+        <div class="container">
+            <div class="row">
+                <div class="page-header">
+                    <h1>Video <small>App Walkthrough</small></h1>
+                </div>
+                <div class="col-md-12">
+                    <div class="panel-body">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="//www.youtube.com/embed/909lm45NkMM" ></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="app">
+        <div class="container">
+            <div class="row">
+                <div class="page-header">
+                    <h1>The App</h1>
+                </div>
+                <div class="col-md-12">
+                    <a href="../app" class="page-scroll btn btn-xl center-block">Use The App!</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
-	</body>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/cbpAnimatedHeader.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/agency.js"></script>
+
+</body>
+
 </html>
