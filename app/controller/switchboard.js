@@ -39,6 +39,25 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
         _updateActiveLayers(map.getQueryRect())
     });
 
+    function _addWaypoint(e) {
+        var _way = route.getWaypoints();
+        _way.push({ latLng: e.latlng });
+        amplify.publish("UPDATE_WAYPOINTS", _way);
+        map.getMap().off("click", _addWaypoint);
+    }
+
+    rect.on("addWaypoint", function(e) {
+        map.getMap().on('click', _addWaypoint)
+    })
+
+    rect.on("deleteWaypoint", function() {
+        var _way = route.getWaypoints();
+        if (_way.length > 2) {
+            route.getPlan().spliceWaypoints(_way.length - 1, 1);
+        }
+
+    })
+
     amplify.subscribe("ROUTE_UPDATED", function(route) {
         coords = route.coordinates;
         amplify.publish("ROUTE_COORDS_UPDATED", coords);

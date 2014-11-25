@@ -83,7 +83,7 @@ function App(){
         museum = L.latLng( 41.861466, -87.614935);
 
         amplify.publish("PREFETCH_DATA_WITH_BOUNDS", L.latLngBounds(uic_west, museum));
-        amplify.publish("UPDATE_WAYPOINTS", [uic_west, museum]);
+        amplify.publish("UPDATE_WAYPOINTS", [museum, uic_west]);
     }())
 
 

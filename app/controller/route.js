@@ -60,6 +60,8 @@ function Route(){
 
     this.getCoords = function() { return coords; };
     this.getBounds = function() { return bounds; };
+    this.getWaypoints = function() { return route.getWaypoints(); }
+    this.getPlan = function() { return plan; };
 
     /****** PRIVATE METHODS ******/
 
