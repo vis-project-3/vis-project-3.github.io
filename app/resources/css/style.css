@@ -7,9 +7,18 @@ g.bar line {
     stroke-opacity: 0.4;
 }
 
+g.bar text {
+    font-size: 4vh;
+    line-height: 5vh;
+}
+
 g.axis path, g.axis g.tick line {
     fill: none;
     stroke: #444;
+}
+
+g.axis text {
+    font-size: 3vh;
 }
 
 body{

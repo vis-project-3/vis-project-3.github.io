@@ -1,6 +1,6 @@
 function drawCharts(container, map, graphControllers, customControl){
 
-    var width = 600, height = 300, margin = {top: 120, bottom: 15, left: 15, right: 15 };
+    var width = 1000, height = 300, margin = {top: 120, bottom: 30, left: 15, right: 15 };
 
     var routeFill = "#E74C3C";
 
@@ -18,11 +18,11 @@ function drawCharts(container, map, graphControllers, customControl){
     function addGraphs(selection) {
         selection.style({
             width: "30vw",
-            height: "40vh",
+            height: "50vh",
             top: "20vh"
         })
         .attr("id", "charts")
-        
+
         var graphTitles = [
             // { text: "Along Your Route", imagePath: "", id: "local" },
             { text: "Chicago Total", imagePath: "resources/icons/icon-chicago-flag.svg", id: "chicago" }
@@ -40,13 +40,13 @@ function drawCharts(container, map, graphControllers, customControl){
         svg.append("g").attr("class", "title")
             .attr({ transform: translate(0, margin.top - 50) })
             .append("text").text(function(d) { return d.text })
-            .style({ "font-size": "1.5vh" })
+            .style({ "font-size": "4vh" })
 
         svg.append("g")
             .attr({ transform: translate(width, margin.top - 50) })
             .append("text").text("Along This Route")
             .attr({ "text-anchor": "end" })
-            .style({ fill: routeFill, "font-size": "1.5vh" })
+            .style({ fill: routeFill, "font-size": "4vh" })
 
         svg.append("g").attr("class", "barchart")
             .attr({ transform: translate(margin.left, margin.top)});
@@ -117,24 +117,25 @@ function drawCharts(container, map, graphControllers, customControl){
                 var cityG = barG.append("g").attr("class", "city");
                 cityG.append("line").attr({ y2: y.rangeBand() });
                 cityG.append("text").attr({ y: y.rangeBand() / 2, x: 10 })
-                    .style({ "font-size": "1.5vh"})
 
                 var routeG = barG.append("g").attr("class", "route");
                 routeG.append("rect").attr({ height: y.rangeBand() })
                     .style({ fill: "#E74C3C", "fill-opacity": 0.8 });
+
                 routeG.append("image")
                     .attr("xlink:href", function(d) { return d.controller.iconPath(); })
                     .attr("width", y.rangeBand() - 20)
                     .attr("height", y.rangeBand() - 20)
                     .attr("y", 10);
+
                 routeG.append("text")
                     .attr({ y: y.rangeBand() / 2, "text-anchor": "left" })
                     .style({
                         fill: "#ECF0F1",
-                        "font-family": "'Open Sans', Sans-serif",
-                        "font-size": "1.5vh"
+                        "font-family": "'Open Sans', Sans-serif"
                     })
             })
+        bar.selectAll("text").attr({ dy: 10 })
         bar.select("g.city").attr("transform", function(d) { return translate(x(d.city), 0); });
         bar.select("g.city text").text(function(d) { return d.city });
         bar.select("g.route rect").attr({
