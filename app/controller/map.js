@@ -199,7 +199,7 @@ function Map(container){
             minZoom: 11,
             zoomControl:false,
             attributionControl : false
-        }).setView([41.87, -87.62], 14);
+        }).setView([41.87, -87.63], 14);
 
         map.on("zoomEnd", function(e) {
             dispatch.zoomEnd.apply(this, arguments);

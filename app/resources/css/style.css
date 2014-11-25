@@ -1,5 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans);
 
+* { font-family: 'Open Sans', sans-serif !important; }
+
 g.bar line {
     fill: none;
     stroke: black;
@@ -62,7 +64,7 @@ body{
 
 #layer g.button text {
     font-family: Helvetica, 'Open Sans', sans-serif;
-    font-size: 2vh;
+    font-size: 2.5vh;
 }
 
 #layer svg text.selected {
@@ -74,7 +76,9 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    top: -54vh;
+    position: absolute;
+    right: 0vw;
+    /*top: -40vh;*/
     /* height: 25vh; */
     /* width: 9vw; */
     background: rgba(255,255,255,0.5);

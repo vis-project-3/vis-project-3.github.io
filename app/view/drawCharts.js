@@ -1,6 +1,6 @@
 function drawCharts(container, map, graphControllers, customControl){
 
-    var width = 1000, height = 300, margin = {top: 120, bottom: 30, left: 15, right: 15 };
+    var width = 1200, height = 300, margin = {top: 120, bottom: 30, left: 15, right: 15 };
 
     var routeFill = "#E74C3C";
 
@@ -18,8 +18,8 @@ function drawCharts(container, map, graphControllers, customControl){
     function addGraphs(selection) {
         selection.style({
             width: "30vw",
-            height: "50vh",
-            top: "25vh"
+            height: "45vh",
+            top: "27vh"
         })
         .attr("id", "charts")
 
@@ -37,8 +37,15 @@ function drawCharts(container, map, graphControllers, customControl){
                 width: "100%", height: "100%"
             });
 
+        svg.append("g").attr("class", "big-title")
+            .attr({ transform: translate((width/2) + margin.left, 40) })
+            .append("text")
+            .attr({ "text-anchor": "middle" })
+            .style({ "font-size": "5vh" })
+            .text("Chicago City Data");
+
         svg.append("g").attr("class", "title")
-            .attr({ transform: translate(0, margin.top - 50) })
+            .attr({ transform: translate(0, margin.top - 60) })
             .append("text").text(function(d) { return d.text })
             .style({ "font-size": "4vh" })
 
