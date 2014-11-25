@@ -150,8 +150,8 @@ function Map(container){
     }
 
     var getSet = (new Utility).getSet;
-    var minIconSize = this.maxIconSize = getSet.bind(this)(15);
-    var maxIconSize = this.maxIconSize = getSet.bind(this)(20);
+    var minIconSize = this.minIconSize = getSet.bind(this)(10);
+    var maxIconSize = this.maxIconSize = getSet.bind(this)(40);
     var minZoom = function() { return getMap().getMinZoom(); };
     var maxZoom = function() { return getMap().getMaxZoom(); };
 
@@ -199,7 +199,7 @@ function Map(container){
             minZoom: 11,
             zoomControl:false,
             attributionControl : false
-        }).setView([41.88,-87.615],13);
+        }).setView([41.87, -87.62], 14);
 
         map.on("zoomEnd", function(e) {
             dispatch.zoomEnd.apply(this, arguments);

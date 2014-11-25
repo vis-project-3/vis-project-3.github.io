@@ -6,8 +6,6 @@ function App(){
 
     var map = new Map("map");
 
-    // map.baseIconSize(10);
-
     var route = new Route();
 
     route.addTo(map.getMap());
