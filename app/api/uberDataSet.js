@@ -6,8 +6,8 @@
 function uberDataSet(){
     //constructor code goes here
     var self = this;
-    this.serverToken = '84qHw2f0sLvUw04IUcdqN3DW6H2FXt6MvJ5BJnOt';
-    this.clientId = 'SSyDGOO0xzPQHkhoHzU6TTichejAQAAJ';
+    this.serverToken = 'AmsiHoYp27Ic8rHwDy9R9BQH72tZZly35VgD971J';
+    this.clientId = 'Utl9vQTZwbo94RDH9sN99WteGoXkzN9C';
 
     //Gives lowest possible estimated price from (start_latitude,start_longitude) to (end_latitude,end_longitude)
     //Sample Data Format
