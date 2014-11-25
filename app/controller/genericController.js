@@ -195,7 +195,7 @@ function genericController() {
             });
             // console.log(iconPath());
             var marker = L.marker(latLng, { icon: icon });
-            var opacity = 0.8;
+            var opacity = 0.9;
             if (dateAccessor()) {
                 var today = d3.time.day(new Date());
                 var created = d3.time.day(dateAccessor()(d));
