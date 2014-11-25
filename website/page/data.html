@@ -1,56 +1,66 @@
-<h1>Data</h1>
-<section>
-    <div>
-        <div>
-            <div>
-                <h1>Data <small>Where does it come from?</small></h1>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="page-header">
+            <h1>Data <small>Where does it come from?</small></h1>
+        </div>
+        <div class="col-md-8">
             <p>The data sets that we used here are coming from few well known API end points</p>
             <p>Each API end point has its own API key using which we are legally allowed to retrieve required information from them</p>
-            <div>
-                <p> The following are the API end points: </p>
-                <ul>
-                    <li><b> City of Chicago Data Portal</b> : The Socrata Open Data API allows users to programatically access a wealth of open data resources from governments, non-profits, and NGOs around the world. City of Chicago has made is datasets open and available to developers using SODA API. For our project we are using this API to get Potholes, Abandoned Vehicles, Crimes, Streetlights one out, Streetlights all out and Food Inspection datasets </li>
-                    <li><b> Weather Underground </b> : This API endpoint is used for showing weather related information on the map along with sunrise and sunset  times of the day </li>
-                    <li><b> Uber </b> : A well known ride-share service, Uber's API is accessed to get time estimates of nearest available Uber product and the minimum possible price estimate </li>
-                    <li><b> Foursquare </b> : This API endpoint is used to retrive available famous venues in a given bounding rectangle and list of trending venues near a given location </li>
-                    <li><b> CTA </b> : XXXXXXXXXXXXXXXXXXXXXXXX </li>
-                    <li><b> Divvy Stations </b> This API end point returns a JSON object which has data of all the divvy stations. Data include number of active bikes in any divvy station and dock information</li>
-                    <li><b> Song Kick </b> This API gives information on events such as concerts, music festivals etc happening around a given location</li>
-                    <li><b> YQL </b> : The Yahoo Query Language platform enables users to query, filter, and combine data across the web through a single interface. It exposes a SQL-like syntax. We used this service in combination with the API endpoints listed above to perform some SQL like operations </li>
-                </ul>
-            </div>
-        </div>
-        <div>
-            <div>
-                <h1>Data <small>What have we done to it?</small></h1>
-            </div>
-            <div>
-                <p>As all the endpoints returned JSON objects and in majority of the cases the data retrieved is clean.</p>
-                <p>Few Challenges we faced with these API endpoints are documented below </p>
-                <p>----Document issues with CTA API Endpoint----</p>
-                <p> City Of Chicago end points did not return all the required fieds in certain data sets especially crime dataset. Few important parameters like latitude and longitude are missing from the data. We have ignored those records for which we do not have data </p>
-                <p> Not all API endpoints returned the results in a given bounding rectangle. We used YQL to deal with this. It's SQL like syntax is very easy to deal with </p>
-                <p> We have used AJAX calls to deal with asynchronous issues in Javascript</p>
-            </div>
-        </div>
-    </div>
-    <div>
-        <div>
-            <h1>Data <small>Resources</small></h1>
-        </div>
-        <div>
+            <p> The following are the API end points: </p>
             <ul>
-                <li><a href="https://data.cityofchicago.org/">City of Chicago</a></li>
-                <li><a href="http://www.wunderground.com/history/airport/KMDW/2013/5/19/DailyHistory.html?req_city=Chicago&req_state=IL&req_statename=Illinois">Weather Underground</a></li>
-                <li><a href="https://developer.uber.com/v1/endpoints/#price-estimates">Uber</a></li>
-                <li><a href="https://developer.foursquare.com/docs/venues/search">Foursquare</a></li>
-                <li><a href="http://www.transitchicago.com/developers/bustracker.aspx">CTA</a></li>
-                <li><a href="http://www.divvybikes.com/stations/json">Divvy Stations</a></li>
-                <li><a href="http://www.songkick.com/developer/upcoming-events-for-user">Song Kick</a></li>
-                <li><a href="https://developer.yahoo.com/yql/">YQL</a></li>
+                <li><b> City of Chicago Data Portal</b> : The Socrata Open Data API allows users to programatically access a wealth of open data resources from governments, non-profits, and NGOs around the world. City of Chicago has made is datasets open and available to developers using SODA API. For our project we are using this API to get Potholes, Abandoned Vehicles, Crimes, Streetlights one out, Streetlights all out and Food Inspection datasets </li>
+                <li><b> Weather Underground </b> : This API endpoint is used for showing weather related information on the map along with sunrise and sunset  times of the day </li>
+                <li><b> Uber </b> : A well known ride-share service, Uber's API is accessed to get time estimates of nearest available Uber product and the minimum possible price estimate </li>
+                <li><b> Foursquare </b> : This API endpoint is used to retrive available famous venues in a given bounding rectangle and list of trending venues near a given location </li>
+                <li><b> CTA </b> : Chicago Transit Authority provides stations, routes, busses and preditictions data to developers</li>
+                <li><b> Divvy Stations </b> This API end point returns a JSON object which has data of all the divvy stations. Data include number of active bikes in any divvy station and dock information</li>
+                <li><b> Song Kick </b> This API gives information on events such as concerts, music festivals etc happening around a given location</li>
+                <li><b> YQL </b> : The Yahoo Query Language platform enables users to query, filter, and combine data across the web through a single interface. It exposes a SQL-like syntax. We used this service in combination with the API endpoints listed above to perform some SQL like operations </li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <ul class="list-group">
+                <li class="list-group-item disabled">Data Sources</li>
+                <li class="list-group-item"><a href="https://data.cityofchicago.org/">City Of Chicago</a></li>
+                <li class="list-group-item"><a href="http://www.wunderground.com/history/airport/KMDW/2013/5/19/DailyHistory.html?req_city=Chicago&req_state=IL&req_statename=Illinois">Weather</a></li>
+                <li class="list-group-item"><a href="http://www.transitchicago.com/developers/bustracker.aspx">Chicago Transit Authority (CTA)</a></li>
+                <li class="list-group-item"><a href="https://developer.foursquare.com/docs/venues/search">FourSquare</a></li>
+                <li class="list-group-item"><a href="http://www.divvybikes.com/stations/json">Divvy Bikes</a></li>
+                <li class="list-group-item"><a href="http://www.songkick.com/developer/upcoming-events-for-user">SongKick</a></li>
+                <li class="list-group-item"><a href="https://developer.uber.com/v1/endpoints/#price-estimates">Uber</a></li>
             </ul>
         </div>
     </div>
-</section>
+    <div class="row">
+        <div class="page-header">
+            <h1>Data <small>What have we done to it?</small></h1>
+        </div>
+        <div class="col-md-12">
+            <p>As all the endpoints returned JSON objects and in majority of the cases the data retrieved is clean.</p>
+            <p>Few Challenges we faced with these API endpoints are documented below </p>
+
+            <h2>CTA</h2>
+            <p>CTA API has been the hardest one to deal with. It is, in fact, not possible to directly query for the busses or the stations cointaned in a given bounding box</p>
+            <p>To get the busses location on the map we first created a static list of all the CTA Bus station around the city.</p>
+            <p>We then dinamically filtered the stations not contained in the selected area. By doing so we can dinamically generate a list of routes going through our box.</p>
+            <p>By having those routes we can finally query the CTA Database and get the location of each bus currently active on the queried routes</p>
+            <p>The retrieved busses are then filtered again by the application</p>
+
+            <h2>City of Chicago</h2>
+            <p>City Of Chicago end points did not return all the required fieds in certain data sets especially crime dataset.</p>
+            <p>Few important parameters like latitude and longitude are sometimes missing from the data. </p>
+            <p>We have ignored those records for which we didn't have location data </p>
+
+            <h2>Locations</h2>
+            <p>Not all API endpoints returned the results in a given bounding rectangle.</p>
+            <p>We used and hybrid approach to deal with this.</p>
+            <p>Whenever possible we used YQL's SQL like syntax to filter data before storing it (Preprocessing)</p>
+            <p>We then filtered again based on the current path and the returned data (Postprocessing)</p>
+
+            <h2>Asynchronicity</h2>
+            <p>We have used AJAX calls to deal with asynchronous issues in Javascript</p>
+        </div>
+    </div>
+</div>
+
 <script>addBootstrap();</script>
