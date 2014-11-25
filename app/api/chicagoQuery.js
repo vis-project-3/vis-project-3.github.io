@@ -11,7 +11,7 @@
 // }
 
 function chicagoQuery() {
-	var chicago = "http://data.cityofchicago.org/resource/";
+	var chicago = "https://data.cityofchicago.org/resource/";
 
 	var where = "",
 		limit = "",
