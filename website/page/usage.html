@@ -1,6 +1,272 @@
-<h1>Usage</h1>
-<section>
+<div class="container">
+    
+    <div class="row">
+        <div class="page-header">
+            <h1>How to <small>use the app?</small></h1>
+        </div>
+        <div class="col-md-12">
+            <p>The application, that is reachable from <a href='http://vis-project-3.github.io/app/'> here </a>, shows real time data around selected path</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Overall "Overview" pane</h3>
+                </div>
+                <div class="panel-body">
+                   <img class="img-responsive center-block" style="max-height: 30%" src="resources/app_overall.png"/> 
+                </div>
+              </div>
+        </div>
+    </div>
 
-</section>
+    <div class="row">
+        <div class="col-md-12">
+            <p>At the beginning, the application shows a map of Chicago with layer controls, a weather box and the currently selected path</p>
+            <p>On the bottom left part of the screen, we have a small controller to select three different map views</p>
+        </div>
+        <div class="col-md-4">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Weather</h3>
+                </div>
+                <div class="panel-body">
+                   <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/weather.png"/> 
+                </div>
+              </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <p>All the data is shown either in a bounding box or  around given path extended up to 2 block radius.</p>
+            <p> The data shown as different layers on map are : </p>
+            <ul>
+                <li>CTA Bus stops</li>
+                <li>Divvy Stations</li>
+                <li>Crimes reported</li>
+                <li>Street lights One out and All out - Currently Open</li>
+                <li>Pot holes - Currently Open</li>
+                <li>Abandoned Cars</li>
+                <li>Failed Food Inspection</li>
+                <li>Foursquare</li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Layer Toggle</h3>
+                </div>
+                <div class="panel-body">
+                   <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/layers.png"/> 
+                </div>
+              </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">  
+            <p>All the shown data is temporally classified into last week and last month data</p>
+            <p>To show particular data layer user has to click on the category he is interested on the layer controller present on left.</p>
+            <p>This turns on the selected layer and data is plotted on the graph. The user has to click again on the layer controller to turn off that specific layer. </p>
+            <p> Additional details regarding a particular incident can be obtained by simply clicking on the corresponding icon on the map. This will give us a popup box showing all the other details available for that particular incident</p>
+
+            <p>For example on clicking on one of the icons of divvy stations you can get information on number of bikes available, no. of docks available at that station etc.<br></p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Selected Layer</h3>
+                </div>
+                <div class="panel-body">
+                   <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/layer_selected.png"/> 
+                </div>
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Divvy Popup</h3>
+                </div>
+                <div class="panel-body">
+                   <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/divvy_popup.png"/> 
+                </div>
+              </div>
+        </div>
+    </div>
+
+    <div class="row">
+            <div class="col-md-12">  
+                <p>By default the route from UIC to Museum Campus is shown on the map. User has the freedom to change the source and destination.</p>
+                <p>He can do this by moving the end points of the route that is drawn. He can also change the route by clicking anywhere on the route and draging it to his desired location on the map.</p>
+                <p> All the above mentioned data points will be shown around this path extending up to 2 blocks in radius.</p>
+            </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">UIC To Museum Campus</h3>
+                </div>
+                <div class="panel-body">
+                   <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/base_route.png"/> 
+                </div>
+              </div>
+        </div>
+        <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Dragged Pin</h3>
+                </div>
+                <div class="panel-body">
+                   <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/dragged_pin.png"/> 
+                </div>
+              </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p>On the right of application we see the graphs. 'Along Your Route' graph shows the number of potholes, abandoned vehicles, crimes reported, street lights out around the selected path. This graph refreshes as you keep on updating the path on the map by dragging the pins.</p>
+            <p>The same graph shows the data described before but for the entire Chicago City. This gives a nicer way for the user to compare data along his route to the whole city's data.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Graphs</h3>
+                </div>
+                <div class="panel-body">
+                   <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/graphs.png"/> 
+                </div>
+              </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p>The weather box on the top left of the screen gives current date and time, weather and temperature in Celsius and Farhenheigh scales. It also gives you information of the weather condition. </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-offset-3 col-md-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Weather</h3>
+            </div>
+            <div class="panel-body">
+               <img class="img-responsive center-block" style="max-height: 70%" src="resources/app/weather.png"/> 
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Sample animated Weather Icon</h3>
+            </div>
+            <div class="panel-body">
+               <img class="img-responsive center-block" style="max-height: 10%" src="resources/app/snow.svg"/> 
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><b>CTA BUS Stations</b></p>
+            <p>Clicking on this component will plot the CTA bus stations around the given path.</p>
+            <P>On clicking on particular station we get Station Name on the popup box.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><b>CTA Buses</b></p>
+                <p>This layer when activated plots all the CTA bus services that are currently running around the given path.</p>
+                <p>The position of buses is updated for every minute as per the information proided by the CTA API.</p>
+                <p>Clicking on particular bus will give you the route of the bus you selected and its destination.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><b>Divvy Stations</b></p>
+            <p>Activating this layer will plot all the available divvy stations around the selected path.</p>
+            <p>Clicking on particular station will give you additional details like number of bikes available and number of docks available in those stations.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><b>Crime Reports</b></p>
+            <p>This layer will plot the locations where crimes are reported. Clicking on particular crime marker will give you details on when the crime has been reported.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><b>Street Light Out</b></p>
+            <p>This layer when activated plots location where a streetlight is not working. It also plots a marker if none of the street lights are working in given location.</p>
+
+        
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><b>Potholes</b></p>
+            <p>Activating this layer will plot all the potholes that are currently open around given route. Selecting on a particular pothole marker will give you when is that pothole reported.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><b>Abandoned Cars</b></p>
+            <p>This layer when activated plots the location of abandoned cars that are reported. As in the previous case it gives you when the car has been reported.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><b>Failed Food Inspection</b></p>
+            <p>This layers plots the markers on locations where restaurants have failed in their food inspection reports.</p>
+            <p>Selecting on particular marker will give you the name of restaurant and when the inspection happened.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><b>Foursquare</b></p>
+            <p>Foursquare layer plots the most popular/checked-in places around the center of the given.</p>
+            <p> Selecting on particular marker will give you the name of the place that most people have checked-in and what type of venue is that like Art Museum, Restaurant etc.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><b>Uber Estimates</b></p>
+            <p>For activating this layer we need to give the source and destination points. After providing them we will get the cheapest Uber product available and the estimated price for that Uber product.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><b>Song Kick</b></p>
+            <p>This data layer gives us the list locations where some recreational activity like concerts are happening around the city.</p>
+            <p>On clicking particular marker we can get additional details like name of the event, date of the event and what type of event it is.</p>
+        </div>
+    </div>
+
+</div>
+
 
 <script>addBootstrap();</script>
