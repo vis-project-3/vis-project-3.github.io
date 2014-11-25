@@ -1,38 +1,66 @@
-<h1>Source code</h1>
-
-<section>
-    <div>
-        <div>
-            <div>
-                <h1>Source <small>How to run the app?</small></h1>
-            </div>
-            <div>
-                <p>The app was meant to run on the last version of Chrome and has not been tested on any other browser.</p>
-                <p>To run the application a local web server is needed. Simple python HTTP Server will serve the purpose.</p>
-                <p>Once you have your web server up and running please download the source code as pointed in Download section.</p>
-                <p>Now extract the downloaded folder and copy the extracted folders to the web server's root folder.</p>
-                <p>Open up your browser and type in "localhost" in the address bar then browse to the folder of the app.</p>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="page-header">
+            <h1>Source <small>How to run the app?</small></h1>
         </div>
-        <div>
-            <div>
-                <h1>Source <small>Download and Credits</small></h1>
-            </div>
-            <div>
-                <p>Download from <a href="https://github.com/vis-project-3/vis-project-3.github.io/archive/master.zip">here</a></p>
-                <p>For the project we have used<p>
-                <ul>
-                    <li>Leaflet.js for interactive map</li>
-                    <li>jQuery for DOM manipulation</li>
-                    <li>D3 for showing graphs and combining new data with refreshed data while updates happen</li>
-
-                </ul>
-
-                D3 for manipulating documents based on data,
-                    Leaflet.js for interactive maps, jQuery for DOM manipulation, Underscore.js which provides useful functional programming helpers, and SunCalc a library for calculating sun/moon positions and phases.</p>
-            </div>
+        <div class="col-md-8">
+            <p>The app was meant to run on the last version of Chrome and has not been tested on any other browser.</p>
+            <p>To run the application a local web server is needed. Simple python HTTP Server will serve the purpose.</p>
+            <p>Once you have your web server up and running please download the source code as pointed in Resources section.</p>
+            <p>Now extract the downloaded folder and copy the extracted folders to the web server's root folder.</p>
+            <p>Open up your browser and type in "localhost" in the address bar then browse to the folder of the app.</p>
+        </div>
+        <div class="col-md-4">
+            <ul class="list-group">
+                <li class="list-group-item disabled">Resources</li>
+                <li class="list-group-item"><a href="https://github.com/vis-project-3/vis-project-3.github.io/archive/master.zip">Source</a></li>
+            </ul>
         </div>
     </div>
-</section>
+    <div class="row">
+        <div class="page-header">
+            <h1>Source <small>Libraries</small></h1>
+        </div>
+        <div class="col-md-8">
+            <p>For the project we have used the following libraries<p>
+            <ul>
+                <li>D3 for showing graphs and combining new data with refreshed data while updates happen</li>
+                <li>Leaflet.js for interactive map</li>
+                <li>jQuery for DOM manipulation and Ajax Calls</li>
+                <li>Amplify.js for the Publisher Subscriber backbone</li>
+                <li>The Open Source Routing Machine for Leaflet</li>
+                <li>Yahoo Query Language</li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <ul class="list-group">
+                <li class="list-group-item disabled">Libraries</li>
+                <li class="list-group-item"><a href="http://d3js.org/">D3</a></li>
+                <li class="list-group-item"><a href="http://leafletjs.com/">Leaflet</a></li>
+                <li class="list-group-item"><a href="http://jquery.com/">jQuery</a></li>
+                <li class="list-group-item"><a href="http://amplifyjs.com/api/pubsub/">Amplify Pub/Sub</a></li>
+                <li class="list-group-item"><a href="http://www.liedman.net/leaflet-routing-machine/">Routing Machine</a></li>
+                <li class="list-group-item"><a href="https://developer.yahoo.com/yql/">Yahoo Query Language</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--<div class="row">
+        <div class="page-header">
+            <h1>Source <small>Credits</small></h1>
+        </div>
+        <div class="col-md-8">
+            <p>For the project we have used the resources<p>
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <ul class="list-group">
+                <li class="list-group-item disabled">Credited Resources</li>
+                <li class="list-group-item"><a href=""></a></li>
+            </ul>
+        </div>
+    </div>-->
+</div>
 
 <script>addBootstrap();</script>
