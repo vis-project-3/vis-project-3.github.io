@@ -19,6 +19,48 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
 
     /**** Route updates ****/
 
+    // d3.select(map.getMap().getPanes().mapPane).on("click", function(e) {
+    //     var latLng = map.getMap().containerPointToLatLng(d3.mouse(this));
+    //     var _way = route.getWaypoints();
+    //     _way.push({ latLng: latLng });
+    //     amplify.publish("UPDATE_WAYPOINTS", _way);
+    // })
+
+    // console.log(map.getMap().getPanes().mapPane)
+
+    // map.getMap().on('click', function(e) {
+    //     // e.originalEvent.preventDefault();
+    //     // e.originalEvent.stopPropagation();
+    //     // alert(e);
+    //     // console.log(e);
+    //     // console.log(e.target._mapPane);
+    //     // console.log(map.getMap())
+    //     // var _way = route.getWaypoints();
+    //     // _way.push({ latLng: e.latlng });
+    //     // amplify.publish("UPDATE_WAYPOINTS", _way);
+    //     // console.log(route.getPlan());
+    //     // d3.selectAll(".route-waypoint-icon").on("dblclick", function(event) {
+    //     //     d3.event.stopPropagation();
+    //     //     console.log(_way);
+    //     // })
+    //
+    //
+    //     waypoints.push({latLng: e.latlng});
+    //     if (waypoints.length >= 2) {
+    //         router.route(waypoints, function(err, routes) {
+    //             if (line) {
+    //                 map.removeLayer(line);
+    //             }
+    //
+    //             if (err) {
+    //                 alert(err);
+    //             } else {
+    //                 line = L.Routing.line(routes[0]).addTo(map);
+    //             }
+    //         });
+    //     }
+    // });
+
     amplify.subscribe("UPDATE_WAYPOINTS", route.setWaypoints);
 
     route.on("routeFound", function(route) {
@@ -38,6 +80,25 @@ function Switchboard(map, route, layerControllers, layerButtons, mapButtons, wea
     rect.on("filterToggle", function() {
         _updateActiveLayers(map.getQueryRect())
     });
+
+    function _addWaypoint(e) {
+        var _way = route.getWaypoints();
+        _way.push({ latLng: e.latlng });
+        amplify.publish("UPDATE_WAYPOINTS", _way);
+        map.getMap().off("click", _addWaypoint);
+    }
+
+    rect.on("addWaypoint", function(e) {
+        map.getMap().on('click', _addWaypoint)
+    })
+
+    rect.on("deleteWaypoint", function() {
+        var _way = route.getWaypoints();
+        if (_way.length > 2) {
+            route.getPlan().spliceWaypoints(_way.length - 1, 1);
+        }
+
+    })
 
     amplify.subscribe("ROUTE_UPDATED", function(route) {
         coords = route.coordinates;

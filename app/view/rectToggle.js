@@ -7,7 +7,7 @@ function rectToggle(map, customControl){
     // var selection = d3.select(control._container);
     // var graphs;
 
-    var dispatch = d3.dispatch("filterToggle");
+    var dispatch = d3.dispatch("filterToggle", "deleteWaypoint", "addWaypoint");
     d3.rebind(this, dispatch, "on");
 
     window.filterBy = "path"
@@ -26,8 +26,24 @@ function rectToggle(map, customControl){
             .on("click", function(d) {
                 window.filterBy = d.id;
                 dispatch.filterToggle();
-            })
+            });
+
+        selection.select("div").append("button")
+            .attr({ width: "7vw", margin: "auto" })
+            .text("Add Waypoint")
+            .on("click", function(e) {
+                d3.event.stopPropagation();
+                dispatch.addWaypoint(e);
+            });
+
+        selection.select("div").append("button")
+            .attr({ width: "7vw", margin: "auto" })
+            .text("Delete Last Waypoint")
+            .on("click", function() {
+                dispatch.deleteWaypoint();
+            });
     }
+
 
 
 }
