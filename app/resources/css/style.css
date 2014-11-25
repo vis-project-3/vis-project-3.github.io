@@ -42,7 +42,7 @@ body{
     position : absolute;
     top : 30vh;
     width : 9vw;
-    height : 40vh;
+    height : 50vh;
     background: rgba(255,255,255,0.5);
     /* background-color: none; */
 }
@@ -82,7 +82,7 @@ body{
 #mapcontrol{
     position : absolute;
     bottom : 10vh;
-    width : 9vw;
+    width : 12vw;
     height : 9vh;
     background-color: rgba(255,255,255,0.66);
 }

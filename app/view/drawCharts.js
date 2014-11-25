@@ -19,7 +19,7 @@ function drawCharts(container, map, graphControllers, customControl){
         selection.style({
             width: "30vw",
             height: "50vh",
-            top: "20vh"
+            top: "25vh"
         })
         .attr("id", "charts")
 
@@ -40,7 +40,7 @@ function drawCharts(container, map, graphControllers, customControl){
         svg.append("g").attr("class", "title")
             .attr({ transform: translate(0, margin.top - 50) })
             .append("text").text(function(d) { return d.text })
-            .style({ "font-size": "4vh" })
+            .style({ "font-size": "3vh" })
 
         svg.append("g")
             .attr({ transform: translate(width, margin.top - 50) })
