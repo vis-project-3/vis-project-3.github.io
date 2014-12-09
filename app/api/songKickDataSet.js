@@ -9,7 +9,7 @@ function songKickDataSet(){
 
     //Return 50 events happening around given location on that day
     this.getEvents = function(latitude,longitude,callBack) {
-        var url = 'https://api.songkick.com/api/3.0/events.json?location=geo:'+latitude+','+longitude+'&apikey='+self.apiKey;
+        var url = 'http://api.songkick.com/api/3.0/events.json?location=geo:'+latitude+','+longitude+'&apikey='+self.apiKey;
         $.ajax({
             url: url,
             success: function(data) {
